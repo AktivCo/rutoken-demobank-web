@@ -1,19 +1,11 @@
 import Plugin from 'rutoken-plugin-bootstrap';
 
-const pluginLoadError = (error) => ({
-    type: 'PLUGIN_LOAD_ERROR',
-    payload: error,
-});
-
-const pluginLoadFinished = () => (
-    { type: 'PLUGIN_LOAD_FINISHED' }
-);
-
-const pluginDevicesFetchEnd = (devices) => ({
-    type: 'PLUGIN_DEVICES_FETCH_END',
-    payload: devices,
-});
-
+import {
+    pluginLoadFinished,
+    pluginSetCurrentDeviceId,
+    pluginDevicesFetchEnd,
+    pluginLoadError,
+} from './changeStateActions';
 
 const loadPlugin = () => (dispatch) => {
     let sequense = Plugin.init();
@@ -67,6 +59,10 @@ const loadPlugin = () => (dispatch) => {
 
     sequense = sequense.then((fetchedDevices) => {
         const devices = fetchedDevices.reduce((acc, current, index) => ({ ...acc, [index]: current }), {});
+
+        if (fetchedDevices.length !== 0) {
+            dispatch(pluginSetCurrentDeviceId(fetchedDevices[0].number));
+        }
 
         dispatch(pluginLoadFinished());
         dispatch(pluginDevicesFetchEnd(devices));

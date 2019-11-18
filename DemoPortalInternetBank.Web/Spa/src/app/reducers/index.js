@@ -20,7 +20,16 @@ const DEVICES = (state = null, action) => {
     return state;
 };
 
+const CURRENT_DEVICE_ID = (state = null, action) => {
+    if (action.type === 'PLUGIN_SET_CURRENT_DEVICE_ID') {
+        return action.payload;
+    }
+    return state;
+};
+
+
 export default combineReducers({
     PLUGIN_LOAD_ERROR,
+    CURRENT_DEVICE_ID,
     DEVICES,
 });

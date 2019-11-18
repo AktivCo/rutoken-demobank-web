@@ -6,6 +6,9 @@ import loadPluginAction from './actions/loadPlugin';
 import CheckPlugin from './checkplugin';
 import NoDevices from './NoDevices';
 
+
+import Devices from './Devices';
+
 class MainView extends React.Component {
     componentDidMount() {
         const { loadPlugin } = this.props;
@@ -23,7 +26,14 @@ class MainView extends React.Component {
 
         if (!DEVICES) {
             return (
-                <div>Загружаем плагин</div>
+                <div className="plugin_loader">
+                    <div className="main_title">
+                        <p>Загружаем плагин...</p>
+                    </div>
+                    <div className="loading">
+                        <div className="loader" />
+                    </div>
+                </div>
             );
         }
 
@@ -31,9 +41,7 @@ class MainView extends React.Component {
             return <NoDevices />;
         }
 
-        return (
-            <div>Плагин загружен</div>
-        );
+        return <Devices />;
     }
 }
 
