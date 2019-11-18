@@ -1,73 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PluginBootstrap from 'rutoken-plugin-bootstrap';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
 
-import CheckPlugin from './checkplugin';
+import { IntlProvider, addLocaleData } from 'react-intl';
+import locale from 'react-intl/locale-data/ru';
 
+import reducers from './reducers';
 
-const Header = () => (
-    <header className="d-flex flex-row justify-content-between">
-        <div className="header__img">
-            <a to="/devices"><span className="img__logo" /></a>
-        </div>
-        <div className="header__menu">
-            <ul className="d-flex flex-row justify-content-end" />
-        </div>
-    </header>
-);
+import App from './App';
 
-const TestApplic = () => (
-    <div className="d-flex flex-row justify-content-center">
-        <div className="container d-flex flex-column">
-            <Header />
-            <App />
-        </div>
-    </div>
-);
-
-
-class App extends React.Component {
-    state = {
-        error: null,
-        loading: true,
-    }
-
-    componentDidMount() {
-        PluginBootstrap.init()
-            .then(() => {
-                this.setState({ loading: false, error: null });
-            })
-            .catch((err) => {
-                this.setState({ loading: false, error: err });
-            });
-    }
-
-    render() {
-        const { error, loading } = this.state;
-
-        if (error) {
-            return (
-                <CheckPlugin error={error} />
-            );
-        }
-
-        if (loading) {
-            return (
-                <div>Загружаем плагин</div>
-            );
-        }
-
-        return (
-            <div>Плагин загружен</div>
-        );
-    }
-}
-
+addLocaleData(locale);
 
 const mainDiv = document.createElement('DIV');
 mainDiv.setAttribute('style', 'height:100%;');
 
+
+const store = createStore(
+    reducers,
+    compose(
+        applyMiddleware(thunk),
+    ),
+);
+
 ReactDOM.render(
-    <TestApplic />,
+    <Provider store={store}>
+        <IntlProvider locale="ru">
+            <App />
+        </IntlProvider>
+    </Provider>,
     document.body.appendChild(mainDiv),
 );
