@@ -2,8 +2,8 @@ import Plugin from 'rutoken-plugin-bootstrap';
 
 import {
     pluginLoadFinished,
-    pluginSetCurrentDeviceId,
     pluginDevicesFetchEnd,
+    pluginSetCurrentDeviceId,
     pluginLoadError,
 } from './changeStateActions';
 

@@ -17,10 +17,16 @@ const pluginSetCurrentDeviceId = (deviceId) => ({
     payload: deviceId,
 });
 
+const pluginSetCertificates = (deviceId, certificates) => ({
+    type: 'PLUGIN_SET_CERTIFICATES',
+    payload: { [deviceId]: certificates },
+});
+
 
 export {
     pluginLoadError,
     pluginLoadFinished,
     pluginDevicesFetchEnd,
     pluginSetCurrentDeviceId,
+    pluginSetCertificates,
 };

@@ -27,9 +27,17 @@ const CURRENT_DEVICE_ID = (state = null, action) => {
     return state;
 };
 
+const CERTIFICATES = (state = {}, action) => {
+    if (action.type === 'PLUGIN_SET_CERTIFICATES') {
+        return { ...state, ...action.payload };
+    }
+    return state;
+};
+
 
 export default combineReducers({
     PLUGIN_LOAD_ERROR,
     CURRENT_DEVICE_ID,
     DEVICES,
+    CERTIFICATES,
 });

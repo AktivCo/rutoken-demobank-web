@@ -4,6 +4,9 @@ import cn from 'classnames';
 import { connect } from 'react-redux';
 import changeActiveDeviceAction from './actions/changeActiveDevice';
 
+import Certificates from './login';
+
+
 const getActiveClass = (deviceId, activeDeviceId) => cn({
     device_wrapper: true,
     active: deviceId === activeDeviceId,
@@ -21,6 +24,11 @@ const getDeviceClass = (type) => `device_logo ${classes[type]}`;
 
 
 class Devices extends React.Component {
+    componentDidMount() {
+        const { CURRENT_DEVICE_ID, changeActiveDevice } = this.props;
+        changeActiveDevice(CURRENT_DEVICE_ID);
+    }
+
     changeDevice(deviceId) {
         const { changeActiveDevice } = this.props;
         changeActiveDevice(deviceId);
@@ -60,6 +68,7 @@ class Devices extends React.Component {
                         }
                     </ul>
                 </div>
+                <Certificates />
             </div>
         );
     }

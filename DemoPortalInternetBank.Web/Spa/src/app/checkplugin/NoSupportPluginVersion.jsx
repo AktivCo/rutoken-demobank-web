@@ -7,7 +7,8 @@ const NoSupportPluginVersion = (os) => (
             <div className="aboutservice w-100 d-flex flex-column justify-content-center align-items-center">
                 <span className="aboutservice__title mb-1">Обновите Рутокен Плагин до последней версии</span>
                 <span className="description mb-1 ml-1">
-                    Прогресс не стоит на месте: расширяются возможности работы электронной подписи в браузере и исправляются ошибки
+                    Прогресс не стоит на месте:
+                    расширяются возможности работы электронной подписи в браузере и исправляются ошибки
                 </span>
             </div>
             <a className="requirement w-100 d-flex flex-column justify-content-start align-items-start mb-2" href={getPluginDownloadLink(os)}>
