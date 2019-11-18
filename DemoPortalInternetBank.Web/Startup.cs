@@ -21,6 +21,8 @@ namespace DemoPortalInternetBank.Web
                 app.UseDeveloperExceptionPage();
             }
             
+            app.UseStaticFiles();
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{*.}", new
