@@ -1,0 +1,76 @@
+.main {
+    flex-grow: 1;
+
+    .main__wrapper {
+
+        // @import "about/_about.scss";
+    }
+
+    @import "settings/_settings.scss";
+}
+
+.create__bg {
+    margin: 2rem auto 2rem 0rem;
+}
+
+.plugin_loader {
+    @import "utilities/_loader.scss";
+    text-align: center;
+
+    .loading {
+        background-color: #fff;
+
+        .loader {
+            width: 6.5em;
+            height: 6.5em;
+            margin-left: 47%;
+
+            &:after{
+                background: #fff;
+            }
+        }
+    }
+}
+
+button {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.round-wrap {
+    padding-right: 18px;
+}
+
+.btn-round {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: #e7f1f3;
+    position: fixed;
+    bottom: 25px; 
+    -moz-box-shadow: -3px 4px 5px #b3b3cc;
+    -webkit-box-shadow: -3px 4px 5px #b3b3cc;
+    box-shadow: -3px 4px 5px #b3b3cc;
+
+    &:before {
+        content: "";
+        position: absolute;
+        width: 4px;
+        height: 20px;
+        background: $selected-device-info-background-color;
+        display: inline-block;
+        margin-top: 10px;
+        margin-left: 18px;
+    }
+
+    &:after {
+        content: "";
+        margin-top: 18px;
+        margin-left: 10px;
+        width: 20px;
+        height: 4px;
+        background: $selected-device-info-background-color;
+        display: inline-block;
+    }
+}

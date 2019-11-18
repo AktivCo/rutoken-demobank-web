@@ -1,0 +1,100 @@
+.main__settings, .main__patterns {
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 600px;
+    margin: 0 auto;
+    padding: 2rem 0;
+
+    .main__title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 3rem;
+        width: 100%;
+
+        .title {
+            font-size: $font-size--large;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.25;
+            letter-spacing: 0.5px;
+            text-align: center;
+            color: $device-font-color;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .patterns__remove {
+        color: $selected-device-info-background-color;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+
+        a {
+            color: $surfie-green;
+
+            .remove__rubishicon {
+                background: $remove-image--green no-repeat center center;
+                width: 1.5rem;
+                height: 1.5rem;
+                position: absolute;
+            }
+        }
+
+        
+    }
+
+    @import "requirement/_requirement.scss";
+
+    .token__error {      
+        .img__error {
+            background: $losttoken-image no-repeat center center;
+            width: 480px;
+            height: 12rem;
+        }
+
+        .text__error {
+            display: block;
+            text-align: center;
+        }
+
+
+    }
+
+    .settings__divider, .patterns__divider {
+        height: 1px;
+        width: 100%;
+        background-color: $border-color;
+        margin-bottom: 2rem;
+    }
+
+    .settings__info {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        a {
+            color: $surfie-green;
+
+            &:hover, &:active {
+                color: $surfie-green;
+            }
+        }
+
+        span {
+            font-size: $font-size--smallest;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: center;
+            color: $form-warning-color;
+        }
+    }
+}
