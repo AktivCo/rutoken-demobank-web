@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { connect } from 'react-redux';
-import changeActiveDeviceAction from './actions/changeActiveDevice';
+import changeActiveDeviceAction from '../actions/changeActiveDevice';
 
-import Certificates from './login';
+import Certificates from './index';
 
 
 const getActiveClass = (deviceId, activeDeviceId) => cn({

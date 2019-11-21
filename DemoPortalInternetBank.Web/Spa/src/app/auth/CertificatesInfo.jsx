@@ -9,9 +9,7 @@ const CertificateInfo = ({ subject }) => {
         OGRNIP: 'ОГРНИП',
     };
 
-    const subjectList = ['organizationName', ...Object.keys(subjectMap)];
-
-    if (!subjectList.some((elem) => Object.prototype.hasOwnProperty.call(subject, elem))) {
+    if (!['O', ...Object.keys(subjectMap)].some((elem) => Object.prototype.hasOwnProperty.call(subject, elem))) {
         return null;
     }
 
@@ -28,11 +26,7 @@ const CertificateInfo = ({ subject }) => {
 
     return (
         <div className="info_organization">
-            {
-                subject.organizationName
-                    ? <span className="info_organization_subject">{subject.organizationName}</span>
-                    : null
-            }
+            {subject.O ? <span className="info_organization_subject">{subject.O}</span> : null}
             {renderINNandKPP()}
         </div>
     );
