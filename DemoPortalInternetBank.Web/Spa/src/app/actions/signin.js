@@ -7,54 +7,82 @@ import { showModal } from './uiActions';
 import { operationStart, operationError, operationSuccess } from './operations';
 import { checkLoginState } from './userInfoActions';
 
-const signin = (deviceId, certificate, PinModal) => (dispatch) => {
-    console.log(deviceId);
-    console.log(certificate);
+import { saveCurrentCert } from '../certificatesStorage';
 
-    dispatch(showModal(PinModal, null, () => {
-        dispatch(operationStart('signin'));
 
-        let sequense = Promise.resolve();
+const signinAction = (deviceId, certificate) => (dispatch) => {
+    dispatch(operationStart('signin'));
 
-        sequense = sequense.then(() => axios.get('/api/pki/random'));
+    let sequense = Promise.resolve();
 
-        sequense = sequense.then((response) => {
-            const random = response.data;
+    sequense = sequense.then(() => axios.get('/api/pki/random'));
 
-            const options = {
-                detached: false,
-                addUserCertificate: true,
-                useHardwareHash: true,
-            };
+    sequense = sequense.then((response) => {
+        const random = response.data;
 
-            return Plugin.sign(deviceId, certificate.certId, random, false, options);
-        });
+        const options = {
+            detached: false,
+            addUserCertificate: true,
+            useHardwareHash: true,
+        };
 
-        sequense = sequense.then((signature) => {
-            const loginRequest = { cms: signature, objectId: certificate.certId };
-            return axios.post('/api/pki/login', loginRequest);
-        });
+        return Plugin.sign(deviceId, certificate.certId, random, false, options);
+    });
 
-        sequense = sequense.then(() => checkLoginState()(dispatch));
+    sequense = sequense.then((signature) => {
+        const loginRequest = { cms: signature, objectId: certificate.certId };
+        return axios.post('/api/pki/login', loginRequest);
+    });
 
-        sequense = sequense.then(() => {
-            dispatch(operationSuccess('signin'));
-        });
+    sequense = sequense.then(() => checkLoginState()(dispatch));
 
-        sequense = sequense.catch((err) => {
-            let error;
+    sequense = sequense.then(() => {
+        saveCurrentCert(certificate.certId);
+        dispatch(operationSuccess('signin'));
+    });
 
-            if (err instanceof PluginError) {
-                error = err;
-            } else {
-                error = { description: 'Не удалось войти в систему' };
-            }
+    sequense = sequense.catch((err) => {
+        let error;
 
-            dispatch(operationError('signin', error));
-        });
+        if (err instanceof PluginError) {
+            error = err;
+        } else {
+            error = { description: 'Не удалось войти в систему' };
+        }
 
-        return sequense;
-    }));
+        dispatch(operationError('signin', error));
+    });
+
+    return sequense;
 };
 
-export default signin;
+
+const signin = (deviceId, certificate, sequenceModals) => (dispatch) => {
+    let sequense = Promise.resolve();
+
+    const { PinModal, ChangePinModal } = sequenceModals;
+
+    sequense = sequense.then(() => {
+        const promise = new Promise((resolve) => {
+            dispatch(showModal(PinModal, null, null, resolve));
+        });
+
+        return promise;
+    });
+
+    sequense = sequense.then((needChangePin) => {
+        if (!needChangePin) return;
+
+        const promise = new Promise((resolve) => {
+            dispatch(showModal(ChangePinModal, null, null, resolve));
+        });
+
+        return promise;
+    });
+
+    sequense = sequense.then(() => signinAction(deviceId, certificate)(dispatch));
+
+    return sequense;
+};
+
+export { signinAction, signin };

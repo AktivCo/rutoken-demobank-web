@@ -5,8 +5,9 @@ import { FormattedDate } from 'react-intl';
 import CertificateInfo from './CertificatesInfo';
 
 
-import signinAction from '../actions/signin';
+import { signin as signinAction } from '../actions/signin';
 import PinModal from './PinModal';
+import ChangePinModal from './ChangePinModal';
 
 const CertificateCard = ({ CURRENT_DEVICE_ID, certificate, signin }) => (
     <div
@@ -53,7 +54,12 @@ const mapStateToProps = (state) => (
 
 const mapActionsToProps = (dispatch) =>
     (
-        { signin: (deviceId, certificate) => dispatch(signinAction(deviceId, certificate, PinModal)) }
+        {
+            signin: (deviceId, certificate) => dispatch(signinAction(deviceId, certificate, {
+                PinModal: PinModal,
+                ChangePinModal: ChangePinModal,
+            })),
+        }
     );
 
 CertificateCard.propTypes = {

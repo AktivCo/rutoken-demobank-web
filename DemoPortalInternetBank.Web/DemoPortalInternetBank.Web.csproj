@@ -11,7 +11,48 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\DemoPortalInternetBank.Domain\DemoPortalInternetBank.Domain.csproj" />
       <ProjectReference Include="..\DemoPortalInternetBank.Pki\DemoPortalInternetBank.Pki.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="obj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ResolveComReferenceCache Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.csproj.ResolveComReference.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <IntermediateAssembly Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DebugSymbolsIntermediatePath Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DeploymentManifestEntryPoint Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ApplicationManifest Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll.manifest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DeployManifest Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.application" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <RazorIntermediateAssembly Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Views.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_RazorDebugSymbolsIntermediatePath Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Views.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckBuilt Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Views.dll" />
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import OPERATION_STATUS from '../operationStatus';
+import PERSONAL_VIEW_STATES from '../personalViewStates';
 
 const PLUGIN_LOAD_ERROR = (state = null, action) => {
     if (action.type === 'PLUGIN_LOAD_FINISHED') {
@@ -97,6 +98,26 @@ const OPERATION_HANDLE = (state = null, action) => {
     return state;
 };
 
+const PERSONAL_VIEW_STATE = (state = PERSONAL_VIEW_STATES.OUTGOING, action) => {
+    if (action.type === 'SET_PERSONAL_VIEW_STATE') {
+        return action.payload;
+    }
+
+    return state;
+};
+
+const OBJECTS_LIST = (state = null, action) => {
+    if (action.type === 'SET_OBJECTS_LIST') {
+        return { ...state, ...action.payload };
+    }
+
+    if (action.type === 'DELETE_OBJECTS_LIST') {
+        return null;
+    }
+
+    return state;
+};
+
 
 export default combineReducers({
     PLUGIN_LOAD_ERROR,
@@ -107,4 +128,6 @@ export default combineReducers({
     VIEW_REGISTER,
     OPERATION_HANDLE,
     LOGIN_STATE,
+    PERSONAL_VIEW_STATE,
+    OBJECTS_LIST,
 });

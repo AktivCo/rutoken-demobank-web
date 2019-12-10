@@ -22,13 +22,11 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
         render() {
             const { OPERATION_HANDLE } = this.props;
 
-
             if (!OPERATION_HANDLE) {
                 return (
                     <WrappedComponent {...this.props} />
                 );
             }
-
 
             if (operationTitle !== OPERATION_HANDLE.title) {
                 return (
@@ -62,7 +60,7 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
             }
 
             if (OPERATION_HANDLE.status === OPERATION_STATUS.SUCCESS) {
-                if (SuccessComponent) return <SuccessComponent />;
+                if (SuccessComponent) return <SuccessComponent data={OPERATION_HANDLE.data} />;
             }
 
             return <WrappedComponent {...this.props} />;

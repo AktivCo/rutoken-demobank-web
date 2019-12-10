@@ -15,7 +15,3 @@ var brs = {
 }
 
 let agent = brs['Firefox'];
-
-var res = bowser.parse(agent);
-
-console.log(res);

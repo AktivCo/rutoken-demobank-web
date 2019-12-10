@@ -7,18 +7,26 @@
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 1;
     visibility: visible;
+    z-index: 1000;
 }
 
 .modal-content {
     position: absolute;
-    top: 30%;
+    top: 100px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
     background-color: white;
     padding: 2rem 2rem;
-    width: 470px;
-    min-height: 285px;
+    min-height: 220px;
     border-radius: 0.5rem;
+}
+
+.modal-sm {
+    width: 470px;
+}
+
+.modal-lg {
+    width: 600px;
 }
 
 .modal_close_icon {
@@ -41,15 +49,24 @@
 }
 
 .modal_title {
-    font-size: 24px;
-    font-weight: bold;
+
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
     letter-spacing: 0.5px;
     text-align: center;
     color: #444444;
-    padding: 0 5rem;
+    padding: 0 4rem;
+
+    .modal_title--head {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    .modal_title--info {
+        font-size: 12px;
+        font-weight: normal;
+    }
 }
 
 .modal_actions {

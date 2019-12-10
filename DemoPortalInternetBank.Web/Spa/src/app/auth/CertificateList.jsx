@@ -1,34 +1,70 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import CertificateCard from './CertificatesCard';
-
-import { showViewRegister as showViewRegisterAction } from '../actions/uiActions';
 import withOperation from '../withOperation';
-
+import { showViewRegister as showViewRegisterAction } from '../actions/uiActions';
 
 import RegisterError from './RegisterError';
 import Loading from './LoadingCertificates';
 
-const CertificateList = ({ certificates, showViewRegister }) => (
-    <div className="info_container main_certificatecard">
-        <div className="certificatecard_certificatelist">
-            <p>Выберите личный сертификат</p>
-            {
-                certificates.map((cert) => <CertificateCard key={cert.certId} certificate={cert} />)
-            }
-            <div className="mt-2">
-                <button
-                    type="button"
-                    className="pl-2 pr-2"
-                    onClick={() => showViewRegister()}
-                >
-                    Зарегистрироваться
-                </button>
+class CertificateList extends React.Component {
+    renderCerts() {
+        const { certificates } = this.props;
+
+        const result = [];
+
+        const mt = <p key="choose-cert">Выберите личный сертификат</p>;
+        const mf = <p key="last-cert">Последний раз вы входили как</p>;
+        const mp = (certs) => certs.map((cert) => <CertificateCard key={cert.certId} certificate={cert} />);
+
+
+        if (certificates.length === 1) {
+            result.push(mt);
+            result.push(mp(certificates));
+            return result;
+        }
+
+        const { isCurrent } = certificates[0];
+
+        if (isCurrent) {
+            result.push(mf);
+            result.push(mp(certificates.slice(0, 1)));
+
+            result.push(mt);
+            result.push(mp(certificates.slice(1)));
+            return result;
+        }
+
+        result.push(mt);
+        result.push(mp(certificates));
+        return result;
+    }
+
+    render() {
+        const { showViewRegister } = this.props;
+
+        return (
+            <div className="info_container main_certificatecard">
+                <div className="certificatecard_certificatelist">
+                    {
+                        this.renderCerts()
+                    }
+                    <div className="mt-2">
+                        <button
+                            type="button"
+                            className="pl-2 pr-2"
+                            onClick={() => showViewRegister()}
+                        >
+                            Зарегистрироваться
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-);
+        );
+    }
+}
 
 
 const mapActionsToProps = (dispatch) =>

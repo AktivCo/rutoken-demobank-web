@@ -75,5 +75,26 @@ const loadPlugin = () => (dispatch) => {
     return sequense;
 };
 
+const checkConnectedDevices = () => (dispatch) => {
+    let sequense = Promise.resolve();
 
-export default loadPlugin;
+    sequense = sequense.then(() => Plugin.enumerateDevices());
+
+    sequense = sequense.then((devices) => {
+        if (devices.length === 0) {
+            const pr = new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(checkConnectedDevices()(dispatch));
+                }, 1000);
+            });
+
+            return pr;
+        }
+
+        return loadPlugin()(dispatch);
+    });
+
+    return sequense;
+};
+
+export { loadPlugin, checkConnectedDevices };

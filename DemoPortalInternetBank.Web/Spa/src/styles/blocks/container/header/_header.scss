@@ -1,10 +1,12 @@
-header {
-    background-image: $background-image-line;
-    background-repeat: repeat-x;
-    background-size: 100% 35%;
-    height: 90px;
-    flex-grow: 0;
-
+header {   
+    .header {
+        background-image: $background-image-line;
+        background-repeat: repeat-x;
+        background-size: 100% 35%;
+        height: 90px;
+        flex-grow: 0;
+    }
+    
     .header__img {
         padding-left: 2rem;
 
@@ -55,6 +57,28 @@ header {
                 }               
             }
         }        
+    }
+
+    .header__userinfo {
+        margin-left: 180px;
+        margin-top: -30px;
+        margin-bottom: 10px;
+        margin-right: 20px;
+        padding: 10px 20px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+            font-weight: bold;
+        }
+
+        .header__userinfo--balance {
+            font-weight: bold;
+            font-size: 24px;
+        }
     }
 }
         

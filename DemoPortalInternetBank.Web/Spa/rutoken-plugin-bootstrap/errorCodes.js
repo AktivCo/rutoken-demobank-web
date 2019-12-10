@@ -5,7 +5,7 @@ const getErrorCodes = (errorCodes) => {
         [errorCodes.NOT_ENOUGH_MEMORY]: "Недостаточно памяти",
         [errorCodes.DEVICE_NOT_FOUND]: "Устройство не найдено",
         [errorCodes.DEVICE_ERROR]: "Ошибка устройства",
-        [errorCodes.TOKEN_INVALID]: "Ошибка чтения/записи устройства. Возможно, устройство было извлечено. Попробуйте выполнить enumerate",
+        [errorCodes.TOKEN_INVALID]: "Ошибка чтения/записи устройства. Возможно, устройство было извлечено. Попробуйте перезагрузить страницу",
         [errorCodes.CERTIFICATE_CATEGORY_BAD]: "Недопустимый тип сертификата",
         [errorCodes.CERTIFICATE_EXISTS]: "Сертификат уже существует на устройстве",
         [errorCodes.CERTIFICATE_NOT_FOUND]: "Сертификат не найден",

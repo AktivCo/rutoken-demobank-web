@@ -14,20 +14,32 @@ class PinModal extends React.Component {
         this.setState({ [id]: value });
     }
 
-    render() {
-        console.log(this.props);
-        const { CURRENT_DEVICE_ID, login, onSuccessAction } = this.props;
+    loginClick = (e) => {
+        e.preventDefault();
+
+        const { CURRENT_DEVICE_ID, login, onSuccessAction, closeModal } = this.props;
         const { password } = this.state;
 
+        login(CURRENT_DEVICE_ID, password)
+            .then((needChangePin) => {
+                onSuccessAction(needChangePin);
+                closeModal();
+            })
+            .catch();
+    }
+
+    render() {
         return (
             <div>
                 <div className="modal_title">
-                    <span>Для доступа к сайту введите свой PIN-код</span>
+                    <div className="modal_title--head">
+                        Для доступа к сайту введите свой PIN-код
+                    </div>
                 </div>
                 <div className="modal_actions">
                     <form>
-                        <Input type="password" id="password" placeholder="Введите PIN-код" onChange={this.onChange} />
-                        <button type="button" onClick={() => login(CURRENT_DEVICE_ID, password, onSuccessAction)}>Войти</button>
+                        <Input type="password" id="password" placeholder="Введите PIN-код" onChange={this.onChange} autoFocus />
+                        <button type="submit" onClick={(e) => this.loginClick(e)}>Войти</button>
                     </form>
                 </div>
             </div>
@@ -38,11 +50,12 @@ class PinModal extends React.Component {
 const mapStateToProps = (state) => ({ CURRENT_DEVICE_ID: state.CURRENT_DEVICE_ID });
 
 const mapActionsToProps = (dispatch) =>
-    ({ login: (deviceId, password, onSuccessAction) => dispatch(loginAction(deviceId, password, onSuccessAction)) });
+    ({ login: (deviceId, password) => dispatch(loginAction(deviceId, password)) });
 
 PinModal.propTypes = {
     CURRENT_DEVICE_ID: PropTypes.number.isRequired,
     login: PropTypes.func.isRequired,
+    closeModal: PropTypes.func.isRequired,
     onSuccessAction: PropTypes.func.isRequired,
 };
 

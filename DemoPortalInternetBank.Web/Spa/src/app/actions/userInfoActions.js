@@ -8,20 +8,19 @@ const checkLoginState = () => (dispatch) => {
     sequense = sequense.then(() => axios.get('/api/user/info'));
 
     sequense = sequense.then((response) => {
-        console.log(response.data);
         dispatch({ type: 'SET_LOGIN_STATE', payload: response.data });
     });
 
     return sequense;
 };
 
-const logout = () => (dispatch) => {
+const logout = () => () => {
     let sequense = Promise.resolve();
 
     sequense = sequense.then(() => axios.get('/api/user/logout'));
 
     sequense = sequense.then(() => {
-        dispatch({ type: 'SET_LOGIN_STATE', payload: false });
+        window.location.reload();
     });
 
     return sequense;

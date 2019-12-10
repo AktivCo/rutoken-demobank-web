@@ -1,8 +1,9 @@
-const showModal = (modalType, modalState, onSuccessAction) => ({
+const showModal = (modalType, modalState, modalOptions, onSuccessAction) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: modalType,
         modalState: modalState,
+        modalOptions: modalOptions,
         onSuccessAction: onSuccessAction,
     },
 });
@@ -13,6 +14,13 @@ const hideModal = () => (
 
 const showViewRegister = () => (
     { type: 'SHOW_VIEW_REGISTER' }
+);
+
+const setPersonalViewState = (viewState) => (
+    {
+        type: 'SET_PERSONAL_VIEW_STATE',
+        payload: viewState,
+    }
 );
 
 const setLoginState = (isSignedIn = false) => (
@@ -27,5 +35,6 @@ export {
     showModal,
     hideModal,
     showViewRegister,
+    setPersonalViewState,
     setLoginState,
 };

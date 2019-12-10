@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 
 import { setUserCertificate as setUserCertificateActions } from '../actions/userInfoActions';
 
+import PersonalNavigation from './PersonalNavigation';
+import PersonalBlocksContainer from './PersonalBlocksContainer';
+
+
 class Personal extends React.Component {
     componentDidMount() {
         const { setUserCertificate } = this.props;
@@ -11,7 +15,13 @@ class Personal extends React.Component {
     }
 
     render() {
-        return <div>персональная история</div>;
+        return (
+            <div className="d-flex flex-row personal">
+                <PersonalNavigation />
+                <PersonalBlocksContainer />
+            </div>
+
+        );
     }
 }
 

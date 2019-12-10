@@ -1,0 +1,28 @@
+version: '2'
+services:
+  demobank.aktivco.ru-dotnet:
+    container_name: demobank.aktivco.ru-dotnet
+    image: mcr.microsoft.com/dotnet/core/aspnet:2.2
+    restart: always
+    volumes:
+      - /docker_sys/demobank.aktivco.ru/var/app:/app
+      - /docker_sys/demobank.aktivco.ru/var/migrator:/migrator
+    links:
+      - demobank.aktivco.ru-psql:demobank.aktivco.ru-psql
+    ports:
+      - "88:80"
+    tty: true
+  demobank.aktivco.ru-psql:
+    container_name: demobank.aktivco.ru-psql
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: Eklmn15
+      POSTGRES_USER: user
+      POSTGRES_DB: db
+    restart: always
+    volumes:
+      - /docker_sys/demobank.aktivco.ru/var/lib/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - "54328:5432"
+
+#sudo docker exec -it demobank-test.aktivco.ru-dotnet echo "I'm inside the container!"

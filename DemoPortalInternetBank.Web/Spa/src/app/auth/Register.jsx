@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 
 import withOperation from '../withOperation';
 
-// import Input from '../controls/Input';
-
 import registerAction from '../actions/register';
 import PinModal from './PinModal';
+import ChangePinModal from './ChangePinModal';
 
 import RegisterError from './RegisterError';
 import Loading from './LoadingCertificates';
@@ -53,10 +52,16 @@ class Register extends React.Component {
     }
 }
 
+
 const mapStateToProps = (state) => ({ CURRENT_DEVICE_ID: state.CURRENT_DEVICE_ID });
 
 const mapActionsToProps = (dispatch) =>
-    ({ register: (deviceId, commonName) => dispatch(registerAction(deviceId, commonName, PinModal)) });
+    ({
+        register: (deviceId, commonName) => dispatch(registerAction(deviceId, commonName, {
+            PinModal: PinModal,
+            ChangePinModal: ChangePinModal,
+        })),
+    });
 
 Register.propTypes = {
     CURRENT_DEVICE_ID: PropTypes.number.isRequired,

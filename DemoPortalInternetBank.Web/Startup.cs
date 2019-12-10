@@ -1,21 +1,48 @@
 ﻿using System;
+using System.IO;
+using DemoPortalInternetBank.Domain;
+using DemoPortalInternetBank.Domain.Interfaces;
+using DemoPortalInternetBank.Domain.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DemoPortalInternetBank.Web
 {
     public class Startup
     {
+        private IConfiguration _configuration;
+
+        public IConfiguration Configuration { get; }
+        public Startup()
+        {
+            _configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDistributedMemoryCache();
+
             services.AddSession(options =>
             {
                 options.CookieName = ".DemoBank.Session";
                 options.IdleTimeout = TimeSpan.FromSeconds(3600);
             });
+            
+            services
+                .AddDbContext<EfDbContext>(config =>
+                    config.UseNpgsql(_configuration.GetConnectionString("Default")));
+
+
+            services.AddScoped<IDbTransactionService, DbTransactionService>();
+            services.AddScoped<IPaymentDataService, PaymentDataService>();
+            services.AddScoped<PaymentService>();
 
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -38,14 +65,16 @@ namespace DemoPortalInternetBank.Web
 
             app.UseStaticFiles();
 
-
             app.UseMvc(routes =>
             {
-                routes.MapRoute("default", "{*.}", new
-                {
-                    controller = "Home",
-                    action = "Index"
-                });
+                routes.MapRoute(
+                    "default",
+                    "{*.}",
+                    new
+                    {
+                        controller = "Home",
+                        action = "Index"
+                    });
             });
         }
     }
