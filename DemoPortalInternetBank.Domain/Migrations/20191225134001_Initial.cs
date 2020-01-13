@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DemoPortalInternetBank.Domain.Migrations
 {
-    public partial class Initial1 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,8 @@ namespace DemoPortalInternetBank.Domain.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(nullable: true),
-                    CheckingAccount = table.Column<string>(nullable: true)
+                    CheckingAccount = table.Column<string>(nullable: true),
+                    BIK = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,7 +31,8 @@ namespace DemoPortalInternetBank.Domain.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(nullable: true),
                     Inn = table.Column<string>(nullable: true),
-                    Kpp = table.Column<string>(nullable: true)
+                    Kpp = table.Column<string>(nullable: true),
+                    Protected = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,7 +88,7 @@ namespace DemoPortalInternetBank.Domain.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Amount = table.Column<int>(nullable: false),
                     PaymentDate = table.Column<DateTime>(nullable: false),
-                    RespondentId = table.Column<int>(nullable: false),
+                    AccountId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     CMS = table.Column<string>(nullable: true)
                 },
@@ -94,9 +96,9 @@ namespace DemoPortalInternetBank.Domain.Migrations
                 {
                     table.PrimaryKey("PK_Payment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payment_Respondents_RespondentId",
-                        column: x => x.RespondentId,
-                        principalTable: "Respondents",
+                        name: "FK_Payment_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -118,9 +120,9 @@ namespace DemoPortalInternetBank.Domain.Migrations
                 column: "RespondentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_RespondentId",
+                name: "IX_Payment_AccountId",
                 table: "Payment",
-                column: "RespondentId");
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payment_UserId",
@@ -131,19 +133,19 @@ namespace DemoPortalInternetBank.Domain.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Payment");
+
+            migrationBuilder.DropTable(
                 name: "Accounts");
 
             migrationBuilder.DropTable(
-                name: "Payment");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Banks");
 
             migrationBuilder.DropTable(
                 name: "Respondents");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

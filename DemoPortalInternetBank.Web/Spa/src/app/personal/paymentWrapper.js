@@ -10,8 +10,10 @@ import getObjectsListAction from '../actions/getObjectsList';
 import PersonalBlock from './PersonalBlock';
 
 import PersonalBlockModal from './PersonalBlockModal';
+import PersonalBlockConfirmModal from './PersonalBlockConfirmModal';
+
 import PersonalBlockMultipleModal from './PersonalBlockMultipleModal';
-import PersonalProcessSignModal from './PersonalProcessSignModal';
+import PersonalBlockMultipleConfirmModal from './PersonalBlockMultipleConfirmModal';
 
 import PersonalSelectedInfo from './PersonalSelectedInfo';
 import Range from '../controls/Range';
@@ -27,7 +29,7 @@ class PaymentList extends React.Component {
         const { selectedItems, multipleSelection } = this.state;
 
         if (!multipleSelection) {
-            sign(OBJECTS_LIST[index]);
+            sign([OBJECTS_LIST[index]]);
             return;
         }
 
@@ -51,8 +53,8 @@ class PaymentList extends React.Component {
     }
 
     onMultipleSign = (payments) => {
-        const { multipleSign } = this.props;
-        multipleSign(payments);
+        const { sign } = this.props;
+        sign(payments);
     }
 
     render() {
@@ -107,7 +109,6 @@ class PaymentList extends React.Component {
 PaymentList.propTypes = {
     OBJECTS_LIST: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     OBJECT_TYPE: PropTypes.number.isRequired,
-    multipleSign: PropTypes.func.isRequired,
     sign: PropTypes.func.isRequired,
 };
 
@@ -122,11 +123,9 @@ const mapActionsToProps = (dispatch) =>
     ({
         sign: (payment) => dispatch(signAction(payment, {
             PaymentModal: PersonalBlockModal,
-            ProcessModal: PersonalProcessSignModal,
-        })),
-        multipleSign: (payments) => dispatch(signAction(payments, {
-            PaymentModal: PersonalBlockMultipleModal,
-            ProcessModal: PersonalProcessSignModal,
+            PaymentModalConfirm: PersonalBlockConfirmModal,
+            PaymentMultipleModal: PersonalBlockMultipleModal,
+            PaymentMultipleModalConfirm: PersonalBlockMultipleConfirmModal,
         })),
     });
 

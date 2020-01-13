@@ -23,7 +23,7 @@ const setPersonalViewState = (viewState) => (
     }
 );
 
-const setLoginState = (isSignedIn = false) => (
+const setLoginState = (isSignedIn = null) => (
     {
         type: 'SET_LOGIN_STATE',
         payload: isSignedIn,

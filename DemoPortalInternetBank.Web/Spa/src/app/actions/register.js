@@ -50,6 +50,18 @@ const reg = (deviceId, commonName) => (dispatch) => {
                 rdn: 'commonName',
                 value: commonName,
             },
+            {
+                rdn: 'O',
+                value: 'ООО Демобанк',
+            },
+            {
+                rdn: 'INN',
+                value: '097624544474',
+            },
+            {
+                rdn: 'OGRN',
+                value: '5155002560499',
+            },
         ];
 
         const extensions = { keyUsage: ['digitalSignature'] };
@@ -100,7 +112,6 @@ const reg = (deviceId, commonName) => (dispatch) => {
 
 
     sequense = sequense.catch((err) => {
-        console.log(err);
         let error;
         if (err instanceof PluginError) {
             error = err;

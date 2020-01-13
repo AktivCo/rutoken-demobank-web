@@ -65,7 +65,7 @@ namespace DemoPortalInternetBank.Web.Controllers
         {
             var userId = int.Parse(User.Claims.First(u => u.Type == "UserId").Value);
 
-            var payments = _paymentService.GetPayments(userId, isPayment: Convert.ToBoolean(type));
+            var payments = _paymentService.GetPayments(userId, isPayment: Convert.ToBoolean(type)).ToList();
 
             return Ok(payments);
         }
@@ -78,11 +78,9 @@ namespace DemoPortalInternetBank.Web.Controllers
 
             var res = PkiProvider.GetCMS(payment.CMS);
 
-            byte[] signedResult;
-
             try
             {
-                signedResult = PkiProvider.VerifySignature(res);
+                PkiProvider.VerifySignature(res);
             }
             catch (Exception err)
             {
@@ -93,8 +91,7 @@ namespace DemoPortalInternetBank.Web.Controllers
 
             return Ok();
         }
-        
-        
+
         [Route("payments/save")]
         [HttpPost]
         public IActionResult SavePayment([FromBody] List<Payment> payments)
@@ -105,11 +102,9 @@ namespace DemoPortalInternetBank.Web.Controllers
 
                 var res = PkiProvider.GetCMS(payment.CMS);
 
-                byte[] signedResult;
-
                 try
                 {
-                    signedResult = PkiProvider.VerifySignature(res);
+                    PkiProvider.VerifySignature(res);
                 }
                 catch (Exception err)
                 {

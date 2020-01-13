@@ -17,6 +17,7 @@ using Org.BouncyCastle.Math;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Utilities;
 using Org.BouncyCastle.X509;
 using Org.BouncyCastle.X509.Extension;
 using X509Certificate = Org.BouncyCastle.X509.X509Certificate;
@@ -28,9 +29,14 @@ namespace DemoPortalInternetBank.Pki
     {
         public static (AsymmetricCipherKeyPair, X509Certificate) GenerateSelfSigned()
         {
-            var startDate = DateTime.Now; // time from which certificate is valid
-            var expiryDate = DateTime.Now.AddYears(1); // time after which certificate is not valid
-            var serialNumber = new BigInteger("1234567890"); // serial number for certificate
+            var startDate = DateTime.Now;
+            var expiryDate = DateTime.Now.AddYears(10);
+
+            var serialNumber = BigIntegers.CreateRandomInRange(
+                BigInteger.ValueOf(2).Pow(63),
+                BigInteger.ValueOf(2).Pow(64),
+                new SecureRandom()
+            );
 
             var oid = ECGost3410NamedCurves.GetOid("Tc26-Gost-3410-12-256-paramSetA");
             var param = new ECKeyGenerationParameters(oid, new SecureRandom());
@@ -42,9 +48,7 @@ namespace DemoPortalInternetBank.Pki
 
             var certGen = new X509V1CertificateGenerator();
 
-
             var dnName = new X509Name("CN=Test CA Certificate");
-
 
             certGen.SetSerialNumber(serialNumber);
             certGen.SetIssuerDN(dnName);
@@ -59,7 +63,6 @@ namespace DemoPortalInternetBank.Pki
 
             return (keyPair, certificate);
         }
-
 
         public static X509Certificate IssueCertificate(string pkcs10Request)
         {
@@ -76,11 +79,16 @@ namespace DemoPortalInternetBank.Pki
             var caKey = (AsymmetricKeyParameter) RootCertificates.GetPrivateKeyGOST();
 
 
-            DateTime startDate = DateTime.Now;
-            DateTime expiryDate = DateTime.Now.AddYears(1);
-            BigInteger serialNumber = new BigInteger("1234567890"); // serial number for certificate
+            var startDate = DateTime.Now;
+            var expiryDate = DateTime.Now.AddYears(1);
 
-            X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
+            var serialNumber = BigIntegers.CreateRandomInRange(
+                BigInteger.ValueOf(2).Pow(63),
+                BigInteger.ValueOf(2).Pow(64),
+                new SecureRandom()
+            );
+
+            var certGen = new X509V3CertificateGenerator();
 
             var requestInfo = request.GetCertificationRequestInfo();
 
@@ -114,6 +122,24 @@ namespace DemoPortalInternetBank.Pki
             return certificate;
         }
 
+        private static void CheckCertificateValidity(X509Certificate cert)
+        {
+            cert.CheckValidity();
+
+            var caCert = (X509Certificate) RootCertificates.GetRootCertGOST();
+
+            var gst = new Gost3410DigestSigner(new ECGost3410Signer(), new Gost3411_2012_256Digest());
+
+            gst.Init(false, caCert.GetPublicKey());
+
+            var tbsCertificate = cert.GetTbsCertificate();
+
+            gst.BlockUpdate(tbsCertificate, 0, tbsCertificate.Length);
+
+            var t = gst.VerifySignature(cert.GetSignature());
+
+            if (!t) throw new CryptographicException("Cannot verify signature");
+        }
 
         public static byte[] VerifySignature(CmsSignedData cms)
         {
@@ -137,6 +163,8 @@ namespace DemoPortalInternetBank.Pki
                 foreach (var st in store.GetMatches(signer.SignerID))
                 {
                     var crt = (X509Certificate) st;
+
+                    CheckCertificateValidity(crt);
 
                     var gst = new Gost3410DigestSigner(new ECGost3410Signer(), new Gost3411_2012_256Digest());
 
@@ -197,7 +225,6 @@ namespace DemoPortalInternetBank.Pki
 
             return data;
         }
-
 
         public static string GenerateRandom()
         {

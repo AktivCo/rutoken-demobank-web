@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import { setLoginState as setLoginStateAction } from './uiActions';
+import { setLoginState as setLoginStateAction, hideModal } from './uiActions';
+import { operationFinished } from './operations'
+
 
 const checkLoginState = () => (dispatch) => {
     let sequense = Promise.resolve();
@@ -29,15 +31,17 @@ const logout = () => () => {
 const setUserCertificate = () => (dispatch, getState) => {
     let sequense = Promise.resolve();
 
-    sequense = sequense.then(() => {
-        console.log(getState());
-    });
+    sequense = sequense.then(() => getState());
 
     return sequense;
 };
 
 
 const setLoginState = (isSignedIn) => (dispatch) => {
+    if (!isSignedIn) {
+        dispatch(hideModal());
+        dispatch(operationFinished());
+    }
     dispatch(setLoginStateAction(isSignedIn));
 };
 

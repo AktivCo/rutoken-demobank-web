@@ -1,5 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+
+const getClassName = (isActive) => cn({
+    slider: true,
+    active: isActive,
+});
+
 
 class Range extends React.Component {
     state = { value: 1 }
@@ -31,7 +38,7 @@ class Range extends React.Component {
                 type="range"
                 max="1"
                 value={value}
-                className="slider"
+                className={getClassName(Number(value))}
                 onChange={(e) => this.handleSliderChange(e)}
             />
         );

@@ -32,9 +32,7 @@ const withLoader = (mapState, mapActions) => (WrappedComponent) => {
 
             if (!data) {
                 return (
-                    <div className="row row-no-gutters">
-                        Загружаемса
-                    </div>
+                    <div className="row row-no-gutters" />
                 );
             }
 

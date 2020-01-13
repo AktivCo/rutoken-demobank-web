@@ -43,6 +43,8 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
             }
 
             if (OPERATION_HANDLE.status === OPERATION_STATUS.ERROR) {
+                if (!OPERATION_HANDLE.error) return null;
+
                 if (ErrorComponent) {
                     return (
                         <ErrorComponent error={OPERATION_HANDLE.error} />

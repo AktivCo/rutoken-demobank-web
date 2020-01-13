@@ -19,38 +19,70 @@ namespace DemoPortalInternetBank.Domain.Services
 
         public void GenerateUserPayments(int userId)
         {
-            var paymentsCount =
-                _paymentDataService.Payments.GetAll().Count(p => p.UserId == userId && p.CMS == null);
-
-            var accountIds = _paymentDataService.Accounts.GetAll().Select(p => p.Id).ToArray();
-
-            var respondentsIdsCount = accountIds.Length;
-
-            var paymentsCountToAdd = 15 - paymentsCount;
+            const int PAYMENTS = 15;
+            const int MIN_PROTECTED_PAYMENTS = 3;
+            const int MAX_PROTECTED_PAYMENTS = 7;
 
             var rnd = new Random();
 
+            _paymentDataService.Respondents.GetAll().ToList();
+
+            var accounts = _paymentDataService.Accounts.GetAll().ToList();
+
+            var accountIdsLength = accounts.Count();
+
+            var payments =
+                _paymentDataService.Payments
+                    .GetAll()
+                    .Where(p => p.UserId == userId && p.CMS == null)
+                    .ToList();
+
+
+            var paymentsCountToAdd = PAYMENTS - payments.Count();
+            var protectedPayments = payments.Count(x => x.Account.Respondent.Protected);
+
+            var list = new List<Payment>();
+
             for (var i = 0; i < paymentsCountToAdd; i++)
             {
-                var respondentIndex = rnd.Next(0, respondentsIdsCount - 1);
+                var accountIndex = rnd.Next(0, accountIdsLength - 1);
 
                 var amount = rnd.Next(2500, 10000);
 
-                var respondentId = accountIds[respondentIndex];
+                var account = accounts[accountIndex];
+
+                if (protectedPayments < MIN_PROTECTED_PAYMENTS && !account.Respondent.Protected)
+                {
+                    i--;
+                    continue;
+                }
+
+                if (account.Respondent.Protected)
+                {
+                    protectedPayments++;
+                }
+
+                if (protectedPayments > MAX_PROTECTED_PAYMENTS && account.Respondent.Protected)
+                {
+                    i--;
+                    continue;
+                }
 
                 var payment = new Payment
                 {
                     UserId = userId,
-                    AccountId = respondentId,
+                    AccountId = account.Id,
                     PaymentDate = DateTime.Now,
                     Amount = amount,
                 };
 
-                _paymentDataService.Payments.Add(payment);
-                
+                list.Add(payment);
             }
-            
-            
+
+            var paymentsArray = list.OrderBy(x => rnd.Next()).ToArray();
+
+            _paymentDataService.Payments.AddRange(paymentsArray);
+
             _dbTransactionService.Commit();
         }
 

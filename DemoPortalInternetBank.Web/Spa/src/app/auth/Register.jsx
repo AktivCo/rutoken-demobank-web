@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import withOperation from '../withOperation';
 
 import registerAction from '../actions/register';
-import PinModal from './PinModal';
-import ChangePinModal from './ChangePinModal';
 
+import ChangePinModal from './ChangePinModal';
 import RegisterError from './RegisterError';
 import Loading from './LoadingCertificates';
+import PinModal from './PinModal';
 
 
 class Register extends React.Component {
@@ -19,33 +19,37 @@ class Register extends React.Component {
         this.setState({ [id]: value });
     }
 
-    render() {
+    onSubmit = (e) => {
+        e.preventDefault();
         const { CURRENT_DEVICE_ID, register } = this.props;
         const { commonName } = this.state;
 
+        register(CURRENT_DEVICE_ID, commonName);
+    }
+
+    render() {
         return (
             <div className="info_container">
                 <div className="certificatecard_certificatelist">
                     <p>На Рутокене пока нет сертификатов </p>
-                    <div className="certificatelist_certificate">
-                        <div className="certificate_body">
-                            <div className="certificate_info m-auto">
-                                <p>Для регистрации и выпуска демонстрационного сертификата, представьтесь</p>
-                                <div className="mt-3">
-                                    <input id="commonName" type="text" onChange={this.onChange} />
+                    <form id="register-form" className="w-100" onSubmit={this.onSubmit}>
+                        <div className="certificatelist_certificate">
+                            <div className="certificate_body">
+                                <div className="certificate_info m-auto">
+                                    <p>Для регистрации и выпуска демонстрационного сертификата, представьтесь</p>
+                                    <div className="mt-3">
+                                        <input id="commonName" type="text" onChange={this.onChange} autoFocus />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <div className="mt-2">
-                        <button
-                            type="button"
-                            className="pl-2 pr-2"
-                            onClick={() => register(CURRENT_DEVICE_ID, commonName)}
-                        >
+                        <button form="register-form" type="submit" className="pl-2 pr-2">
                             Зарегистрироваться
                         </button>
                     </div>
+
                 </div>
             </div>
         );

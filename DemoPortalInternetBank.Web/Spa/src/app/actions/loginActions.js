@@ -3,6 +3,31 @@ import PluginError from 'rutoken-plugin-bootstrap/pluginError';
 
 import { operationStart, operationFinished, operationError } from './operations';
 
+const handleIncorrectPin = (deviceId, err) => (dispatch) => {
+    let sequense = Promise.resolve();
+
+    sequense = sequense.then(() => Plugin.getDeviceInfo(deviceId, Plugin.TOKEN_INFO_PINS_INFO));
+
+    sequense = sequense.then((retries) => {
+        const pinRetriesLeft = retries.retriesLeft;
+
+        let x = 'ок';
+
+        if (pinRetriesLeft < 5 || pinRetriesLeft > 20) {
+            const last = pinRetriesLeft % 10;
+            if (last === 1) x = 'ка';
+            if (last > 1 && last < 5) x = 'ки';
+        }
+
+        const error = { ...err, description: `${err.description}. Осталось ${pinRetriesLeft} попыт${x}.` };
+        dispatch(operationError('login', error));
+
+        throw error;
+    });
+
+    return sequense;
+};
+
 const logout = (deviceId, password) => (dispatch) => {
     let sequense = Promise.resolve();
 
@@ -32,6 +57,10 @@ const login = (deviceId, password) => (dispatch) => {
     sequense = sequense.catch((err) => {
         if (err instanceof PluginError && err.code === Plugin.errorCodes.ALREADY_LOGGED_IN) {
             return logout(deviceId, password)(dispatch);
+        }
+
+        if (err instanceof PluginError && err.code === Plugin.errorCodes.PIN_INCORRECT) {
+            return handleIncorrectPin(deviceId, err)(dispatch);
         }
 
         dispatch(operationError('login', err));

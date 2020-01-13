@@ -44,6 +44,8 @@ namespace DemoPortalInternetBank.Domain.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("BIK");
+
                     b.Property<string>("CheckingAccount");
 
                     b.Property<string>("Name");
@@ -87,6 +89,8 @@ namespace DemoPortalInternetBank.Domain.Migrations
                     b.Property<string>("Kpp");
 
                     b.Property<string>("Name");
+
+                    b.Property<bool>("Protected");
 
                     b.HasKey("Id");
 

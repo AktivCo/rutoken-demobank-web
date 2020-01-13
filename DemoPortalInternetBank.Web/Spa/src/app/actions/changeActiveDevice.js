@@ -54,7 +54,6 @@ const changeCurrentDeviceId = (deviceId) => (dispatch, getState) => {
 
     sequense = sequense.then((certificates) => {
         const crts = certificates.filter((fl) => fl.extensions && fl.extensions.extKeyUsage && fl.extensions.extKeyUsage.includes('1.1.1.1.1.1.2'));
-        console.log(crts);
         dispatch(pluginSetCertificates(deviceId, crts));
     });
 

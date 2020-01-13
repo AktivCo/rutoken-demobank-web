@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DemoPortalInternetBank.Domain.Migrations
 {
     [DbContext(typeof(EfDbContext))]
-    [Migration("20191206215251_Initial1")]
-    partial class Initial1
+    [Migration("20191225134001_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,8 @@ namespace DemoPortalInternetBank.Domain.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("BIK");
+
                     b.Property<string>("CheckingAccount");
 
                     b.Property<string>("Name");
@@ -60,19 +62,19 @@ namespace DemoPortalInternetBank.Domain.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AccountId");
+
                     b.Property<int>("Amount");
 
                     b.Property<string>("CMS");
 
                     b.Property<DateTime>("PaymentDate");
 
-                    b.Property<int>("RespondentId");
-
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RespondentId");
+                    b.HasIndex("AccountId");
 
                     b.HasIndex("UserId");
 
@@ -89,6 +91,8 @@ namespace DemoPortalInternetBank.Domain.Migrations
                     b.Property<string>("Kpp");
 
                     b.Property<string>("Name");
+
+                    b.Property<bool>("Protected");
 
                     b.HasKey("Id");
 
@@ -124,9 +128,9 @@ namespace DemoPortalInternetBank.Domain.Migrations
 
             modelBuilder.Entity("DemoPortalInternetBank.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("DemoPortalInternetBank.Domain.Entities.Respondent", "Respondent")
+                    b.HasOne("DemoPortalInternetBank.Domain.Entities.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("RespondentId")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("DemoPortalInternetBank.Domain.Entities.User", "User")

@@ -8,7 +8,7 @@ const markCurrentCert = (certs) => {
     /* eslint-disable no-confusing-arrow */
     return certs
         .map((cert) => ({ ...cert, isCurrent: cert.certId === currentCert }))
-        .sort((f) => f.isCurrent ? 0 : 1);
+        .sort((f) => f.isCurrent ? -1 : 1);
 };
 
 export { saveCurrentCert, markCurrentCert };

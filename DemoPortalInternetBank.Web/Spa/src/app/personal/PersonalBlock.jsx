@@ -21,6 +21,11 @@ const PersonalBlock = ({ element, isSelected, onSelect }) => (
         <span className="light mt-0">
             №&nbsp;
             {element.id}
+            {
+                element.account.respondent.protected && (
+                    <span className="confirm">Требующий проверки</span>
+                )
+            }
         </span>
         <p>
             {`Cчет № ${element.id} от ${element.account.respondent.name}`}

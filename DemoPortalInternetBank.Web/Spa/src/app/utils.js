@@ -29,6 +29,21 @@ const formatMoney = (num) => {
     return `${resultStr} ₽`;
 };
 
+const formatDate = (stringDate) => {
+    const date = new Date(stringDate);
+    const yyyy = date.getFullYear();
 
-/* eslint-disable-next-line import/prefer-default-export */
-export { formatMoney };
+    let dd = date.getDate();
+    let mm = date.getMonth() + 1;
+
+    if (dd < 10) {
+        dd = `0${dd}`;
+    }
+    if (mm < 10) {
+        mm = `0${mm}`;
+    }
+    return `${dd}.${mm}.${yyyy}`;
+};
+
+
+export { formatMoney, formatDate };

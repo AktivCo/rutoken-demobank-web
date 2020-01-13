@@ -6,6 +6,6 @@ namespace DemoPortalInternetBank.Domain.Entities
         public string Name { get; set; }
         public string Inn { get; set; }
         public string Kpp { get; set; }
-
+        public bool Protected { get; set; }
     }
 }

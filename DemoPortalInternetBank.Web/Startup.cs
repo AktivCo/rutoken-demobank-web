@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using DemoPortalInternetBank.Domain;
 using DemoPortalInternetBank.Domain.Interfaces;
@@ -14,9 +14,8 @@ namespace DemoPortalInternetBank.Web
 {
     public class Startup
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
-        public IConfiguration Configuration { get; }
         public Startup()
         {
             _configuration = new ConfigurationBuilder()
@@ -32,9 +31,9 @@ namespace DemoPortalInternetBank.Web
             services.AddSession(options =>
             {
                 options.CookieName = ".DemoBank.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(3600);
+                options.IdleTimeout = TimeSpan.FromSeconds(600);
             });
-            
+
             services
                 .AddDbContext<EfDbContext>(config =>
                     config.UseNpgsql(_configuration.GetConnectionString("Default")));
@@ -46,7 +45,10 @@ namespace DemoPortalInternetBank.Web
 
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
+                .AddCookie(options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromSeconds(60);
+                });
 
             services.AddMvc();
         }

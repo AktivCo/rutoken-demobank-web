@@ -62,7 +62,7 @@ const NoPlugin = (error) => (
         <div className="main__wrapper main__settings d-flex flex-column justify-content-start align-items-start p-2">
             <div className="aboutservice w-100 d-flex flex-column justify-content-center align-items-center">
                 <span className="aboutservice__title mb-1 w-100">
-                    Для работы с центром сертификации Рутокен вам понадобится
+                    Для работы в Демобанке вам понадобятся
                 </span>
             </div>
 

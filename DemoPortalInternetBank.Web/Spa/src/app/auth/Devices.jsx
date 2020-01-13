@@ -40,7 +40,7 @@ class Devices extends React.Component {
         return (
             <div className="main">
                 <div className="main_title">
-                    <p>Вход на сайт по сертификату</p>
+                    <p>Вход в Демобанк по сертификату</p>
                 </div>
                 <div className="main_device">
                     <ul className="device_container">

@@ -11,6 +11,8 @@ import { generateSignature as signAction } from '../actions/sign';
 import saveAction from '../actions/fileActions';
 
 import PersonalSuccessSignModal from './PersonalSuccessSignModal';
+import Button from '../controls/Button';
+
 
 const PersonalBlockModal = ({ modalState, sign, save }) => (
     <div className="personal-payment-info">
@@ -63,7 +65,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
                 Счет №
             </div>
             <div className="personal-payment-info--value">
-                {modalState.account.accountNumber}
+                {modalState.account.bank.checkingAccount}
             </div>
         </div>
 
@@ -106,9 +108,13 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
             !modalState.cms && (
 
                 <div className="mt-2">
-                    <button type="button" className="btn" onClick={() => sign(modalState)}>
+                    <Button type="button" className="btn" onClick={() => sign(modalState)}>
                         Подписать и отправить
-                    </button>
+                        <small>
+                            платежку на сумму&nbsp;
+                            {formatMoney(modalState.amount)}
+                        </small>
+                    </Button>
                 </div>
             )
         }

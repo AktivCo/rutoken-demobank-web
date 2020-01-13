@@ -8,7 +8,6 @@ import {
 }
     from '../actions/uiActions';
 
-
 import { formatMoney } from '../utils';
 import PERSONAL_VIEW_STATES from '../personalViewStates';
 
@@ -49,7 +48,7 @@ const mapActionsToProps = (dispatch) =>
 
 
 PersonalSuccessSignModal.propTypes = {
-    data: PropTypes.func.isRequired,
+    data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     navigate: PropTypes.func.isRequired,
 };
 

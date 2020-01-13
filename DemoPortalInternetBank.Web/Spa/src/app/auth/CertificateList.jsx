@@ -52,6 +52,7 @@ class CertificateList extends React.Component {
                         this.renderCerts()
                     }
                     <div className="mt-2">
+
                         <button
                             type="button"
                             className="pl-2 pr-2"
