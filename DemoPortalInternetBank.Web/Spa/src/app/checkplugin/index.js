@@ -7,7 +7,7 @@ import {
     NoInstalledPluginError,
     NoSupportBrowserVersionError,
     NoSupportPluginVersionError,
-} from 'rutoken-plugin-bootstrap/supportError';
+} from '@aktivco-it/rutoken-plugin-bootstrap/src/supportError';
 
 import IncorrectLoad from './IncorrectLoad';
 import NoSupportPlatform from './NoSupportPlatform';

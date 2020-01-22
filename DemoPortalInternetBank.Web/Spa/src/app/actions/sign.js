@@ -1,4 +1,4 @@
-import Plugin from 'rutoken-plugin-bootstrap';
+import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
 import axios from 'axios';
 
 import { showModal } from './uiActions';

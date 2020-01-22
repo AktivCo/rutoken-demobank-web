@@ -1,5 +1,5 @@
-import Plugin from 'rutoken-plugin-bootstrap';
-import PluginError from 'rutoken-plugin-bootstrap/pluginError';
+import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
+import PluginError from '@aktivco-it/rutoken-plugin-bootstrap/src/pluginError';
 import axios from 'axios';
 
 import changeCurrentDeviceId from './changeActiveDevice';
