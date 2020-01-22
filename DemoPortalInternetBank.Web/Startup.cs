@@ -47,7 +47,7 @@ namespace DemoPortalInternetBank.Web
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.ExpireTimeSpan = TimeSpan.FromSeconds(60);
+                    options.ExpireTimeSpan = TimeSpan.FromSeconds(600);
                 });
 
             services.AddMvc();
