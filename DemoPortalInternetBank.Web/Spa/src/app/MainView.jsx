@@ -1,17 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { connect } from 'react-redux';
 
-import loadPluginAction from './actions/loadPlugin';
+import { loadPlugin as loadPluginAction } from './actions/loadPlugin';
+import { setLoginState as setLoginStateAction } from './actions/userInfoActions';
+
 import CheckPlugin from './checkplugin';
 import NoDevices from './NoDevices';
-
-
-import Devices from './Devices';
+import CheckLogin from './CheckLogin';
 
 class MainView extends React.Component {
     componentDidMount() {
-        const { loadPlugin } = this.props;
+        const { loadPlugin, setLoginState } = this.props;
+
+        axios.interceptors.response.use(
+            (response) =>
+                response,
+            (error) => {
+                if (error.response.status === 401) {
+                    setLoginState();
+                }
+                return Promise.reject();
+            },
+        );
+
         loadPlugin();
     }
 
@@ -41,7 +54,7 @@ class MainView extends React.Component {
             return <NoDevices />;
         }
 
-        return <Devices />;
+        return <CheckLogin />;
     }
 }
 
@@ -52,13 +65,17 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = (dispatch) => (
-    { loadPlugin: () => dispatch(loadPluginAction()) }
+    {
+        loadPlugin: () => dispatch(loadPluginAction()),
+        setLoginState: () => dispatch(setLoginStateAction(false)),
+    }
 );
 
 MainView.propTypes = {
     PLUGIN_LOAD_ERROR: PropTypes.shape(),
     DEVICES: PropTypes.shape(),
     loadPlugin: PropTypes.func.isRequired,
+    setLoginState: PropTypes.func.isRequired,
 };
 
 MainView.defaultProps = {

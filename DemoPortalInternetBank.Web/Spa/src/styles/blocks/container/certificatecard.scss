@@ -18,7 +18,6 @@
     text-align: center;
 }
 
-
 .certificatelist_certificate {
     margin-bottom: 20px;
     border-radius: 6px;
@@ -74,13 +73,13 @@
     justify-content: space-between;
     flex-direction: row;
     padding-bottom: 20px;
-  }
+}
   
-  .info_organization_subject {
+.info_organization_subject {
     width: 40%;
     word-wrap: break-word;
     word-break: break-all;
-  }
+}
 
 .info_owner {
     font-weight: bold;
@@ -115,18 +114,10 @@
         line-height: normal;
         letter-spacing: 0.3px;
         text-align: center;
-        color: #444444;
         height: 21px;
-        margin: 0rem auto 1.5rem;
     }
 
     &.description {
-        text-align: center;
-       
-        & p {
-            margin-top: 40px;
-        }
-
         & span {
             margin-top: 40px;
             display: block;
@@ -150,7 +141,7 @@
 
         & button {
             margin-top: 40px;
-            padding: 1rem 4rem; 
+            padding: 1rem 4rem;
             object-fit: contain;
             border-radius: 6px;
             background-color: #e7f1f3;

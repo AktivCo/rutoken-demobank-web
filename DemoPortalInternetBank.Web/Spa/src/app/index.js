@@ -16,7 +16,7 @@ import App from './App';
 addLocaleData(locale);
 
 const mainDiv = document.createElement('DIV');
-mainDiv.setAttribute('style', 'height:100%;');
+// mainDiv.setAttribute('style', 'height:100%;');
 
 
 const store = createStore(

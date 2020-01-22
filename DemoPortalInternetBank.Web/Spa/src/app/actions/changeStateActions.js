@@ -22,6 +22,11 @@ const pluginSetCertificates = (deviceId, certificates) => ({
     payload: { [deviceId]: certificates },
 });
 
+const pluginResetCertificates = (deviceId) => ({
+    type: 'PLUGIN_RESET_CERTIFICATES',
+    payload: { [deviceId]: null },
+});
+
 
 export {
     pluginLoadError,
@@ -29,4 +34,5 @@ export {
     pluginDevicesFetchEnd,
     pluginSetCurrentDeviceId,
     pluginSetCertificates,
+    pluginResetCertificates,
 };

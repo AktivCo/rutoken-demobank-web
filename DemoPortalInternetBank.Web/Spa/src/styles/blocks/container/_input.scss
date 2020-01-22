@@ -1,0 +1,57 @@
+input {
+    width: 100%;
+    height: 45px;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 0 15px;    
+    padding-right: 45px;
+    border-color: transparent;
+
+    &:focus {
+        outline: none !important;
+    }    
+} 
+
+button {
+    width: 100%;
+    height: 45px;
+    border-radius: 6px;
+    background-color: #117788;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.2px;
+    text-align: center;
+    color: white;
+    border-width: 0;
+    cursor: pointer;
+
+    &:focus {
+        outline: none !important;
+    }
+
+    &:disabled {
+        background-color: #999999;
+    }
+}
+
+
+.input-img__eye {
+    position: absolute;
+    width: 2rem;
+    height: 1.2rem;
+    top: 14px;
+    right: 0;
+    margin-right: 10px;
+    background: url('./images/show-off.png') no-repeat center center;
+    cursor: pointer;
+    
+    &.active {
+        background: url('./images/show-on.png') no-repeat center center; 
+    }
+}
+

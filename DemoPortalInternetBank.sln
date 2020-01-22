@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoPortalInternetBank.Pki"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoPortalInternetBank.Web", "DemoPortalInternetBank.Web\DemoPortalInternetBank.Web.csproj", "{E18BDB0A-EEA0-4A42-A4F5-F52825DED5A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoPortalInternetBank.Domain", "DemoPortalInternetBank.Domain\DemoPortalInternetBank.Domain.csproj", "{D631A88B-60D1-49C3-98DB-5C7E59F13D49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoPortalInternetBank.Migrator", "DemoPortalInternetBank.Migrator\DemoPortalInternetBank.Migrator.csproj", "{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{E18BDB0A-EEA0-4A42-A4F5-F52825DED5A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E18BDB0A-EEA0-4A42-A4F5-F52825DED5A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E18BDB0A-EEA0-4A42-A4F5-F52825DED5A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D631A88B-60D1-49C3-98DB-5C7E59F13D49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D631A88B-60D1-49C3-98DB-5C7E59F13D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D631A88B-60D1-49C3-98DB-5C7E59F13D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D631A88B-60D1-49C3-98DB-5C7E59F13D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

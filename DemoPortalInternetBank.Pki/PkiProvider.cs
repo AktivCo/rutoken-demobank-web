@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
+using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.CryptoPro;
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Cms;
@@ -14,8 +17,10 @@ using Org.BouncyCastle.Math;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Utilities;
 using Org.BouncyCastle.X509;
 using Org.BouncyCastle.X509.Extension;
+using X509Certificate = Org.BouncyCastle.X509.X509Certificate;
 
 
 namespace DemoPortalInternetBank.Pki
@@ -24,9 +29,14 @@ namespace DemoPortalInternetBank.Pki
     {
         public static (AsymmetricCipherKeyPair, X509Certificate) GenerateSelfSigned()
         {
-            var startDate = DateTime.Now; // time from which certificate is valid
-            var expiryDate = DateTime.Now; // time after which certificate is not valid
-            var serialNumber = new BigInteger("1234567890"); // serial number for certificate
+            var startDate = DateTime.Now;
+            var expiryDate = DateTime.Now.AddYears(10);
+
+            var serialNumber = BigIntegers.CreateRandomInRange(
+                BigInteger.ValueOf(2).Pow(63),
+                BigInteger.ValueOf(2).Pow(64),
+                new SecureRandom()
+            );
 
             var oid = ECGost3410NamedCurves.GetOid("Tc26-Gost-3410-12-256-paramSetA");
             var param = new ECKeyGenerationParameters(oid, new SecureRandom());
@@ -38,7 +48,6 @@ namespace DemoPortalInternetBank.Pki
 
             var certGen = new X509V1CertificateGenerator();
 
-            
             var dnName = new X509Name("CN=Test CA Certificate");
 
             certGen.SetSerialNumber(serialNumber);
@@ -55,7 +64,6 @@ namespace DemoPortalInternetBank.Pki
             return (keyPair, certificate);
         }
 
-
         public static X509Certificate IssueCertificate(string pkcs10Request)
         {
             Pkcs10CertificationRequest request;
@@ -71,11 +79,16 @@ namespace DemoPortalInternetBank.Pki
             var caKey = (AsymmetricKeyParameter) RootCertificates.GetPrivateKeyGOST();
 
 
-            DateTime startDate = DateTime.Now;
-            DateTime expiryDate = DateTime.Now;
-            BigInteger serialNumber = new BigInteger("1234567890"); // serial number for certificate
+            var startDate = DateTime.Now;
+            var expiryDate = DateTime.Now.AddYears(1);
 
-            X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
+            var serialNumber = BigIntegers.CreateRandomInRange(
+                BigInteger.ValueOf(2).Pow(63),
+                BigInteger.ValueOf(2).Pow(64),
+                new SecureRandom()
+            );
+
+            var certGen = new X509V3CertificateGenerator();
 
             var requestInfo = request.GetCertificationRequestInfo();
 
@@ -93,6 +106,14 @@ namespace DemoPortalInternetBank.Pki
             certGen.AddExtension(X509Extensions.SubjectKeyIdentifier, false,
                 new SubjectKeyIdentifierStructure(request.GetPublicKey()));
 
+            certGen.AddExtension(
+                X509Extensions.ExtendedKeyUsage,
+                true,
+                new ExtendedKeyUsage(new[]
+                {
+                    new DerObjectIdentifier("1.1.1.1.1.1.2")
+                })
+            );
 
             var signer = new GostSignerFactory(caKey);
 
@@ -101,19 +122,39 @@ namespace DemoPortalInternetBank.Pki
             return certificate;
         }
 
-
-        public static bool VerifySignature(string signature, string stringToHash)
+        private static void CheckCertificateValidity(X509Certificate cert)
         {
-            var base64Content = signature.Replace("-----BEGIN CMS-----", "").Replace("-----END CMS-----", "")
-                .Replace("\r", "").Replace("\n", "");
+            cert.CheckValidity();
 
-            var decodedContent = Convert.FromBase64String(base64Content);
+            var caCert = (X509Certificate) RootCertificates.GetRootCertGOST();
 
-            var data = new CmsSignedData(decodedContent);
+            var gst = new Gost3410DigestSigner(new ECGost3410Signer(), new Gost3411_2012_256Digest());
 
-            var store = data.GetCertificates("COLLECTION");
+            gst.Init(false, caCert.GetPublicKey());
 
-            var signers = data.GetSignerInfos();
+            var tbsCertificate = cert.GetTbsCertificate();
+
+            gst.BlockUpdate(tbsCertificate, 0, tbsCertificate.Length);
+
+            var t = gst.VerifySignature(cert.GetSignature());
+
+            if (!t) throw new CryptographicException("Cannot verify signature");
+        }
+
+        public static byte[] VerifySignature(CmsSignedData cms)
+        {
+            var store = cms.GetCertificates("COLLECTION");
+
+            var signers = cms.GetSignerInfos();
+
+            byte[] arr;
+
+            using (var stream = new MemoryStream())
+            {
+                cms.SignedContent.Write(stream);
+
+                arr = stream.ToArray();
+            }
 
             foreach (var sig in signers.GetSigners())
             {
@@ -123,21 +164,66 @@ namespace DemoPortalInternetBank.Pki
                 {
                     var crt = (X509Certificate) st;
 
+                    CheckCertificateValidity(crt);
+
                     var gst = new Gost3410DigestSigner(new ECGost3410Signer(), new Gost3411_2012_256Digest());
 
                     gst.Init(false, crt.GetPublicKey());
-
-                    var arr = stringToHash.Select(Convert.ToByte).ToArray();
 
                     gst.BlockUpdate(arr, 0, arr.Length);
 
                     var t = gst.VerifySignature(signer.GetSignature());
 
-                    if (!t) return false;
+                    if (!t) throw new CryptographicException("Cannot verify signature");
                 }
             }
 
-            return true;
+            return arr;
+        }
+
+        public static Queue<string> GetSignersCommonNames(CmsSignedData cms)
+        {
+            var lst = new Queue<string>();
+
+            var store = cms.GetCertificates("COLLECTION");
+
+            var signers = cms.GetSignerInfos();
+
+            foreach (var sig in signers.GetSigners())
+            {
+                var signer = (SignerInformation) sig;
+
+                foreach (var st in store.GetMatches(signer.SignerID))
+                {
+                    var crt = (X509Certificate) st;
+
+                    var dn = crt.SubjectDN.ToString();
+
+                    var regex = new Regex(@"^CN=|,\S.*");
+
+                    var commonName = regex.Replace(dn, "");
+
+                    lst.Enqueue(commonName);
+                }
+            }
+
+            return lst;
+        }
+
+        public static CmsSignedData GetCMS(string signature)
+        {
+            var base64Content =
+                signature
+                    .Replace("-----BEGIN CMS-----", "")
+                    .Replace("-----END CMS-----", "")
+                    .Replace("\r", "")
+                    .Replace("\n", "");
+
+            var decodedContent = Convert.FromBase64String(base64Content);
+
+            var data = new CmsSignedData(decodedContent);
+
+            return data;
         }
 
         public static string GenerateRandom()

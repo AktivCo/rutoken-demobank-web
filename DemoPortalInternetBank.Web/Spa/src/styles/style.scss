@@ -14,9 +14,7 @@
 
 
 @import "blocks/container/_container.scss";
-
 @import "blocks/container/certificatecard.scss";
-
 
 @import "blocks/container/header/_header.scss";
 
@@ -24,7 +22,15 @@
 
 @import "blocks/container/devices.scss";
 
+@import "blocks/container/modal.scss";
+
+@import "blocks/container/_input.scss";
+
+@import "blocks/container/main/personal";
+
 * {
+
+    box-sizing: border-box;
     font-family: $font-family;
 }
 
@@ -36,7 +42,8 @@ html, body {
 body {
     overflow-y: scroll;
     margin: 0;
-    // background-color: $main-second-background-color;
+    background-color: $main-second-background-color;
+    font: 400 14px 'Segoe UI', 'Open Sans' !important;
 }
 
 html {
@@ -44,3 +51,4 @@ html {
     font-family: 'Segoe UI';
     font-size: 14px;
 }
+

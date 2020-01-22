@@ -1,8 +1,4 @@
 .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 660px;
     margin: 0 auto;
 
@@ -21,7 +17,7 @@
     line-height: 1.25;
     letter-spacing: 0.5px;
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 20px;
 }
 
 .create__bg {
@@ -47,7 +43,7 @@
     }
 }
 
-button {
+button, a {
     &:hover {
         cursor: pointer;
     }
@@ -88,4 +84,13 @@ button {
         background: $selected-device-info-background-color;
         display: inline-block;
     }
+}
+
+
+.text-danger {
+    color: red;
+}
+
+.text-center {
+    text-align: center;
 }

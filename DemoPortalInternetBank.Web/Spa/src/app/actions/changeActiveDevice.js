@@ -5,6 +5,7 @@ import {
     pluginSetCertificates,
 } from './changeStateActions';
 
+import { markCurrentCert } from '../certificatesStorage';
 
 const changeCurrentDeviceId = (deviceId) => (dispatch, getState) => {
     let sequense = Promise.resolve();
@@ -29,13 +30,20 @@ const changeCurrentDeviceId = (deviceId) => (dispatch, getState) => {
     });
 
     sequense = sequense.then((certs) => {
-        const certificateIds = [].concat([], ...certs);
-        const certificates = certificateIds.map((certId) =>
+        const certificates = [].concat([], ...certs).map((certId) => ({ certId: certId }));
+        return certificates;
+    });
+
+    sequense = sequense.then((certs) => markCurrentCert(certs));
+
+    sequense = sequense.then((certs) => {
+        const certificates = certs.map((cert) =>
             Plugin
-                .parseCertificate(deviceId, certId).then((certificate) => (
+                .parseCertificate(deviceId, cert.certId).then((certificate) => (
                     {
+                        ...cert,
                         ...certificate,
-                        certId: certId,
+                        certId: cert.certId,
                         issuer: Object.assign({}, ...certificate.issuer.map((is) => ({ [is.rdn]: is.value }))),
                         subject: Object.assign({}, ...certificate.subject.map((is) => ({ [is.rdn]: is.value }))),
                     }
@@ -45,7 +53,8 @@ const changeCurrentDeviceId = (deviceId) => (dispatch, getState) => {
     });
 
     sequense = sequense.then((certificates) => {
-        dispatch(pluginSetCertificates(deviceId, certificates));
+        const crts = certificates.filter((fl) => fl.extensions && fl.extensions.extKeyUsage && fl.extensions.extKeyUsage.includes('1.1.1.1.1.1.2'));
+        dispatch(pluginSetCertificates(deviceId, crts));
     });
 
     return sequense;

@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { FormattedDate } from 'react-intl';
 import CertificateInfo from './CertificatesInfo';
 
-const CertificateCard = ({ certificate }) => (
-    <div className="certificatelist_certificate" role="button" tabIndex={0}>
+
+import { signin as signinAction } from '../actions/signin';
+import PinModal from './PinModal';
+import ChangePinModal from './ChangePinModal';
+
+const CertificateCard = ({ CURRENT_DEVICE_ID, certificate, signin }) => (
+    <div
+        className="certificatelist_certificate"
+        role="button"
+        tabIndex={0}
+        onClick={() => signin(CURRENT_DEVICE_ID, certificate)}
+    >
         <div className="certificate_body">
             <div className="certificate_icon" />
             <div className="certificate_info">
@@ -36,5 +47,24 @@ const CertificateCard = ({ certificate }) => (
 
 CertificateCard.propTypes = { certificate: PropTypes.shape().isRequired };
 
+const mapStateToProps = (state) => (
+    { CURRENT_DEVICE_ID: state.CURRENT_DEVICE_ID }
+);
 
-export default CertificateCard;
+
+const mapActionsToProps = (dispatch) =>
+    (
+        {
+            signin: (deviceId, certificate) => dispatch(signinAction(deviceId, certificate, {
+                PinModal: PinModal,
+                ChangePinModal: ChangePinModal,
+            })),
+        }
+    );
+
+CertificateCard.propTypes = {
+    CURRENT_DEVICE_ID: PropTypes.number.isRequired,
+    signin: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(CertificateCard);

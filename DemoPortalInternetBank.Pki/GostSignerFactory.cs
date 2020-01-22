@@ -24,7 +24,7 @@ namespace DemoPortalInternetBank.Pki
         public IStreamCalculator CreateCalculator()
         {
             var param = new ParametersWithRandom(privateKey, new SecureRandom());
-            var gst = new Gost3410DigestSigner(new ECGost3410Signer(), new Gost3411Digest());
+            var gst = new Gost3410DigestSigner(new ECGost3410Signer(), new Gost3411_2012_256Digest());
 
             gst.Init(true, param);
 
