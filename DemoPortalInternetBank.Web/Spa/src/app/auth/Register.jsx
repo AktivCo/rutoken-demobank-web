@@ -45,11 +45,10 @@ class Register extends React.Component {
                         </div>
                     </form>
                     <div className="mt-2">
-                        <button form="register-form" type="submit" className="pl-2 pr-2">
+                        <button form="register-form" type="submit" onClick={(e) => this.onSubmit(e)} className="pl-2 pr-2">
                             Зарегистрироваться
                         </button>
                     </div>
-
                 </div>
             </div>
         );

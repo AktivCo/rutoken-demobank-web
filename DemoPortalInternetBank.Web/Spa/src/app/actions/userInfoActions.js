@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-import { setLoginState as setLoginStateAction, hideModal } from './uiActions';
-import { operationFinished } from './operations';
+import { setLoginState as setLoginStateAction } from './uiActions';
 
 
 const checkLoginState = () => (dispatch) => {
@@ -37,10 +36,13 @@ const setUserCertificate = () => (dispatch, getState) => {
 };
 
 
-const setLoginState = (isSignedIn) => (dispatch) => {
+const setLoginState = (isSignedIn) => (dispatch, getState) => {
     if (!isSignedIn) {
-        dispatch(hideModal());
-        dispatch(operationFinished());
+        const { LOGIN_STATE } = getState();
+        if (LOGIN_STATE) {
+            window.location.reload();
+            return;
+        }
     }
     dispatch(setLoginStateAction(isSignedIn));
 };

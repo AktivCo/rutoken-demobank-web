@@ -14,7 +14,20 @@ class MainView extends React.Component {
     componentDidMount() {
         const { loadPlugin, setLoginState } = this.props;
 
-        axios.interceptors.response.use(
+        this.requestInterceptor = axios.interceptors.request.use(
+            (config) => {
+                // for IE
+                const headers = {
+                    ...config.headers,
+                    Pragma: 'no-cache',
+                    'Cache-Control': 'no-cache, no-store',
+                };
+                return { ...config, headers: headers };
+            },
+            (error) => Promise.reject(error),
+        );
+
+        this.responseInterceptor = axios.interceptors.response.use(
             (response) =>
                 response,
             (error) => {
@@ -26,6 +39,11 @@ class MainView extends React.Component {
         );
 
         loadPlugin();
+    }
+
+    componentWillUnmount() {
+        axios.interceptors.request.eject(this.requestInterceptor);
+        axios.interceptors.request.eject(this.responseInterceptor);
     }
 
     render() {
