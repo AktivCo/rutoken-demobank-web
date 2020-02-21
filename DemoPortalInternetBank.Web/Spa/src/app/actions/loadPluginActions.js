@@ -1,3 +1,5 @@
+/** @module loadPluginActions */
+
 import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
 
 import {
@@ -7,6 +9,10 @@ import {
     pluginLoadError,
 } from './changeStateActions';
 
+/**
+ * Метод инициализации Рутокен Плагина.
+ * Получение списка подключенных устройств.
+ */
 const loadPlugin = () => (dispatch) => {
     let sequense = Plugin.init();
 

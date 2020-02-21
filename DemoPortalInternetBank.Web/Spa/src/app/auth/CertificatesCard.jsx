@@ -5,7 +5,7 @@ import { FormattedDate } from 'react-intl';
 import CertificateInfo from './CertificatesInfo';
 
 
-import { signin as signinAction } from '../actions/signin';
+import { signin as signinAction } from '../actions/signinActions';
 import PinModal from './PinModal';
 import ChangePinModal from './ChangePinModal';
 

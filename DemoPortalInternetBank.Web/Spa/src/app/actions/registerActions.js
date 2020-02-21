@@ -1,16 +1,25 @@
+/** @module registerActions */
+
 import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
 import PluginError from '@aktivco-it/rutoken-plugin-bootstrap/src/pluginError';
 import axios from 'axios';
 
-import changeCurrentDeviceId from './changeActiveDevice';
+import changeCurrentDeviceId from './changeCurrentDeviceActions';
 
 import { pluginResetCertificates } from './changeStateActions';
 import { showModal } from './uiActions';
 import { operationStart, operationError, operationSuccess } from './operations';
 
-import { signinAction } from './signin';
+import { signinAction } from './signinActions';
 
-const reg = (deviceId, commonName) => (dispatch) => {
+/**
+ * Метод регистрации нового пользователя в системе Демобанк.
+ * Создание Pkcs10 запроса на сертификат, отпправка запроса на BackEnd,
+ * сохранение полученного сертификата на устройстве.
+ * @param {number} deviceId - Id подключенного устройства.
+ * @param {string} commonName - Имя нового пользователя.
+ */
+const createPkcs10AndCompleteRegister = (deviceId, commonName) => (dispatch) => {
     dispatch(operationStart('register'));
 
     const algorithm = Plugin.keyAlgorithms[Plugin.PUBLIC_KEY_ALGORITHM_GOST3410_2012_256];
@@ -126,6 +135,12 @@ const reg = (deviceId, commonName) => (dispatch) => {
 };
 
 
+/**
+ * Метод начала регистрации нового пользователя в системе Демобанк.
+ * @param {number} deviceId - Id подключенного устройства.
+ * @param {string} commonName - Имя нового пользователя.
+ * @param {string} sequenceModals - Модальные окна обработки ввода PIN-кода при регистрации.
+ */
 const register = (deviceId, commonName, sequenceModals) => (dispatch) => {
     if (!commonName || commonName.length === 0) {
         dispatch(operationError('register', { description: 'Имя не может быть пустым' }));
@@ -154,7 +169,7 @@ const register = (deviceId, commonName, sequenceModals) => (dispatch) => {
         return promise;
     });
 
-    sequense = sequense.then(() => reg(deviceId, commonName)(dispatch));
+    sequense = sequense.then(() => createPkcs10AndCompleteRegister(deviceId, commonName)(dispatch));
 
     return sequense;
 };

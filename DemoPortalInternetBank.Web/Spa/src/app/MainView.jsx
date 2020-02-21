@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { loadPlugin as loadPluginAction } from './actions/loadPlugin';
+import { loadPlugin as loadPluginAction } from './actions/loadPluginActions';
 import { setLoginState as setLoginStateAction } from './actions/userInfoActions';
 
 import CheckPlugin from './checkplugin';

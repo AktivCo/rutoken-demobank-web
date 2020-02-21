@@ -1,3 +1,4 @@
+/** @module signPayments */
 import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
 import axios from 'axios';
 
@@ -25,6 +26,13 @@ const constructPinPadData = (payment) =>
     <N>Номер счета плательщика<V>0000005034613644136
     `;
 
+
+/**
+ * Метод формирования и подписи платежного поручения с использованием API Рутокен Плагина.
+ * Содержит вызов метода Рутокен Плагина sign.
+ * @param {number} payment - Объект платжного поручения.
+ * @param {string} state - Объект состояния системы.
+ */
 const makeSignature = (payment, state) => {
     let sequense = Promise.resolve();
 
@@ -48,6 +56,10 @@ const makeSignature = (payment, state) => {
     return sequense;
 };
 
+/**
+ * Метод подписи и сохранения платежного поручения.
+ * @param {number} payment - Объект платжного поручения.
+ */
 const makeSingleSignature = (payment) => (dispatch, getState) => {
     const state = getState();
     let sequense = Promise.resolve();

@@ -1,3 +1,5 @@
+/** @module changeCurrentDeviceActions */
+
 import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
 
 import {
@@ -7,7 +9,12 @@ import {
 
 import { markCurrentCert } from '../certificatesStorage';
 
-const changeCurrentDeviceId = (deviceId) => (dispatch, getState) => {
+/**
+ * Метод выбора текущего устройства.
+ * После выбора текущего устройства происходит опрос устройства и получение сертификатов.
+ * @param {number} deviceId - Id подключенного устройства.
+ */
+const changeCurrentDevIdAndGetCertificates = (deviceId) => (dispatch, getState) => {
     let sequense = Promise.resolve();
 
     sequense = sequense.then(() => {
@@ -60,4 +67,4 @@ const changeCurrentDeviceId = (deviceId) => (dispatch, getState) => {
     return sequense;
 };
 
-export default changeCurrentDeviceId;
+export default changeCurrentDevIdAndGetCertificates;

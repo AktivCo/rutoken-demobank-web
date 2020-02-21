@@ -1,3 +1,5 @@
+/** @module signinActions */
+
 import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
 import PluginError from '@aktivco-it/rutoken-plugin-bootstrap/src/pluginError';
 
@@ -10,6 +12,13 @@ import { checkLoginState } from './userInfoActions';
 import { saveCurrentCert } from '../certificatesStorage';
 
 
+/**
+ * Метод аутентификации пользователя в системе Демобанк.
+ * Получение случайного числа, подпись случайного числа, отправка полученной подписи на BackEnd.
+ * В случае успешной проверки подписи - обработка успешной аутентификации.
+ * @param {number} deviceId - Id подключенного устройства.
+ * @param {string} certificate - Объект пользовательского сертификата.
+ */
 const signinAction = (deviceId, certificate) => (dispatch) => {
     dispatch(operationStart('signin'));
 
@@ -57,6 +66,12 @@ const signinAction = (deviceId, certificate) => (dispatch) => {
 };
 
 
+/**
+ * Метод начала аутентификации пользователя в системе Демобанк.
+ * @param {number} deviceId - Id подключенного устройства.
+ * @param {string} certificate - Объект пользовательского сертификата.
+ * @param {string} sequenceModals - Модальные окна обработки ввода PIN-кода при аутентификации.
+ */
 const signin = (deviceId, certificate, sequenceModals) => (dispatch) => {
     let sequense = Promise.resolve();
 

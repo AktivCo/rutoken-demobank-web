@@ -59,3 +59,10 @@ dotnet restore && dotnet publish -c Release
 11. sudo docker exec -d demobank.aktivco.ru-dotnet bash -c "cd /app && dotnet DemoPortalInternetBank.Web.dll" (запуск приложения)
 12. http://localhost:88
 ```
+
+## Генерация документации SPA
+```
+1. cd DemoPortalInternetBank.Web/Spa && yarn && yarn build:doc (генерация документации SPA)
+2. Документация сгенерирована в папке DemoPortalInternetBank.Web/Spa/out
+3. Просмотр документации - index.html 
+```

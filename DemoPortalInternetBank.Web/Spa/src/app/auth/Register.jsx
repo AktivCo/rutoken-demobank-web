@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import withOperation from '../withOperation';
 
-import registerAction from '../actions/register';
+import registerAction from '../actions/registerActions';
 
 import ChangePinModal from './ChangePinModal';
 import RegisterError from './RegisterError';
