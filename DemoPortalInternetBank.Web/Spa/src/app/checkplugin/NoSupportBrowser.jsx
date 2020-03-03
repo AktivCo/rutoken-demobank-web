@@ -6,9 +6,9 @@ const NoSupportBrowser = (browserName, suppBrowsers) => (
         <div className="main__wrapper main__settings d-flex flex-column justify-content-start align-items-start p-2">
             <div className="aboutservice w-100 d-flex flex-column justify-content-center align-items-center">
                 <span className="aboutservice__title mb-1">
-                    Браузер
+                    Браузер&nbsp;
                     {browserName}
-                    не поддерживается Рутокен плагином
+                    &nbsp;не поддерживается Рутокен плагином
                 </span>
             </div>
             <div className="requirement inactive w-100 d-flex flex-column justify-content-start align-items-start mb-2">

@@ -18,7 +18,7 @@ const getExtensionDownloadLink = (browserName) => {
     case 'Yandex Browser':
         return 'https://chrome.google.com/webstore/detail/%D0%B0%D0%B4%D0%B0%D0%BF%D1%82%D0%B5%D1%80-%D1%80%D1%83%D1%82%D0%BE%D0%BA%D0%B5%D0%BD-%D0%BF%D0%BB%D0%B0%D0%B3%D0%B8%D0%BD/ohedcglhbbfdgaogjhcclacoccbagkjg';
     case 'Firefox':
-        return 'http://www.rutoken.ru/support/download/rutoken-plugin/';
+        return 'https://addons.mozilla.org/ru/firefox/addon/adapter-rutoken-plugin/';
     case 'Opera':
         return 'https://addons.opera.com/ru/extensions/details/adapter-rutoken-plagin/';
     case 'Microsoft Edge':
@@ -51,4 +51,17 @@ const getSupportedBrowserHref = (browser) => {
     }
 };
 
-export { getExtensionDownloadLink, getPluginDownloadLink, getSupportedBrowserHref };
+
+const getPluginDirectAppLink = (os) => {
+    switch (os) {
+    case 'Windows':
+        return 'https://download.rutoken.ru/Rutoken_Plugin/Current/Windows/RutokenPlugin.msi';
+    case 'macOS':
+        return 'https://download.rutoken.ru/Rutoken_Plugin/Current/macOS/RutokenPlugin.pkg';
+    case 'Linux':
+    default:
+        return 'https://www.rutoken.ru/support/download/rutoken-plugin/#linux';
+    }
+};
+
+export { getExtensionDownloadLink, getPluginDownloadLink, getSupportedBrowserHref, getPluginDirectAppLink };

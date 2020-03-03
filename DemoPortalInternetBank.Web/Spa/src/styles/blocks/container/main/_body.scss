@@ -5,6 +5,10 @@
     @import "settings/_settings.scss";
 }
 
+.white-transparent {
+    opacity: 0.1;
+}
+
 .main_title {
     display: flex;
     flex-direction: row;
@@ -47,6 +51,10 @@ button, a {
     &:hover {
         cursor: pointer;
     }
+}
+
+.d-block {
+    display: block;
 }
 
 .round-wrap {

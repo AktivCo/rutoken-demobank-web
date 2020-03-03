@@ -18,42 +18,40 @@ import NoPluginForOs from './NoPluginForOs';
 import NoPluginWithExtension from './NoPluginWithExtension';
 import NoSupportCurrentBrowserVersion from './NoSupportCurrentBrowserVersion';
 import NoSupportPluginVersion from './NoSupportPluginVersion';
+import { getPluginDirectAppLink } from './pluginDownloadLinks';
 
+
+const DownloadPlugin = (name) => {
+    const lastLoadedTime = new Date(localStorage.getItem('lastPluginLoaded'));
+    const dateDiffMinutes = !lastLoadedTime ? 0 : Math.floor((new Date() - lastLoadedTime) / (1000 * 60));
+
+    if (dateDiffMinutes > 60) {
+        window.location.href = getPluginDirectAppLink(name);
+        localStorage.setItem('lastPluginLoaded', new Date().toString());
+    }
+};
 
 const NoPluginForOsRender = (error) => {
     const { name } = error.os;
     const { name: browserName } = error.browser;
 
+    if (name !== 'Linux') {
+        DownloadPlugin(name);
+    }
+
     if (name === 'Windows') {
-        if (browserName === 'Firefox' || browserName === 'Internet Explorer') {
+        if (browserName === 'Internet Explorer') {
             const link = 'https://www.rutoken.ru/support/download/get/rtPlugin-win.html';
-            return NoPluginForOs(link);
+            return NoPluginForOs(link, false);
         }
         if (browserName === 'Microsoft Edge') {
             const link = 'https://www.microsoft.com/en-us/p/adapter-rutoken-plugin/9p4kb5pz2vvx';
-            return NoPluginForOs(link);
-        }
-    }
-
-    if (name === 'Linux') {
-        if (browserName === 'Firefox') {
-            const link = 'https://www.rutoken.ru/support/download/rutoken-plugin/';
-            return NoPluginForOs(link);
-        }
-    }
-
-    if (name === 'macOS') {
-        const link = 'https://www.rutoken.ru/support/download/get/rtPlugin-mac.html';
-        if (browserName === 'Firefox') {
             return NoPluginForOs(link, true);
-        }
-        if (browserName === 'Safari') {
-            return NoPluginForOs(link, false, error.browser.version.split('.')[0]);
         }
     }
 
     return (
-        <NoPluginWithExtension needExtension={error.needExtension} browserName={browserName} os={name} />
+        <NoPluginWithExtension browserName={browserName} os={name} />
     );
 };
 
