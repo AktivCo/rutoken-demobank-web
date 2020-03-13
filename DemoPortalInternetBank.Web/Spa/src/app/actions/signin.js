@@ -23,7 +23,7 @@ const signinAction = (deviceId, certificate) => (dispatch) => {
         const options = {
             detached: false,
             addUserCertificate: true,
-            useHardwareHash: true,
+            useHardwareHash: false,
         };
 
         return Plugin.sign(deviceId, certificate.certId, random, false, options);

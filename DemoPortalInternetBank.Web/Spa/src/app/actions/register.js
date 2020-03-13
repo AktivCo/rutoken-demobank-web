@@ -88,7 +88,7 @@ const reg = (deviceId, commonName) => (dispatch) => {
         const options = {
             detached: false,
             addUserCertificate: true,
-            useHardwareHash: true,
+            useHardwareHash: false,
         };
 
         certificate.certId = certId;

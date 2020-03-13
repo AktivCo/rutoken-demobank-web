@@ -34,7 +34,7 @@ const makeSignature = (payment, state) => {
         const options = {
             detached: false,
             addUserCertificate: true,
-            useHardwareHash: true,
+            useHardwareHash: false,
         };
 
         return Plugin.sign(state.CURRENT_DEVICE_ID, state.LOGIN_STATE.objectId, paymentData, false, options);
