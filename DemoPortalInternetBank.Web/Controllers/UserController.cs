@@ -9,26 +9,22 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using DemoPortalInternetBank.Domain.Services;
 using DemoPortalInternetBank.Pki;
+using DemoPortalInternetBank.Web.Models;
 
-
+#if !DISABLE_DEMOBANK
 namespace DemoPortalInternetBank.Web.Controllers
 {
-    class UserModel
-    {
-        public string FullName { get; set; }
-        public string ObjectId { get; set; }
-        public int Balance { get; set; }
-    }
-
     [Route("api/user")]
     [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class UserController : Controller
     {
         private readonly PaymentService _paymentService;
+        private readonly PkiManager _pkiManager;
 
-        public UserController(PaymentService paymentService)
+        public UserController(PaymentService paymentService, PkiManager pkiManager)
         {
             _paymentService = paymentService;
+            _pkiManager = pkiManager;
         }
 
         [Route("info")]
@@ -36,6 +32,8 @@ namespace DemoPortalInternetBank.Web.Controllers
         // GET
         public IActionResult Index()
         {
+            const int USER_AVAILABLE_PAYMENTS_SUM = 1000000;
+
             var user = new UserModel();
 
             foreach (var claim in User.Claims)
@@ -55,7 +53,7 @@ namespace DemoPortalInternetBank.Web.Controllers
 
             var paymentsTotal = _paymentService.GetPayments(userId, true).Sum(p => p.Amount);
 
-            user.Balance = 1000000 - paymentsTotal;
+            user.Balance = USER_AVAILABLE_PAYMENTS_SUM - paymentsTotal;
 
             return Ok(user);
         }
@@ -76,11 +74,11 @@ namespace DemoPortalInternetBank.Web.Controllers
         {
             var userId = int.Parse(User.Claims.First(u => u.Type == "UserId").Value);
 
-            var res = PkiProvider.GetCMS(payment.CMS);
+            var res = _pkiManager.GetCMS(payment.CMS);
 
             try
             {
-                PkiProvider.VerifySignature(res);
+                _pkiManager.VerifySignature(res);
             }
             catch (Exception err)
             {
@@ -100,11 +98,11 @@ namespace DemoPortalInternetBank.Web.Controllers
             {
                 var userId = int.Parse(User.Claims.First(u => u.Type == "UserId").Value);
 
-                var res = PkiProvider.GetCMS(payment.CMS);
+                var res = _pkiManager.GetCMS(payment.CMS);
 
                 try
                 {
-                    PkiProvider.VerifySignature(res);
+                    new PkiManager().VerifySignature(res);
                 }
                 catch (Exception err)
                 {
@@ -127,3 +125,4 @@ namespace DemoPortalInternetBank.Web.Controllers
         }
     }
 }
+#endif

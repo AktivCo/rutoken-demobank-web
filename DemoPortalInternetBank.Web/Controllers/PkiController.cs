@@ -5,21 +5,25 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using DemoPortalInternetBank.Domain.Services;
 using DemoPortalInternetBank.Pki;
+using DemoPortalInternetBank.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+#if !DISABLE_DEMOBANK
 namespace DemoPortalInternetBank.Web.Controllers
 {
     [Route("api/pki")]
     public class PkiController : Controller
     {
         private readonly PaymentService _paymentService;
+        private readonly PkiManager _pkiManager;
 
-        public PkiController(PaymentService paymentService)
+        public PkiController(PaymentService paymentService, PkiManager pkiManager)
         {
             _paymentService = paymentService;
+            _pkiManager = pkiManager;
         }
 
         [Route("random")]
@@ -27,7 +31,7 @@ namespace DemoPortalInternetBank.Web.Controllers
         // GET
         public IActionResult Index()
         {
-            var random = PkiProvider.GenerateRandom();
+            var random = _pkiManager.GenerateRandom();
             var arr = random.Select(Convert.ToByte).ToArray();
             HttpContext.Session.Set("RandomString", arr);
             return Ok(random);
@@ -37,14 +41,14 @@ namespace DemoPortalInternetBank.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginRequest([FromBody] CmsRequest loginRequest)
         {
-            var cms = PkiProvider.GetCMS(loginRequest.Cms);
+            var cms = _pkiManager.GetCMS(loginRequest.Cms);
             var randomArrayFromSession = HttpContext.Session.Get("RandomString");
 
             byte[] randomArrayFromCms;
 
             try
             {
-                randomArrayFromCms = PkiProvider.VerifySignature(cms);
+                randomArrayFromCms = _pkiManager.VerifySignature(cms);
             }
             catch (Exception err)
             {
@@ -56,7 +60,7 @@ namespace DemoPortalInternetBank.Web.Controllers
             var user = _paymentService.GetUser(loginRequest.ObjectId);
 
             _paymentService.GenerateUserPayments(user.Id);
-            
+
             var claims = new List<Claim>
             {
                 new Claim("UserId", user.Id.ToString()),
@@ -72,12 +76,11 @@ namespace DemoPortalInternetBank.Web.Controllers
             return Ok();
         }
 
-
         [Route("register")]
         [HttpPost]
         public IActionResult Register([FromBody] CmsRequest loginRequest)
         {
-            var cert = PkiProvider.IssueCertificate(loginRequest.Cms);
+            var cert = _pkiManager.IssueCertificate(loginRequest.Cms, new DemoBankExtensionBuilder());
 
             var pem = PemHelper.ToPem("CERTIFICATE", cert.GetEncoded());
 
@@ -88,13 +91,13 @@ namespace DemoPortalInternetBank.Web.Controllers
         [HttpPost]
         public IActionResult RegisterComplete([FromBody] CmsRequest loginRequest)
         {
-            var res = PkiProvider.GetCMS(loginRequest.Cms);
+            var res = _pkiManager.GetCMS(loginRequest.Cms);
 
             byte[] signedResult;
 
             try
             {
-                signedResult = PkiProvider.VerifySignature(res);
+                signedResult = _pkiManager.VerifySignature(res);
             }
             catch (Exception err)
             {
@@ -102,11 +105,12 @@ namespace DemoPortalInternetBank.Web.Controllers
             }
 
             var byteArr = signedResult.Select(Convert.ToChar);
+
             var certificateId = string.Join("", byteArr);
 
             if (string.IsNullOrEmpty(certificateId) || string.IsNullOrWhiteSpace(certificateId)) return BadRequest();
 
-            var lst = PkiProvider.GetSignersCommonNames(res);
+            var lst = _pkiManager.GetSignersCommonNames(res);
 
             if (lst.Count != 1) return BadRequest();
 
@@ -117,10 +121,5 @@ namespace DemoPortalInternetBank.Web.Controllers
             return Ok();
         }
     }
-
-    public class CmsRequest
-    {
-        public string Cms { get; set; }
-        public string ObjectId { get; set; }
-    }
 }
+#endif

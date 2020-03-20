@@ -3,6 +3,7 @@ using System.IO;
 using DemoPortalInternetBank.Domain;
 using DemoPortalInternetBank.Domain.Interfaces;
 using DemoPortalInternetBank.Domain.Services;
+using DemoPortalInternetBank.Pki;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,16 +40,19 @@ namespace DemoPortalInternetBank.Web
                     config.UseNpgsql(_configuration.GetConnectionString("Default")));
 
 
-            services.AddScoped<IDbTransactionService, DbTransactionService>();
-            services.AddScoped<IPaymentDataService, PaymentDataService>();
-            services.AddScoped<PaymentService>();
-
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.FromSeconds(600);
                 });
+            
+            services.AddScoped<IDbTransactionService, DbTransactionService>();
+            services.AddScoped<IPaymentDataService, PaymentDataService>();
+            
+            services.AddScoped<PkiManager>();
+            services.AddScoped<PaymentService>();
+
 
             services.AddMvc();
         }
