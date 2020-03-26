@@ -39,14 +39,33 @@ const NoPluginForOsRender = (error) => {
         DownloadPlugin(name);
     }
 
-    if (name === 'Windows') {
-        if (browserName === 'Internet Explorer') {
-            const link = 'https://www.rutoken.ru/support/download/get/rtPlugin-win.html';
-            return NoPluginForOs(link, false);
+    if (!error.needExtension) {
+        if (name === 'Windows') {
+            if (browserName === 'Internet Explorer') {
+                const link = 'https://www.rutoken.ru/support/download/get/rtPlugin-win.html';
+                return NoPluginForOs(link, false);
+            }
+            if (browserName === 'Microsoft Edge') {
+                const link = 'https://www.microsoft.com/en-us/p/adapter-rutoken-plugin/9p4kb5pz2vvx';
+                return NoPluginForOs(link, true);
+            }
         }
-        if (browserName === 'Microsoft Edge') {
-            const link = 'https://www.microsoft.com/en-us/p/adapter-rutoken-plugin/9p4kb5pz2vvx';
-            return NoPluginForOs(link, true);
+
+        if (name === 'Linux') {
+            if (browserName === 'Firefox') {
+                const link = 'https://www.rutoken.ru/support/download/rutoken-plugin/';
+                return NoPluginForOs(link);
+            }
+        }
+
+        if (name === 'macOS') {
+            const link = 'https://www.rutoken.ru/support/download/get/rtPlugin-mac.html';
+            if (browserName === 'Firefox') {
+                return NoPluginForOs(link, true);
+            }
+            if (browserName === 'Safari') {
+                return NoPluginForOs(link, false, error.browser.version.split('.')[0]);
+            }
         }
     }
 

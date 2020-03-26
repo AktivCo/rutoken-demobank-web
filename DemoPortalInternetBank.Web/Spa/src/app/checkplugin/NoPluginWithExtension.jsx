@@ -67,15 +67,12 @@ const getExtensionChilds = (browserName) => {
         return (
             <div className="requirement__description d-flex flex-column justify-content-start align-items-start">
                 <span className="description__info">
-                    <span className="d-block mb-1">Перезапустите браузер.</span>
                     <span className="d-block mb-1">
-                        Включите&nbsp;
-                        <span className="link">расширение</span>
-                            ,&nbsp;для этого в меню браузера выберите пункт
-                            &quot;Rutoken Plugin Adapter добавлено в FireFox&quot;.
-                            В открывшемся окне нажмите &quot;Включить&quot;.
+                        <span className="link">Уставите расширение &quot;Адаптер Рутокен Плагин&quot;</span>
+                            .&nbsp; В открывшемся окне нажмите
+                            &quot;+ Добавить в Firefox&quot;.
                     </span>
-                    <span>Обновите страницу</span>
+                    <span>Обновите страницу. Если вы снова увидите этот экран — перезапустите браузер</span>
                 </span>
             </div>
         );
