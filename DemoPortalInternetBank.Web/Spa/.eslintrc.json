@@ -55,7 +55,7 @@
             "warn"
         ],
         "react/no-multi-comp": [
-            true,
+            2,
             {
                 "ignoreStateless": true
             }

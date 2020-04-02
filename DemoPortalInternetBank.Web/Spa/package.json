@@ -20,7 +20,7 @@
         "babel-preset-stage-0": "6.24.1",
         "core-js": "^2.6.2",
         "css-loader": "^3.4.2",
-        "eslint": "^5.16.0",
+        "eslint": "^6.0.0",
         "eslint-config-airbnb": "^17.1.0",
         "eslint-loader": "^2.1.2",
         "eslint-plugin-import": "^2.17.2",
@@ -36,7 +36,7 @@
         "stylelint-webpack-plugin": "^1.2.1",
         "uglifyjs-webpack-plugin": "^2.2.0",
         "url-loader": "1.0.1",
-        "webpack": "^4.41.5",
+        "webpack": "^4.42.1",
         "webpack-cli": "^3.3.10"
     },
     "dependencies": {
