@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
+
 import OPERATION_STATUS from './operationStatus';
 
 import { operationFinished as setPreviousOperationFinishedAction } from './actions/operations';
@@ -51,11 +53,15 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
                     );
                 }
 
+                const description = OPERATION_HANDLE.error.code === Plugin.errorCodes.PIN_LOCKED
+                    ? 'PIN-код Пользователя был заблокирован после неправильного ввода нескольких раз подряд. Обратитесь в службу технической поддержки.'
+                    : OPERATION_HANDLE.error.description;
+
                 return (
                     <div>
                         <WrappedComponent {...this.props} />
                         <div className="text-danger text-center mt-1">
-                            {OPERATION_HANDLE.error.description}
+                            {description}
                         </div>
                     </div>
                 );
