@@ -69,8 +69,8 @@ const getExtensionChilds = (browserName) => {
                 <span className="description__info">
                     <span className="d-block mb-1">
                         <span className="link">Уставите расширение &quot;Адаптер Рутокен Плагин&quot;</span>
-                            .&nbsp; В открывшемся окне нажмите
-                            &quot;+ Добавить в Firefox&quot;.
+                        .&nbsp; В открывшемся окне нажмите
+                        &quot;+ Добавить в Firefox&quot;.
                     </span>
                     <span>Обновите страницу. Если вы снова увидите этот экран — перезапустите браузер</span>
                 </span>
@@ -85,9 +85,9 @@ const getExtensionChilds = (browserName) => {
                     <span className="d-block mb-1">
                         Включите&nbsp;
                         <span className="link">расширение</span>
-                            ,&nbsp;для этого в меню браузера выберите пункт
-                            &quot;Добавлено новое расширение (Адаптер Рутокен Плагин)&quot;.
-                            В открывшемся окне нажмите &quot;Включить расширение&quot;.
+                        ,&nbsp;для этого в меню браузера выберите пункт
+                        &quot;Добавлено новое расширение (Адаптер Рутокен Плагин)&quot;.
+                        В открывшемся окне нажмите &quot;Включить расширение&quot;.
                     </span>
                     <span>Обновите страницу. Если вы снова увидите этот экран — перезапустите браузер</span>
                 </span>
