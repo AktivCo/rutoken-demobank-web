@@ -10,8 +10,8 @@
         "build:doc": "node docsource/index.js && ./node_modules/.bin/jsdoc -c ./.jsdocconf.json src/app/*"
     },
     "devDependencies": {
-        "babel-core": "6.26.0",
-        "babel-eslint": "^10.0.3",
+        "babel-core": "6.26.3",
+        "babel-eslint": "^10.1.0",
         "babel-loader": "7.1.4",
         "babel-plugin-add-module-exports": "^0.1.2",
         "babel-preset-env": "1.6.1",
@@ -40,7 +40,7 @@
         "webpack-cli": "^3.3.10"
     },
     "dependencies": {
-        "@aktivco-it/rutoken-plugin-bootstrap": "^1.7.2",
+        "@aktivco-it/rutoken-plugin-bootstrap": "^1.8.2",
         "axios": "0.19.0",
         "babel-polyfill": "6.26.0",
         "classnames": "2.2.5",
