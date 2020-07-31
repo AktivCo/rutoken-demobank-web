@@ -1,4 +1,5 @@
 using Org.BouncyCastle.Asn1.CryptoPro;
+using Org.BouncyCastle.Asn1.Rosstandart;
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Digests;
@@ -16,14 +17,15 @@ namespace DemoPortalInternetBank.Pki
 
         public GostSignerFactory(AsymmetricKeyParameter privateKey)
         {
-            var oid = ECGost3410NamedCurves.GetOid("Tc26-Gost-3410-12-256-paramSetA");
-            algID = new AlgorithmIdentifier(oid);
+            algID = new AlgorithmIdentifier(RosstandartObjectIdentifiers.id_tc26_signwithdigest_gost_3410_12_256);
+            
             this.privateKey = privateKey;
         }
 
         public IStreamCalculator CreateCalculator()
         {
             var param = new ParametersWithRandom(privateKey, new SecureRandom());
+
             var gst = new Gost3410DigestSigner(new ECGost3410Signer(), new Gost3411_2012_256Digest());
 
             gst.Init(true, param);

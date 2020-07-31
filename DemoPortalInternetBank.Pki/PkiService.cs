@@ -16,6 +16,7 @@ namespace DemoPortalInternetBank.Pki
     public abstract class PkiService
     {
         protected abstract ISigner GetSigner();
+
         private void CheckCertificateValidity(X509Certificate cert)
         {
             cert.CheckValidity();
@@ -34,6 +35,7 @@ namespace DemoPortalInternetBank.Pki
 
             if (!t) throw new CryptographicException("Cannot verify signature");
         }
+
         public byte[] VerifySignature(CmsSignedData cms)
         {
             var store = cms.GetCertificates("COLLECTION");
@@ -48,7 +50,7 @@ namespace DemoPortalInternetBank.Pki
 
                 arr = stream.ToArray();
             }
-            
+
             foreach (var sig in signers.GetSigners())
             {
                 var signer = (SignerInformation) sig;
@@ -89,7 +91,9 @@ namespace DemoPortalInternetBank.Pki
 
             var certGen = new X509V3CertificateGenerator();
 
-            var dnName = new X509Name("CN=Test CA Certificate");
+            var dn = "ST=Moscow,L=Moscow,O=ZAO Aktiv-Soft,OU=Rutoken,CN=Rutoken TEST CA " + GetAlgoName();
+
+            var dnName = new X509Name(dn);
 
             certGen.SetSerialNumber(serialNumber);
             certGen.SetIssuerDN(dnName);
@@ -189,5 +193,6 @@ namespace DemoPortalInternetBank.Pki
             X509V3CertificateGenerator certGen
         );
         protected abstract AsymmetricCipherKeyPair GenerateKeyPair();
+        protected abstract string GetAlgoName();
     }
 }
