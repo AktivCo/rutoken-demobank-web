@@ -1,4 +1,5 @@
 using Org.BouncyCastle.Asn1.CryptoPro;
+using Org.BouncyCastle.Asn1.Rosstandart;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Crypto.Generators;
@@ -36,12 +37,22 @@ namespace DemoPortalInternetBank.Pki
         protected override AsymmetricCipherKeyPair GenerateKeyPair()
         {
             var oid = ECGost3410NamedCurves.GetOid("Tc26-Gost-3410-12-256-paramSetA");
-            var param = new ECKeyGenerationParameters(oid, new SecureRandom());
+            var ecp = new ECNamedDomainParameters(oid, ECGost3410NamedCurves.GetByOid(oid));
+            var gostParams =
+                new ECGost3410Parameters(ecp, oid, RosstandartObjectIdentifiers.id_tc26_gost_3411_12_256, null);
+
+            var parameters = new ECKeyGenerationParameters(gostParams, new SecureRandom());
             var engine = new ECKeyPairGenerator();
+            engine.Init(parameters);
 
-            engine.Init(param);
+            AsymmetricCipherKeyPair pair = engine.GenerateKeyPair();
 
-            return engine.GenerateKeyPair();
+            return pair;
+        }
+
+        protected override string GetAlgoName()
+        {
+            return "GOST";
         }
     }
 }

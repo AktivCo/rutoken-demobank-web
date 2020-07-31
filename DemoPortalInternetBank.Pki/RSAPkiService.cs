@@ -39,5 +39,10 @@ namespace DemoPortalInternetBank.Pki
             keyPairGenerator.Init(keyGenerationParameters);
             return keyPairGenerator.GenerateKeyPair();
         }
+
+        protected override string GetAlgoName()
+        {
+            return "RSA";
+        }
     }
 }
