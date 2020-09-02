@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@aktivco-it/rutoken-plugin-bootstrap@^1.8.3":
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/@aktivco-it/rutoken-plugin-bootstrap/-/rutoken-plugin-bootstrap-1.8.3.tgz#ced320559a0df0a04ec5d2659d81272e0c269aef"
-  integrity sha512-3njcYaSG+yshAYQ10k4RdoK5Q8W3ObpW8H9bZ3Ql+KR4uU8chz14+7gPLLMjDWRxbEhJE7PIOgLzkXR1wvJPqQ==
+"@aktivco-it/rutoken-plugin-bootstrap@^1.8.4":
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@aktivco-it/rutoken-plugin-bootstrap/-/rutoken-plugin-bootstrap-1.8.4.tgz#39738d98490d924b4e7d83d8860032c02dc4cf36"
+  integrity sha512-S/wext4MeG+ln1M+k1RCLYD7FIT6x4uJFaFf8A53zr7nvwIfcuM2f6K597LXiduB43jmbYr/wd9CBblmRhAcNw==
   dependencies:
-    bowser "^2.7.0"
+    bowser "^2.10.0"
     rutoken "^1.0.8"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4":
@@ -1641,7 +1641,7 @@ bn.js@^5.1.1:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.1.2.tgz#c9686902d3c9a27729f43ab10f9d79c2004da7b0"
   integrity sha512-40rZaf3bUNKTVYu9sIeeEGOg7g14Yvnj9kH7b50EiwX0Q7A6umbvfI5tvHaOERH0XigqKkfLkFQxzb4e6CIXnA==
 
-bowser@^2.7.0:
+bowser@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.10.0.tgz#be3736f161c4bb8b10958027ab99465d2a811198"
   integrity sha512-OCsqTQboTEWWsUjcp5jLSw2ZHsBiv2C105iFs61bOT0Hnwi9p7/uuXdd7mu8RYcarREfdjNN+8LitmEHATsLYg==
