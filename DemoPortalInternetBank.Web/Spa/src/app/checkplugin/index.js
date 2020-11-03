@@ -41,13 +41,9 @@ const NoPluginForOsRender = (error) => {
 
     if (!error.needExtension) {
         if (name === 'Windows') {
-            if (browserName === 'Internet Explorer') {
+            if (browserName === 'Internet Explorer' || browserName === 'Microsoft Edge') {
                 const link = 'https://www.rutoken.ru/support/download/get/rtPlugin-win.html';
                 return NoPluginForOs(link, false);
-            }
-            if (browserName === 'Microsoft Edge') {
-                const link = 'https://www.microsoft.com/en-us/p/adapter-rutoken-plugin/9p4kb5pz2vvx';
-                return NoPluginForOs(link, true);
             }
         }
 
