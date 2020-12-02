@@ -13,6 +13,27 @@ namespace DemoPortalInternetBank.Pki
             X509V3CertificateGenerator certGen,
             Pkcs10CertificationRequest request,
             X509Certificate caCert);
+
+        protected void ApplyCrlExtension(
+            X509V3CertificateGenerator certGen,
+            string crlLink
+        )
+        {
+            if (string.IsNullOrEmpty(crlLink)) return;
+
+            var distPointOne =
+                new DistributionPointName(
+                    new GeneralNames(new GeneralName(GeneralName.UniformResourceIdentifier, crlLink)));
+
+            var distPoints = new DistributionPoint[1];
+            distPoints[0] = new DistributionPoint(distPointOne, null, null);
+
+            certGen.AddExtension(
+                X509Extensions.CrlDistributionPoints,
+                false,
+                new CrlDistPoint(distPoints)
+            );
+        }
     }
 
     public class DefaultExtensionBuilder : ExtensionBuilder
@@ -27,6 +48,13 @@ namespace DemoPortalInternetBank.Pki
 
     public class AllReqExtensionBuilder : ExtensionBuilder
     {
+        private readonly string _crlLink;
+
+        public AllReqExtensionBuilder(string crlLink)
+        {
+            _crlLink = crlLink;
+        }
+
         public override void Build(
             X509V3CertificateGenerator certGen,
             Pkcs10CertificationRequest request,
@@ -55,6 +83,8 @@ namespace DemoPortalInternetBank.Pki
                     ext.GetParsedValue()
                 );
             }
+
+            ApplyCrlExtension(certGen, _crlLink);
         }
     }
 
@@ -124,20 +154,7 @@ namespace DemoPortalInternetBank.Pki
                 })
             );
 
-            var link = crlLink;
-
-            var distPointOne =
-                new DistributionPointName(
-                    new GeneralNames(new GeneralName(GeneralName.UniformResourceIdentifier, link)));
-
-            var distPoints = new DistributionPoint[1];
-            distPoints[0] = new DistributionPoint(distPointOne, null, null);
-
-            certGen.AddExtension(
-                X509Extensions.CrlDistributionPoints,
-                false,
-                new CrlDistPoint(distPoints)
-            );
+            ApplyCrlExtension(certGen, crlLink);
 
             var otherName = new Asn1EncodableVector
             {

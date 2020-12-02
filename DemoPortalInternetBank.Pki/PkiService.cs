@@ -159,8 +159,6 @@ namespace DemoPortalInternetBank.Pki
             crlGen.SetThisUpdate(DateTime.Now);
             crlGen.SetNextUpdate(DateTime.Now.AddYears(1));
 
-            crlGen.SetSignatureAlgorithm("SHA1withRSA");
-
             crlGen.AddCrlEntry(BigInteger.One, DateTime.Now, CrlReason.PrivilegeWithdrawn);
 
             crlGen.AddExtension(
@@ -175,23 +173,23 @@ namespace DemoPortalInternetBank.Pki
                 new CrlNumber(BigInteger.One)
             );
 
+            var crl = GenerateCrl(caKey, crlGen);
 
-            X509Certificate x509Certificate = null;
-
-
-            crlGen.SetSignatureAlgorithm("SHA1WITHRSA");
-
-            var x = crlGen.Generate(caKey);
-
-            return x;
+            return crl;
         }
 
         protected abstract AsymmetricKeyParameter GetRootKey();
         protected abstract X509Certificate GetRootCert();
+
         protected abstract X509Certificate GenerateCertificate(
             AsymmetricKeyParameter privateKey,
             X509V3CertificateGenerator certGen
         );
+
+        protected abstract X509Crl GenerateCrl(
+            AsymmetricKeyParameter privateKey,
+            X509V2CrlGenerator certGen);
+
         protected abstract AsymmetricCipherKeyPair GenerateKeyPair();
         protected abstract string GetAlgoName();
     }

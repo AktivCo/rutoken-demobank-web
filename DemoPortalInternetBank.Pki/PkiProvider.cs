@@ -7,6 +7,7 @@ using Org.BouncyCastle.Cms;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
+using Org.BouncyCastle.X509;
 using X509Certificate = Org.BouncyCastle.X509.X509Certificate;
 
 namespace DemoPortalInternetBank.Pki
@@ -129,8 +130,26 @@ namespace DemoPortalInternetBank.Pki
             {
                 service = new RSAPkiService();
             }
-
+            
             return service.VerifySignature(cms);
+        }
+
+
+        public X509Crl CreateCrl(bool isGost = false)
+        {
+            
+            PkiService service;
+            
+            if (isGost)
+            {
+                service = new GOSTPkiService();
+            }
+            else
+            {
+                service = new RSAPkiService();
+            }
+            
+            return service.CreateCRL();
         }
     }
 }
