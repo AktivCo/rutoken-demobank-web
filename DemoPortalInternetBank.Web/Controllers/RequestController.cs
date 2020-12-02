@@ -17,7 +17,7 @@ namespace DemoPortalInternetBank.Web.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] CmsRequest loginRequest)
         {
-            var cert = _pkiManager.IssueCertificate(loginRequest.Cms, new AllReqExtensionBuilder());
+            var cert = _pkiManager.IssueCertificate(loginRequest.Cms, new AllReqExtensionBuilder(loginRequest.CrlLink));
 
             var pem = PemHelper.ToPem("CERTIFICATE", cert.GetEncoded());
 

@@ -35,12 +35,19 @@ namespace DemoPortalInternetBank.Pki
             return certGen.Generate(signer);
         }
 
+        protected override X509Crl GenerateCrl(AsymmetricKeyParameter privateKey, X509V2CrlGenerator crlGen)
+        {
+            var signer = new GostSignerFactory(privateKey);
+
+            return crlGen.Generate(signer);
+        }
+
         protected override AsymmetricCipherKeyPair GenerateKeyPair()
         {
-            
             DerObjectIdentifier oid = ECGost3410NamedCurves.GetOid("GostR3410-2001-CryptoPro-A");
             ECNamedDomainParameters ecp = new ECNamedDomainParameters(oid, ECGost3410NamedCurves.GetByOid(oid));
-            ECGost3410Parameters gostParams = new ECGost3410Parameters(ecp, oid, RosstandartObjectIdentifiers.id_tc26_gost_3411_12_256, null);
+            ECGost3410Parameters gostParams =
+                new ECGost3410Parameters(ecp, oid, RosstandartObjectIdentifiers.id_tc26_gost_3411_12_256, null);
             ECKeyGenerationParameters parameters = new ECKeyGenerationParameters(gostParams, new SecureRandom());
             ECKeyPairGenerator engine = new ECKeyPairGenerator();
             engine.Init(parameters);

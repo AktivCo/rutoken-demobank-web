@@ -28,8 +28,15 @@ namespace DemoPortalInternetBank.Pki
         protected override X509Certificate GenerateCertificate(AsymmetricKeyParameter privateKey,
             X509V3CertificateGenerator certGen)
         {
-            certGen.SetSignatureAlgorithm("SHA1WITHRSA");
+            certGen.SetSignatureAlgorithm("SHA1withRSA");
             return certGen.Generate(privateKey);
+        }
+
+        protected override X509Crl GenerateCrl(AsymmetricKeyParameter privateKey, X509V2CrlGenerator crlGen)
+        {
+            crlGen.SetSignatureAlgorithm("SHA1withRSA");
+
+            return crlGen.Generate(privateKey);
         }
 
         protected override AsymmetricCipherKeyPair GenerateKeyPair()
