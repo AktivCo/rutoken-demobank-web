@@ -34,6 +34,25 @@ namespace DemoPortalInternetBank.Pki
                 new CrlDistPoint(distPoints)
             );
         }
+
+        protected void ApplyAuthorityInfoAccess(
+            X509V3CertificateGenerator certGen,
+            string rootCertLink
+        )
+        {
+            if (string.IsNullOrEmpty(rootCertLink)) return;
+
+            int uri = GeneralName.UniformResourceIdentifier;
+            GeneralName gn = new GeneralName(uri, rootCertLink);
+            AuthorityInformationAccess authorityInformationAccess = new AuthorityInformationAccess(X509ObjectIdentifiers.IdADCAIssuers, gn);
+
+
+            certGen.AddExtension(
+                X509Extensions.AuthorityInfoAccess,
+                false,
+                authorityInformationAccess
+            );
+        }
     }
 
     public class DefaultExtensionBuilder : ExtensionBuilder
@@ -49,10 +68,12 @@ namespace DemoPortalInternetBank.Pki
     public class AllReqExtensionBuilder : ExtensionBuilder
     {
         private readonly string _crlLink;
+        private readonly string _rootCertLink;
 
-        public AllReqExtensionBuilder(string crlLink)
+        public AllReqExtensionBuilder(string crlLink, string rootCertLink)
         {
             _crlLink = crlLink;
+            _rootCertLink = rootCertLink;
         }
 
         public override void Build(
@@ -85,6 +106,7 @@ namespace DemoPortalInternetBank.Pki
             }
 
             ApplyCrlExtension(certGen, _crlLink);
+            ApplyAuthorityInfoAccess(certGen, _rootCertLink);
         }
     }
 
