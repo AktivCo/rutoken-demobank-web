@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.X509;
@@ -69,6 +70,7 @@ namespace DemoPortalInternetBank.Pki
     {
         private readonly string _crlLink;
         private readonly string _rootCertLink;
+        private const string threeYearsValidExtKeyId = "1.2.643.3.34.6.36";
 
         public AllReqExtensionBuilder(string crlLink, string rootCertLink)
         {
@@ -97,6 +99,25 @@ namespace DemoPortalInternetBank.Pki
             foreach (var x509ExtOid in extOIDs)
             {
                 var ext = exts.GetExtension(x509ExtOid);
+
+                if (x509ExtOid.Id == "2.5.29.37") //extKeyUsage sequence
+                {
+                    Asn1OctetString oct = ext.Value;
+                    Asn1Sequence seq = Asn1Sequence.GetInstance(oct.GetOctets());
+
+                    foreach (DerObjectIdentifier obj in seq)
+                    {
+                        if (threeYearsValidExtKeyId == obj.Id)
+                        {
+                            var startDate = DateTime.Now;
+
+                            certGen.SetNotBefore(startDate);
+                            certGen.SetNotAfter(startDate.AddYears(3));
+
+                            break;
+                        }
+                    }
+                }
 
                 certGen.AddExtension(
                     x509ExtOid,
