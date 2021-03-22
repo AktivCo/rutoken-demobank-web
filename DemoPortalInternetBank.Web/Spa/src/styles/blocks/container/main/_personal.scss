@@ -133,11 +133,12 @@
 
 .personal-payment-info {
     color: #444444;
+    margin-top: 8px;
 
     h2 {
         margin-top: -5px;
     }
-    
+
     button {
         small {
             display: block;
@@ -147,7 +148,7 @@
 
 
     & .personal-payment-info--description {
-       font-size: 24px;
+        font-size: 24px;
     }
 
     & .personal-payment-info--field {
@@ -168,8 +169,8 @@
     & .personal-payment-info--success {
         display: flex;
         flex-direction: row;
-        justify-content: space-between; 
-    }   
+        justify-content: space-between;
+    }
 
     & .personal-payment-info--nav {
         button {
@@ -190,6 +191,7 @@
             color: #117788;
             border-width: 0;
         }
+
         padding-right: 40px;
     }
 
@@ -201,7 +203,7 @@
             color: #117788;
             margin-top: 20px;
         }
-        
+
         span {
             margin-bottom: 20px;
             display: block;
@@ -211,8 +213,7 @@
             background-color: #f5f5f5;
             border-color: #dfdfdf;
         }
-
-    }    
+    }
 }
 
 .personal-selected-info {
