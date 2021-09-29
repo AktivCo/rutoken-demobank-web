@@ -18,7 +18,7 @@ const handleIncorrectPin = (deviceId, err) => (dispatch) => {
             pinRetriesLeft: retries.retriesLeft,
         };
 
-        const error = { ...err, code: 'LOGIN_ERROR', isInternal: true, values };
+        const error = { ...err, internalCodeError: 'LOGIN_ERROR', values };
         dispatch(operationError('login', error));
 
         throw error;
@@ -85,12 +85,12 @@ const changePinByPin = (deviceId, newPin, newPinConfirm) => (dispatch) => {
     dispatch(operationStart('changePin'));
 
     if (newPin !== newPinConfirm) {
-        dispatch(operationError('changePin', { code: 'PIN_CONFRIM_ERROR', isInternal: true }));
+        dispatch(operationError('changePin', { internalCodeError: 'PIN_CONFRIM_ERROR' }));
         return;
     }
 
     if (newPin === defaultPin) {
-        dispatch(operationError('changePin', { code: 'NEW_PIN_IS_DEFAULT', isInternal: true }));
+        dispatch(operationError('changePin', { internalCodeError: 'NEW_PIN_IS_DEFAULT' }));
         return;
     }
 

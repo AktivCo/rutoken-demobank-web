@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import OPERATION_STATUS from './operationStatus';
 
@@ -12,18 +12,40 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
     const Component = class extends React.Component {
         static propTypes = {
             OPERATION_HANDLE: PropTypes.shape(),
+            SELECTED_LANGUAGE: PropTypes.string.isRequired,
             setPreviousOperationFinished: PropTypes.func.isRequired,
+            intl: PropTypes.shape().isRequired,
         };
 
         static defaultProps = { OPERATION_HANDLE: null };
+
+        constructor(props) {
+            super(props);
+            this.state = { errorDescriptionTranslated: null };
+        }
 
         componentDidMount() {
             const { setPreviousOperationFinished } = this.props;
             setPreviousOperationFinished();
         }
 
+        componentWillReceiveProps(nextProps) {
+            const { OPERATION_HANDLE, SELECTED_LANGUAGE } = this.props;
+
+            if (!OPERATION_HANDLE
+                    || SELECTED_LANGUAGE === nextProps.SELECTED_LANGUAGE
+                    || !OPERATION_HANDLE.error
+                    || !OPERATION_HANDLE.error.code) return;
+
+            if (OPERATION_HANDLE.error.internalCodeError && !OPERATION_HANDLE.error.values) return;
+
+            const errorDescriptionTranslated = Plugin.translateErrorByCode(OPERATION_HANDLE.error.code);
+
+            this.setState({ errorDescriptionTranslated });
+        }
+
         render() {
-            const { OPERATION_HANDLE } = this.props;
+            const { OPERATION_HANDLE, intl } = this.props;
 
             if (!OPERATION_HANDLE) {
                 return (
@@ -49,10 +71,7 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
                 if (!OPERATION_HANDLE.error) return null;
 
                 const { error } = OPERATION_HANDLE;
-
-                if (error.isInternal) {
-                    error.description = <FormattedMessage id={error.code} values={error.values} />;
-                }
+                const { errorDescriptionTranslated } = this.state;
 
                 if (ErrorComponent) {
                     return (
@@ -60,9 +79,17 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
                     );
                 }
 
-                const description = OPERATION_HANDLE.error.code === Plugin.errorCodes.PIN_LOCKED
-                    ? <FormattedMessage id="PIN_LOCKED" />
-                    : error.description;
+                let { description } = error;
+
+                if (error.values && errorDescriptionTranslated) {
+                    error.values.description = errorDescriptionTranslated;
+                }
+
+                if (OPERATION_HANDLE.error.code === Plugin.errorCodes.PIN_LOCKED) {
+                    description = <FormattedMessage id="PIN_LOCKED" />;
+                } else if (error.internalCodeError) {
+                    description = intl.formatMessage({ id: error.internalCodeError }, error.values);
+                }
 
                 return (
                     <div>
@@ -82,11 +109,14 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
         }
     };
 
-    return Component;
+    return injectIntl(Component);
 };
 
 
-const mapStateToProps = (state) => ({ OPERATION_HANDLE: state.OPERATION_HANDLE });
+const mapStateToProps = (state) => ({
+    OPERATION_HANDLE: state.OPERATION_HANDLE,
+    SELECTED_LANGUAGE: state.SELECTED_LANGUAGE,
+});
 
 const mapActionsToProps = (dispatch) =>
     ({ setPreviousOperationFinished: () => dispatch(setPreviousOperationFinishedAction()) });

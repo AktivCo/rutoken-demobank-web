@@ -56,7 +56,7 @@ const signinAction = (deviceId, certificate) => (dispatch) => {
         if (err instanceof PluginError) {
             error = err;
         } else {
-            error = { code: 'SIGN_IN_ERROR', isInternal: true };
+            error = { internalCodeError: 'SIGN_IN_ERROR' };
         }
 
         dispatch(operationError('signin', error));

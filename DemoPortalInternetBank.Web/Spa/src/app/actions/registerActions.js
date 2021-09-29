@@ -125,7 +125,7 @@ const createPkcs10AndCompleteRegister = (deviceId, commonName, organization) => 
         if (err instanceof PluginError) {
             error = err;
         } else {
-            error = { code: 'ERROR_DEFAULT', isInternal: true };
+            error = { internalCodeError: 'ERROR_DEFAULT' };
         }
 
         dispatch(operationError('register', error));
@@ -143,7 +143,7 @@ const createPkcs10AndCompleteRegister = (deviceId, commonName, organization) => 
  */
 const register = (deviceId, commonName, organization, sequenceModals) => (dispatch) => {
     if (!commonName || commonName.length === 0) {
-        dispatch(operationError('register', { code: 'REGISTER_NAME_EMPTY', isInternal: true }));
+        dispatch(operationError('register', { internalCodeError: 'REGISTER_NAME_EMPTY' }));
         return;
     }
 

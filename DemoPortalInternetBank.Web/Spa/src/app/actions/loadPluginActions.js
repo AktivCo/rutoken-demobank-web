@@ -13,8 +13,9 @@ import {
  * Метод инициализации Рутокен Плагина.
  * Получение списка подключенных устройств.
  */
-const loadPlugin = () => (dispatch) => {
-    let sequense = Plugin.init();
+const loadPlugin = () => (dispatch, getState) => {
+    const locale = getState().SELECTED_LANGUAGE;
+    let sequense = Plugin.init(locale);
 
     sequense = sequense.then(() => Plugin.enumerateDevices());
 

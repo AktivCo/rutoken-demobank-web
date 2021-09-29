@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import cn from 'classnames';
+import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
 
 import Header from './Header';
 import MainView from './MainView';
@@ -23,6 +24,7 @@ const getActiveClass = (stateValue, element) => cn({
 
 const handleLanguageChange = (locale, action) => {
     localStorage.setItem('SELECTED_LANGUAGE', locale);
+    Plugin.setLocale(locale);
     action(locale);
 };
 
