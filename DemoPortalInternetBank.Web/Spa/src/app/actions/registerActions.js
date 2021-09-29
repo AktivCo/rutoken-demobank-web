@@ -19,7 +19,7 @@ import { signinAction } from './signinActions';
  * @param {number} deviceId - Id подключенного устройства.
  * @param {string} commonName - Имя нового пользователя.
  */
-const createPkcs10AndCompleteRegister = (deviceId, commonName) => (dispatch) => {
+const createPkcs10AndCompleteRegister = (deviceId, commonName, organization) => (dispatch) => {
     dispatch(operationStart('register'));
 
     const algorithm = Plugin.keyAlgorithms[Plugin.PUBLIC_KEY_ALGORITHM_GOST3410_2012_256];
@@ -61,7 +61,7 @@ const createPkcs10AndCompleteRegister = (deviceId, commonName) => (dispatch) => 
             },
             {
                 rdn: 'O',
-                value: 'ООО Демобанк',
+                value: organization,
             },
             {
                 rdn: 'INN',
@@ -125,7 +125,7 @@ const createPkcs10AndCompleteRegister = (deviceId, commonName) => (dispatch) => 
         if (err instanceof PluginError) {
             error = err;
         } else {
-            error = { description: 'Произошла ошибка' };
+            error = { code: 'ERROR_DEFAULT', isInternal: true };
         }
 
         dispatch(operationError('register', error));
@@ -141,9 +141,9 @@ const createPkcs10AndCompleteRegister = (deviceId, commonName) => (dispatch) => 
  * @param {string} commonName - Имя нового пользователя.
  * @param {string} sequenceModals - Модальные окна обработки ввода PIN-кода при регистрации.
  */
-const register = (deviceId, commonName, sequenceModals) => (dispatch) => {
+const register = (deviceId, commonName, organization, sequenceModals) => (dispatch) => {
     if (!commonName || commonName.length === 0) {
-        dispatch(operationError('register', { description: 'Имя не может быть пустым' }));
+        dispatch(operationError('register', { code: 'REGISTER_NAME_EMPTY', isInternal: true }));
         return;
     }
 
@@ -169,7 +169,7 @@ const register = (deviceId, commonName, sequenceModals) => (dispatch) => {
         return promise;
     });
 
-    sequense = sequense.then(() => createPkcs10AndCompleteRegister(deviceId, commonName)(dispatch));
+    sequense = sequense.then(() => createPkcs10AndCompleteRegister(deviceId, commonName, organization)(dispatch));
 
     return sequense;
 };

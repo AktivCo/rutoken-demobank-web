@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import { logout as logoutAction } from './actions/userInfoActions';
 import { formatMoney } from './utils';
@@ -22,7 +23,7 @@ const Header = ({ LOGIN_STATE, logout }) => (
                                     role="button"
                                     tabIndex={0}
                                 >
-                                    Выход
+                                    <FormattedMessage id="main.logout" />
                                 </a>
                             )
                         }
@@ -35,7 +36,9 @@ const Header = ({ LOGIN_STATE, logout }) => (
                 <div className="header__userinfo">
                     <div className="header__userinfo--username">
                         <span>
-                            Расчетный счет 0000005034613644136
+                            <FormattedMessage id="main.account-id" />
+                            &nbsp;
+                            0000005034613644136
                         </span>
                         <p>
                             {LOGIN_STATE.fullName}
@@ -59,7 +62,7 @@ const mapActionsToProps = (dispatch) =>
     ({ logout: () => dispatch(logoutAction()) });
 
 Header.propTypes = {
-    LOGIN_STATE: PropTypes.shape(),
+    LOGIN_STATE: PropTypes.oneOfType([PropTypes.bool, PropTypes.shape()]),
     logout: PropTypes.func.isRequired,
 };
 

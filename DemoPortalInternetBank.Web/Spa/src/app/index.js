@@ -6,21 +6,23 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 
-import { IntlProvider, addLocaleData } from 'react-intl';
-import locale from 'react-intl/locale-data/ru';
-
 import reducers from './reducers';
-
-import App from './App';
-
-addLocaleData(locale);
+import Wrapper from './Wrapper';
 
 const mainDiv = document.createElement('DIV');
-// mainDiv.setAttribute('style', 'height:100%;');
 
+const defaultLang = (() => {
+    const result = localStorage.getItem('SELECTED_LANGUAGE')
+        || navigator.language.slice(0, 2);
+
+    if (result === 'ru' || result === 'en') return result;
+
+    return 'en';
+})();
 
 const store = createStore(
     reducers,
+    { SELECTED_LANGUAGE: defaultLang },
     compose(
         applyMiddleware(thunk),
     ),
@@ -28,9 +30,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <IntlProvider locale="ru">
-            <App />
-        </IntlProvider>
+        <Wrapper />
     </Provider>,
     document.body.appendChild(mainDiv),
 );

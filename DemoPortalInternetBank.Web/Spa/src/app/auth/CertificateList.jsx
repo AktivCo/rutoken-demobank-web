@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import CertificateCard from './CertificatesCard';
 import withOperation from '../withOperation';
@@ -15,8 +16,8 @@ class CertificateList extends React.Component {
 
         const result = [];
 
-        const mt = <p key="choose-cert">Выберите личный сертификат</p>;
-        const mf = <p key="last-cert">Последний раз вы входили как</p>;
+        const mt = <p key="choose-cert"><FormattedMessage id="auth.select-sert" /></p>;
+        const mf = <p key="last-cert"><FormattedMessage id="auth.last-signin-as" /></p>;
         const mp = (certs) => certs.map((cert) => <CertificateCard key={cert.certId} certificate={cert} />);
 
 
@@ -58,7 +59,7 @@ class CertificateList extends React.Component {
                             className="pl-2 pr-2"
                             onClick={() => showViewRegister()}
                         >
-                            Зарегистрироваться
+                            <FormattedMessage id="auth.sign-in-btn" />
                         </button>
                     </div>
                 </div>

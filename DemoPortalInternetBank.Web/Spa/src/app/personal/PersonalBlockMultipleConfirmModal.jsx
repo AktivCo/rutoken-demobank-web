@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { formatMoney } from '../utils';
 import withOperation from '../withOperation';
 
@@ -20,20 +21,20 @@ class PersonalBlockMultipleConfirmModal extends React.Component {
 
     render() {
         const { pin } = this.state;
-        const { modalState, generateMultipleSignature } = this.props;
+        const { modalState, generateMultipleSignature, intl } = this.props;
         const amount = formatMoney(modalState.reduce((acc, current) => acc + current.amount, 0));
+
+        const placeholder = intl.formatMessage({ id: 'personal.enter-pin-placeholder' });
 
         return (
             <div className="personal-payment-info">
                 <h2>
-                    <span>{modalState.length}</span>
-                    <span> платежных </span>
-                    <span>{modalState.length >= 2 && modalState.length < 5 ? 'поручения' : 'поручений'}</span>
+                    <FormattedMessage id="personal.payment-count" values={{ count: modalState.length }} />
                 </h2>
 
                 <div className="personal-payment-info--field mt-3">
                     <div className="personal-payment-info--label">
-                        На
+                        <FormattedMessage id="personal.amount-preposition" />
                     </div>
                     <div className="personal-payment-info--value">
                         {
@@ -44,27 +45,38 @@ class PersonalBlockMultipleConfirmModal extends React.Component {
 
                 <div className="personal-payment-info--field mt-1">
                     <div className="personal-payment-info--label">
-                        За
+                        <FormattedMessage id="personal.for-preposition" />
                     </div>
                     <div className="personal-payment-info--value">
                         {
                             modalState.map((payment) => (
                                 <div key={payment.id}>
-                                    {`Cчет № ${payment.id} от ${payment.account.respondent.name}`}
+                                    <FormattedMessage id="payment.account" />
+                                    &nbsp;
+                                    {payment.id}
+                                    &nbsp;
+                                    <FormattedMessage id="payment.date-from" />
+                                    &nbsp;
+                                    {payment.account.respondent.name}
                                 </div>
                             ))
                         }
                     </div>
                 </div>
                 <div className="personal-payment-info--bottom mt-2">
-                    <p>Требующий проверки контрагент</p>
-                    <span>Для подтверждения требуется ввести PIN-код</span>
-                    <Input type="text" placeholder="Введите PIN-код" id="pin" onChange={(e) => this.onChange(e)} />
+                    <p>
+                        <FormattedMessage id="personal.agent-check-required" />
+                    </p>
+                    <span>
+                        <FormattedMessage id="personal.confirm-pin-code" />
+                    </span>
+                    <Input type="text" placeholder={placeholder} id="pin" onChange={(e) => this.onChange(e)} />
 
                     <Button type="button" className="btn mt-2" onClick={() => generateMultipleSignature(pin, modalState)}>
-                        Подписать и отправить
+                        <FormattedMessage id="personal.sign-and-dispatch" />
                         <small>
-                            платежки на сумму&nbsp;
+                            <FormattedMessage id="personal.some-payments-with-summ" />
+                            &nbsp;
                             {amount}
                         </small>
                     </Button>
@@ -83,6 +95,7 @@ const mapActionsToProps = (dispatch) =>
 PersonalBlockMultipleConfirmModal.propTypes = {
     modalState: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     generateMultipleSignature: PropTypes.func.isRequired,
+    intl: PropTypes.shape().isRequired,
 };
 
-export default withOperation('sign', connect(null, mapActionsToProps)(PersonalBlockMultipleConfirmModal), PersonalSuccessSignModal);
+export default withOperation('sign', connect(null, mapActionsToProps)(injectIntl(PersonalBlockMultipleConfirmModal)), PersonalSuccessSignModal);

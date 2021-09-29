@@ -13,17 +13,12 @@ const handleIncorrectPin = (deviceId, err) => (dispatch) => {
     sequense = sequense.then(() => Plugin.getDeviceInfo(deviceId, Plugin.TOKEN_INFO_PINS_INFO));
 
     sequense = sequense.then((retries) => {
-        const pinRetriesLeft = retries.retriesLeft;
+        const values = {
+            description: err.description,
+            pinRetriesLeft: retries.retriesLeft,
+        };
 
-        let x = 'ок';
-
-        if (pinRetriesLeft < 5 || pinRetriesLeft > 20) {
-            const last = pinRetriesLeft % 10;
-            if (last === 1) x = 'ка';
-            if (last > 1 && last < 5) x = 'ки';
-        }
-
-        const error = { ...err, description: `${err.description}. Осталось ${pinRetriesLeft} попыт${x}.` };
+        const error = { ...err, code: 'LOGIN_ERROR', isInternal: true, values };
         dispatch(operationError('login', error));
 
         throw error;
@@ -90,12 +85,12 @@ const changePinByPin = (deviceId, newPin, newPinConfirm) => (dispatch) => {
     dispatch(operationStart('changePin'));
 
     if (newPin !== newPinConfirm) {
-        dispatch(operationError('changePin', { description: 'PIN-коды не совпадают' }));
+        dispatch(operationError('changePin', { code: 'PIN_CONFRIM_ERROR', isInternal: true }));
         return;
     }
 
     if (newPin === defaultPin) {
-        dispatch(operationError('changePin', { description: 'Новый PIN-код не может быть стандартным' }));
+        dispatch(operationError('changePin', { code: 'NEW_PIN_IS_DEFAULT', isInternal: true }));
         return;
     }
 

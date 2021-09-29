@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import { formatMoney } from '../utils';
 
@@ -23,23 +23,37 @@ const PersonalBlock = ({ element, isSelected, onSelect }) => (
             {element.id}
             {
                 element.account.respondent.protected && (
-                    <span className="confirm">Требующий проверки</span>
+                    <span className="confirm">
+                        <FormattedMessage id="payment.validation-required" />
+                    </span>
                 )
             }
         </span>
         <p>
-            {`Cчет № ${element.id} от ${element.account.respondent.name}`}
+            <FormattedMessage id="payment.account" />
+            &nbsp;
+            {element.id}
+            &nbsp;
+            <FormattedMessage id="payment.date-from" />
+            &nbsp;
+            {element.account.respondent.name}
         </p>
 
-        <span className="light">Сумма</span>
+        <span className="light">
+            <FormattedMessage id="payment.summ" />
+        </span>
         <span>
             {formatMoney(element.amount)}
         </span>
 
-        <span className="light">Получатель</span>
+        <span className="light">
+            <FormattedMessage id="payment.recipient" />
+        </span>
         <span>{element.account.respondent.name}</span>
 
-        <span className="light">От</span>
+        <span className="light">
+            <FormattedMessage id="payment.date-from-upper" />
+        </span>
         <span>
             <FormattedDate
                 value={element.paymentDate}

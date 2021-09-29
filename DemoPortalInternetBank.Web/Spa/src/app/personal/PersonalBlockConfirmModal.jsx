@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, FormattedMessage, injectIntl } from 'react-intl';
 
 import { formatMoney } from '../utils';
 
@@ -25,7 +25,9 @@ class PersonalBlockModal extends React.Component {
 
     render() {
         const { pin } = this.state;
-        const { modalState, sign, save } = this.props;
+        const { modalState, sign, save, intl } = this.props;
+
+        const placeholder = intl.formatMessage({ id: 'personal.enter-pin-placeholder' });
 
         return (
             <div className="personal-payment-info">
@@ -35,12 +37,18 @@ class PersonalBlockModal extends React.Component {
                 </h2>
 
                 <div className="personal-payment-info--description">
-                    {`Cчет № ${modalState.id} от ${modalState.account.respondent.name}`}
+                    <FormattedMessage id="payment.account" />
+                    &nbsp;
+                    {modalState.id}
+                    &nbsp;
+                    <FormattedMessage id="payment.date-from" />
+                    &nbsp;
+                    {modalState.account.respondent.name}
                 </div>
 
                 <div className="personal-payment-info--field mt-3">
                     <div className="personal-payment-info--label">
-                        Сумма
+                        <FormattedMessage id="payment.summ" />
                     </div>
                     <div className="personal-payment-info--value">
                         {formatMoney(modalState.amount)}
@@ -49,7 +57,7 @@ class PersonalBlockModal extends React.Component {
 
                 <div className="personal-payment-info--field mt-1">
                     <div className="personal-payment-info--label">
-                        Дата
+                        <FormattedMessage id="payment.date" />
                     </div>
                     <div className="personal-payment-info--value">
                         <FormattedDate
@@ -67,7 +75,7 @@ class PersonalBlockModal extends React.Component {
 
                 <div className="personal-payment-info--field mt-2">
                     <div className="personal-payment-info--label">
-                        Банк получателя
+                        <FormattedMessage id="payment.recipient-bank" />
                     </div>
                 </div>
 
@@ -75,7 +83,7 @@ class PersonalBlockModal extends React.Component {
 
                 <div className="personal-payment-info--field mt-1">
                     <div className="personal-payment-info--label">
-                        Счет №
+                        <FormattedMessage id="payment.account" />
                     </div>
                     <div className="personal-payment-info--value">
                         {modalState.account.bank.checkingAccount}
@@ -84,7 +92,7 @@ class PersonalBlockModal extends React.Component {
 
                 <div className="personal-payment-info--field mt-1">
                     <div className="personal-payment-info--label">
-                        БИК
+                        <FormattedMessage id="payment.bik" />
                     </div>
                     <div className="personal-payment-info--value">
                         {modalState.account.bank.bik}
@@ -93,7 +101,7 @@ class PersonalBlockModal extends React.Component {
 
                 <div className="personal-payment-info--field mt-2">
                     <div className="personal-payment-info--label">
-                        Получатель
+                        <FormattedMessage id="payment.recipient" />
                     </div>
                 </div>
 
@@ -101,7 +109,7 @@ class PersonalBlockModal extends React.Component {
 
                 <div className="personal-payment-info--field mt-1">
                     <div className="personal-payment-info--label">
-                        Счет №
+                        <FormattedMessage id="payment.account" />
                     </div>
                     <div className="personal-payment-info--value">
                         {modalState.account.accountNumber}
@@ -110,7 +118,7 @@ class PersonalBlockModal extends React.Component {
 
                 <div className="personal-payment-info--field mt-1">
                     <div className="personal-payment-info--label">
-                        ИНН
+                        <FormattedMessage id="payment.inn" />
                     </div>
                     <div className="personal-payment-info--value">
                         {modalState.account.respondent.inn}
@@ -119,14 +127,19 @@ class PersonalBlockModal extends React.Component {
                 {
                     !modalState.cms && (
                         <div className="personal-payment-info--bottom mt-2">
-                            <p>Требующий проверки контрагент</p>
-                            <span>Для подтверждения требуется ввести PIN-код</span>
-                            <Input type="text" placeholder="Введите PIN-код" id="pin" onChange={(e) => this.onChange(e)} />
+                            <p>
+                                <FormattedMessage id="personal.agent-check-required" />
+                            </p>
+                            <span>
+                                <FormattedMessage id="personal.confirm-pin-code" />
+                            </span>
+                            <Input type="text" placeholder={placeholder} id="pin" onChange={(e) => this.onChange(e)} />
 
                             <Button type="button" className="btn mt-2" onClick={() => sign(pin, modalState)}>
-                                Подписать и отправить
+                                <FormattedMessage id="personal.sign-and-dispatch" />
                                 <small>
-                                    платежку на сумму&nbsp;
+                                    <FormattedMessage id="personal.payment-with-summ" />
+                                    &nbsp;
                                     {formatMoney(modalState.amount)}
                                 </small>
                             </Button>
@@ -137,7 +150,7 @@ class PersonalBlockModal extends React.Component {
                     modalState.cms && (
                         <div className="mt-2">
                             <button type="button" className="btn" onClick={() => save(modalState)}>
-                                Сохранить CMS
+                                <FormattedMessage id="personal.save-cms" />
                             </button>
                         </div>
                     )
@@ -157,6 +170,7 @@ PersonalBlockModal.propTypes = {
     modalState: PropTypes.shape().isRequired,
     sign: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
+    intl: PropTypes.shape().isRequired,
 };
 
-export default withOperation('sign', connect(null, mapActionsToProps)(PersonalBlockModal), PersonalSuccessSignModal);
+export default withOperation('sign', connect(null, mapActionsToProps)(injectIntl(PersonalBlockModal)), PersonalSuccessSignModal);

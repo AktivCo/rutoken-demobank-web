@@ -118,6 +118,13 @@ const OBJECTS_LIST = (state = null, action) => {
     return state;
 };
 
+const SELECTED_LANGUAGE = (state = null, action) => {
+    if (action.type === 'SET_SELECTED_LANGUAGE_STATE') {
+        return action.payload;
+    }
+
+    return state;
+};
 
 export default combineReducers({
     PLUGIN_LOAD_ERROR,
@@ -130,4 +137,5 @@ export default combineReducers({
     LOGIN_STATE,
     PERSONAL_VIEW_STATE,
     OBJECTS_LIST,
+    SELECTED_LANGUAGE,
 });

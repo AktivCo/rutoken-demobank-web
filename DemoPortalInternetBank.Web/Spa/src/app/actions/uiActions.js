@@ -30,6 +30,12 @@ const setLoginState = (isSignedIn = null) => (
     }
 );
 
+const setLanguageState = (locale) => (
+    {
+        type: 'SET_SELECTED_LANGUAGE_STATE',
+        payload: locale,
+    }
+);
 
 export {
     showModal,
@@ -37,4 +43,5 @@ export {
     showViewRegister,
     setPersonalViewState,
     setLoginState,
+    setLanguageState,
 };

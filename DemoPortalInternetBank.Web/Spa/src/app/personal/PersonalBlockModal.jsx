@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import { formatMoney } from '../utils';
 
@@ -22,12 +22,18 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
         </h2>
 
         <div className="personal-payment-info--description">
-            {`Cчет № ${modalState.id} от ${modalState.account.respondent.name}`}
+            <FormattedMessage id="payment.account" />
+            &nbsp;
+            {modalState.id}
+            &nbsp;
+            <FormattedMessage id="payment.date-from" />
+            &nbsp;
+            {modalState.account.respondent.name}
         </div>
 
         <div className="personal-payment-info--field mt-3">
             <div className="personal-payment-info--label">
-                Сумма
+                <FormattedMessage id="payment.summ" />
             </div>
             <div className="personal-payment-info--value">
                 {formatMoney(modalState.amount)}
@@ -36,7 +42,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
 
         <div className="personal-payment-info--field mt-1">
             <div className="personal-payment-info--label">
-                Дата
+                <FormattedMessage id="payment.date" />
             </div>
             <div className="personal-payment-info--value">
                 <FormattedDate
@@ -54,7 +60,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
 
         <div className="personal-payment-info--field mt-2">
             <div className="personal-payment-info--label">
-                Банк получателя
+                <FormattedMessage id="payment.recipient-bank" />
             </div>
         </div>
 
@@ -62,7 +68,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
 
         <div className="personal-payment-info--field mt-1">
             <div className="personal-payment-info--label">
-                Счет №
+                <FormattedMessage id="payment.account" />
             </div>
             <div className="personal-payment-info--value">
                 {modalState.account.bank.checkingAccount}
@@ -71,7 +77,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
 
         <div className="personal-payment-info--field mt-1">
             <div className="personal-payment-info--label">
-                БИК
+                <FormattedMessage id="payment.bik" />
             </div>
             <div className="personal-payment-info--value">
                 {modalState.account.bank.bik}
@@ -80,7 +86,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
 
         <div className="personal-payment-info--field mt-2">
             <div className="personal-payment-info--label">
-                Получатель
+                <FormattedMessage id="payment.recipient" />
             </div>
         </div>
 
@@ -88,7 +94,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
 
         <div className="personal-payment-info--field mt-1">
             <div className="personal-payment-info--label">
-                Счет №
+                <FormattedMessage id="payment.account" />
             </div>
             <div className="personal-payment-info--value">
                 {modalState.account.accountNumber}
@@ -97,7 +103,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
 
         <div className="personal-payment-info--field mt-1">
             <div className="personal-payment-info--label">
-                ИНН
+                <FormattedMessage id="payment.inn" />
             </div>
             <div className="personal-payment-info--value">
                 {modalState.account.respondent.inn}
@@ -109,9 +115,10 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
 
                 <div className="mt-2">
                     <Button type="button" className="btn" onClick={() => sign(modalState)}>
-                        Подписать и отправить
+                        <FormattedMessage id="personal.sign-and-dispatch" />
                         <small>
-                            платежку на сумму&nbsp;
+                            <FormattedMessage id="personal.payment-with-summ" />
+                            &nbsp;
                             {formatMoney(modalState.amount)}
                         </small>
                     </Button>
@@ -122,7 +129,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
             modalState.cms && (
                 <div className="mt-2">
                     <button type="button" className="btn" onClick={() => save(modalState)}>
-                        Сохранить CMS
+                        <FormattedMessage id="personal.save-cms" />
                     </button>
                 </div>
             )

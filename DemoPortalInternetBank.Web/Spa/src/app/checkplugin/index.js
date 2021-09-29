@@ -8,6 +8,7 @@ import {
     NoSupportBrowserVersionError,
     NoSupportPluginVersionError,
 } from '@aktivco-it/rutoken-plugin-bootstrap/src/supportError';
+import { FormattedMessage } from 'react-intl';
 
 import IncorrectLoad from './IncorrectLoad';
 import NoSupportPlatform from './NoSupportPlatform';
@@ -75,7 +76,7 @@ const NoPlugin = (error) => (
         <div className="main__wrapper main__settings d-flex flex-column justify-content-start align-items-start p-2">
             <div className="aboutservice w-100 d-flex flex-column justify-content-center align-items-center">
                 <span className="aboutservice__title mb-1 w-100">
-                    Для работы в Демобанке вам понадобятся
+                    <FormattedMessage id="plugin.required-title" />
                 </span>
             </div>
 
@@ -85,9 +86,9 @@ const NoPlugin = (error) => (
 
             <div className="settings__info">
                 <span>
-                    Модули необходимы для получения доступа к хранилищу Рутокен
+                    <FormattedMessage id="plugin.modules-need-1" />
                     <br />
-                    и работы с сертификатами и ключами
+                    <FormattedMessage id="plugin.modules-need-2" />
                 </span>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import {
     setPersonalViewState as setPersonalViewStateAction,
@@ -15,22 +16,25 @@ const PersonalSuccessSignModal = ({ data, navigate }) => {
     const renderTitle = () => {
         if (!data) return;
         if (data.length === 1) {
-            return `Подписана и отправлена на обработку в банк платежка на сумму ${formatMoney(data[0].amount)}`;
+            return <FormattedMessage id="personal.signed-single" values={{ amount: formatMoney(data[0].amount) }} />;
         }
 
-        return `Подписаны и отправлены на обработку в банк ${data.length} платежки на сумму 
-            ${formatMoney(data.reduce((acc, current) => acc + current.amount, 0))}`;
+        const amount = formatMoney(data.reduce((acc, current) => acc + current.amount, 0));
+
+        return <FormattedMessage id="personal.signed-multiple" values={{ count: data.length, amount }} />;
     };
 
     return (
         <div className="personal-payment-info">
             <h2>
-                Готово
+                <FormattedMessage id="personal.done" />
             </h2>
             <div className="personal-payment-info--success">
                 <div className="personal-payment-info--nav">
                     <span>{renderTitle()}</span>
-                    <button type="button" onClick={() => navigate()}>к отправленным</button>
+                    <button type="button" onClick={() => navigate()}>
+                        <FormattedMessage id="personal.to-sent" />
+                    </button>
                 </div>
                 <div className="icon-done" />
             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Plugin from '@aktivco-it/rutoken-plugin-bootstrap/src/index';
+import { FormattedMessage } from 'react-intl';
 
 import OPERATION_STATUS from './operationStatus';
 
@@ -47,6 +48,12 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
             if (OPERATION_HANDLE.status === OPERATION_STATUS.ERROR) {
                 if (!OPERATION_HANDLE.error) return null;
 
+                const { error } = OPERATION_HANDLE;
+
+                if (error.isInternal) {
+                    error.description = <FormattedMessage id={error.code} values={error.values} />;
+                }
+
                 if (ErrorComponent) {
                     return (
                         <ErrorComponent error={OPERATION_HANDLE.error} />
@@ -54,8 +61,8 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
                 }
 
                 const description = OPERATION_HANDLE.error.code === Plugin.errorCodes.PIN_LOCKED
-                    ? 'PIN-код Пользователя был заблокирован после неправильного ввода нескольких раз подряд. Обратитесь в службу технической поддержки.'
-                    : OPERATION_HANDLE.error.description;
+                    ? <FormattedMessage id="PIN_LOCKED" />
+                    : error.description;
 
                 return (
                     <div>

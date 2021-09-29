@@ -56,7 +56,7 @@ const signinAction = (deviceId, certificate) => (dispatch) => {
         if (err instanceof PluginError) {
             error = err;
         } else {
-            error = { description: 'Не удалось войти в систему' };
+            error = { code: 'SIGN_IN_ERROR', isInternal: true };
         }
 
         dispatch(operationError('signin', error));

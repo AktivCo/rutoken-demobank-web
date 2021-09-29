@@ -35,14 +35,6 @@ const loadPlugin = () => (dispatch) => {
             [Plugin.TOKEN_TYPE_UNKNOWN]: 'TOKEN_TYPE_UNKNOWN',
         };
 
-        const infoTypes = {
-            [Plugin.TOKEN_TYPE_RUTOKEN_PINPAD_2]: 'Рутокен PINPad',
-            [Plugin.TOKEN_TYPE_RUTOKEN_WEB]: 'Рутокен Web',
-            [Plugin.TOKEN_TYPE_RUTOKEN_ECP]: 'Рутокен ЭЦП',
-            [Plugin.TOKEN_TYPE_RUTOKEN_ECP_SC]: 'Смарт-карта Рутокен ЭЦП',
-            [Plugin.TOKEN_TYPE_UNKNOWN]: 'Рутокен Lite',
-        };
-
         const getDeviceInfo = (deviceNumber) =>
             Promise
                 .all(
@@ -56,7 +48,6 @@ const loadPlugin = () => (dispatch) => {
                     serial: values[2],
                     isPinCached: values[3],
                     type: types[values[4]],
-                    description: infoTypes[values[4]],
                 }));
 
         return Promise.all(deviceNumbers.map((dev) => getDeviceInfo(dev)));

@@ -1,14 +1,17 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { getPluginDownloadLink } from './pluginDownloadLinks';
 
 const NoSupportPluginVersion = (os) => (
     <div className="main">
         <div className="main__wrapper main__settings d-flex flex-column justify-content-start align-items-start p-2">
             <div className="aboutservice w-100 d-flex flex-column justify-content-center align-items-center">
-                <span className="aboutservice__title mb-1">Обновите Рутокен Плагин до последней версии</span>
+                <span className="aboutservice__title mb-1">
+                    <FormattedMessage id="plugin.platform-not-supported-title" />
+                </span>
                 <span className="description mb-1 ml-1">
-                    Прогресс не стоит на месте:
-                    расширяются возможности работы электронной подписи в браузере и исправляются ошибки
+                    <FormattedMessage id="plugin.update-required-desc" />
                 </span>
             </div>
             <a className="requirement w-100 d-flex flex-column justify-content-start align-items-start mb-2" href={getPluginDownloadLink(os)}>
@@ -16,17 +19,22 @@ const NoSupportPluginVersion = (os) => (
                     <div className="requirement__wrapper w-100 d-flex flex-column justify-content-start align-items-start p-2">
                         <div className="requirement__row w-100 d-flex flex-row">
                             <div className="requirement__description d-flex flex-column justify-content-start align-items-center">
-                                <span className="description__title">Программа</span>
-                                <span className="description__name">Рутокен Плагин</span>
+                                <span className="description__title">
+                                    <FormattedMessage id="plugin.no-plugin-title" />
+                                </span>
+                                <span className="description__name">
+                                    <FormattedMessage id="plugin.no-plugin-description" />
+                                </span>
                             </div>
                         </div>
                         <div className="requirement__row w-100 d-flex flex-row">
                             <div className="requirement__description d-flex flex-column justify-content-start align-items-start">
                                 <span className="description__info justify-content-start w-100">
-                                    <span className="link">Установите</span>
-                                    заново Рутокен Плагин. Перезапустите браузер.
-                                    Если плагин уже установлен, убедитесь, что расширение
-                                    &quot;Адаптер Рутокен Плагин&quot; включено.
+                                    <span className="link">
+                                        <FormattedMessage id="plugin.update-required-info-1" />
+                                    </span>
+                                    &nbsp;
+                                    <FormattedMessage id="plugin.update-required-info-2" />
                                 </span>
                             </div>
                         </div>
@@ -37,9 +45,9 @@ const NoSupportPluginVersion = (os) => (
 
             <div className="settings__info">
                 <span>
-                    Модули необходимы для получения доступа к хранилищу Рутокен
+                    <FormattedMessage id="plugin.update-required-info-3" />
                     <br />
-                    и работы с сертификатами и ключами
+                    <FormattedMessage id="plugin.update-required-info-4" />
                 </span>
             </div>
         </div>

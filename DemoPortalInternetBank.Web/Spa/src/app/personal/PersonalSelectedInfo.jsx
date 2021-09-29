@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { formatMoney } from '../utils';
 
-const PersonalSelectedInfo = ({ payments, onMultipleSign }) => {
+const getSelectedPaymentsInfo = (intl, count) => {
+    if (!count) return <FormattedMessage id="personal.select-payments" />;
+
+    return <FormattedMessage id="personal.selected-payments-plural" values={{ count }} />;
+};
+
+const PersonalSelectedInfo = ({ payments, onMultipleSign, intl }) => {
     let paymentSumStr = null;
 
     if (payments.length !== 0) {
@@ -11,17 +18,11 @@ const PersonalSelectedInfo = ({ payments, onMultipleSign }) => {
         paymentSumStr = formatMoney(paymentSum);
     }
 
-    let paymentStr = 'Выберите платежные поручения';
-
-    if (payments.length !== 0) {
-        paymentStr = `Выбрано ${payments.length} поручения`;
-    }
-
     return (
         <div className="personal-selected-info">
             <div>
                 <p>
-                    {paymentStr}
+                    {getSelectedPaymentsInfo(intl, payments.length)}
                 </p>
                 <span>
                     {paymentSumStr}
@@ -33,7 +34,7 @@ const PersonalSelectedInfo = ({ payments, onMultipleSign }) => {
                     disabled={payments.length === 0}
                     onClick={() => onMultipleSign(payments)}
                 >
-                    Подписать
+                    <FormattedMessage id="personal.sign-btn" />
                 </button>
             </div>
         </div>
@@ -43,6 +44,7 @@ const PersonalSelectedInfo = ({ payments, onMultipleSign }) => {
 PersonalSelectedInfo.propTypes = {
     payments: PropTypes.arrayOf(PropTypes.object).isRequired,
     onMultipleSign: PropTypes.func.isRequired,
+    intl: PropTypes.shape().isRequired,
 };
 
-export default PersonalSelectedInfo;
+export default injectIntl(PersonalSelectedInfo);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import RenderSupportedBrowsers from './RenderSupportedBrowsers';
 
 const NoSupportCurrentBrowserVersion = (browserName, suppBrowsers) => (
@@ -6,9 +7,11 @@ const NoSupportCurrentBrowserVersion = (browserName, suppBrowsers) => (
         <div className="main__wrapper main__settings d-flex flex-column justify-content-start align-items-start p-2">
             <div className="aboutservice w-100 d-flex flex-column justify-content-center align-items-center">
                 <span className="aboutservice__title mb-1">
-                    Ваша версия браузера&nbsp;
+                    <FormattedMessage id="plugin.browser-version" />
+                    &nbsp;
                     {browserName}
-                    &nbsp;не поддерживается Рутокен плагином
+                    &nbsp;
+                    <FormattedMessage id="plugin.not-supported" />
                 </span>
             </div>
             <div className="requirement inactive w-100 d-flex flex-column justify-content-start align-items-start mb-2">

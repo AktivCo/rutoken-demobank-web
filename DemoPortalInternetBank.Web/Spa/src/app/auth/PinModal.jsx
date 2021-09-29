@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 import Input from '../controls/Input';
 import { login as loginAction } from '../actions/loginActions';
@@ -29,17 +30,23 @@ class PinModal extends React.Component {
     }
 
     render() {
+        const { intl } = this.props;
+        const placeholder = intl.formatMessage({ id: 'auth.pin-modal-placeholder' });
+
+
         return (
             <div>
                 <div className="modal_title">
                     <div className="modal_title--head">
-                        Для доступа к сайту введите свой PIN-код
+                        <FormattedMessage id="auth.pin-modal-title" />
                     </div>
                 </div>
                 <div className="modal_actions">
                     <form>
-                        <Input type="password" id="password" placeholder="Введите PIN-код" onChange={this.onChange} autoFocus />
-                        <button type="submit" onClick={(e) => this.loginClick(e)}>Войти</button>
+                        <Input type="password" id="password" placeholder={placeholder} onChange={this.onChange} autoFocus />
+                        <button type="submit" onClick={(e) => this.loginClick(e)}>
+                            <FormattedMessage id="auth.pin-modal-submit" />
+                        </button>
                     </form>
                 </div>
             </div>
@@ -57,6 +64,7 @@ PinModal.propTypes = {
     login: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     onSuccessAction: PropTypes.func.isRequired,
+    intl: PropTypes.shape().isRequired,
 };
 
-export default withOperation('login', connect(mapStateToProps, mapActionsToProps)(PinModal));
+export default withOperation('login', connect(mapStateToProps, mapActionsToProps)(injectIntl(PinModal)));

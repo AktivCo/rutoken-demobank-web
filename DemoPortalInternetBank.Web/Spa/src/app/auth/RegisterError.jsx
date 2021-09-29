@@ -2,22 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { FormattedMessage } from 'react-intl';
+
 import { operationFinished } from '../actions/operations';
 
 const RegisterError = ({ error, restartOperation }) => (
     <div className="info_container description">
         <div className="certificatecard_certificatelist">
             <p>
-                Что-то пошло не так
+                <FormattedMessage id="auth.register-error-title" />
             </p>
             <span className="error_img" />
-            <span>{error.description}</span>
+            <span>
+                {error.description}
+            </span>
             <div>
                 <button type="button" onClick={() => restartOperation()}>
-                    Попробовать снова
+                    <FormattedMessage id="auth.register-error-try-again" />
                 </button>
             </div>
-            <a href="#">Сообщить разработчикам</a>
+            <a href="#">
+                <FormattedMessage id="auth.register-error-report" />
+            </a>
         </div>
     </div>
 );

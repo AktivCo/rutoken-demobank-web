@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import CertificateInfo from './CertificatesInfo';
 
 
@@ -25,13 +25,15 @@ const CertificateCard = ({ CURRENT_DEVICE_ID, certificate, signin }) => (
                 </div>
                 <div className="info_center">
                     <span>
-                        Выдал:&nbsp;
+                        <FormattedMessage id="auth.cert-issued" />
+                        &nbsp;
                         {certificate.issuer.commonName}
                     </span>
                 </div>
                 <div className="info_date">
                     <span>
-                        Годен до&nbsp;
+                        <FormattedMessage id="auth.cert-valid-thru" />
+                        &nbsp;
                         <FormattedDate
                             value={certificate.validNotAfter}
                             day="numeric"

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 const CertificateInfo = ({ subject }) => {
     const subjectMap = {
-        INN: 'ИНН',
-        KPP: 'КПП',
-        OGRN: 'ОГРН',
-        OGRNIP: 'ОГРНИП',
+        INN: 'certInfo-INN',
+        KPP: 'certInfo-KPP',
+        OGRN: 'certInfo-OGRN',
+        OGRNIP: 'certInfo-OGRNIP',
     };
 
     if (!['organizationName', ...Object.keys(subjectMap)].some((elem) => Object.prototype.hasOwnProperty.call(subject, elem))) {
@@ -19,7 +20,13 @@ const CertificateInfo = ({ subject }) => {
         }
 
         if (subject[item]) {
-            acc.push(<span key={item}>{`${subjectMap[item]} ${subject[item]}`}</span>);
+            acc.push(
+                <span key={item}>
+                    <FormattedMessage id={subjectMap[item]} />
+                    &nbsp;
+                    {subject[item]}
+                </span>,
+            );
         }
         return acc;
     }, []);

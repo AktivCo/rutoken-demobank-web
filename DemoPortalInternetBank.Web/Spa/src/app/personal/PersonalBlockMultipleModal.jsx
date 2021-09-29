@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { formatMoney } from '../utils';
 import withOperation from '../withOperation';
 
@@ -16,14 +17,12 @@ const PersonalBlockMultipleModal = ({ modalState, generateMultipleSignature }) =
     return (
         <div className="personal-payment-info">
             <h2>
-                <span>{modalState.length}</span>
-                <span> платежных </span>
-                <span>{modalState.length >= 2 && modalState.length < 5 ? 'поручения' : 'поручений'}</span>
+                <FormattedMessage id="personal.payment-count" values={{ count: modalState.length }} />
             </h2>
 
             <div className="personal-payment-info--field mt-3">
                 <div className="personal-payment-info--label">
-                    На
+                    <FormattedMessage id="personal.amount-preposition" />
                 </div>
                 <div className="personal-payment-info--value">
                     {
@@ -34,13 +33,19 @@ const PersonalBlockMultipleModal = ({ modalState, generateMultipleSignature }) =
 
             <div className="personal-payment-info--field mt-1">
                 <div className="personal-payment-info--label">
-                    За
+                    <FormattedMessage id="personal.for-preposition" />
                 </div>
                 <div className="personal-payment-info--value">
                     {
                         modalState.map((payment) => (
-                            <div>
-                                {`Cчет № ${payment.id} от ${payment.account.respondent.name}`}
+                            <div key={payment.id}>
+                                <FormattedMessage id="payment.account" />
+                                &nbsp;
+                                {payment.id}
+                                &nbsp;
+                                <FormattedMessage id="payment.date-from" />
+                                &nbsp;
+                                {payment.account.respondent.name}
                             </div>
                         ))
                     }
@@ -52,9 +57,10 @@ const PersonalBlockMultipleModal = ({ modalState, generateMultipleSignature }) =
                     className="btn"
                     onClick={() => generateMultipleSignature(modalState)}
                 >
-                    Подписать и отправить
+                    <FormattedMessage id="personal.sign-and-dispatch" />
                     <small>
-                        платежки на сумму&nbsp;
+                        <FormattedMessage id="personal.some-payments-with-summ" />
+                        &nbsp;
                         {amount}
                     </small>
                 </Button>

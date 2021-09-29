@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import { setPersonalViewState as setPersonalViewStateAction } from '../actions/uiActions';
 
 import PERSONAL_VIEW_STATES from '../personalViewStates';
 
-const personalNavigationTitleMap = {
-    [PERSONAL_VIEW_STATES.OUTGOING]: 'Исходящие',
-    [PERSONAL_VIEW_STATES.SENT]: 'Отправленные',
+const personalNavigationTranslateMap = {
+    [PERSONAL_VIEW_STATES.OUTGOING]: 'personal.header-outgoing',
+    [PERSONAL_VIEW_STATES.SENT]: 'personal.header-sent',
 };
 
 const personalNavigationClassMap = {
@@ -33,7 +34,7 @@ const PersonalNavigation = ({ PERSONAL_VIEW_STATE, setPersonalViewState }) => (
     <div className="d-flex flex-column personal-nav">
         {
             Object
-                .keys(personalNavigationTitleMap)
+                .keys(personalNavigationTranslateMap)
                 .map((key) => (
                     <div
                         onClick={() => setPersonalViewState(Number(key))}
@@ -44,7 +45,7 @@ const PersonalNavigation = ({ PERSONAL_VIEW_STATE, setPersonalViewState }) => (
                     >
                         <span className={getLinkClassName(key)} />
                         <span className="personal-link-title w-90">
-                            {personalNavigationTitleMap[key]}
+                            <FormattedMessage id={personalNavigationTranslateMap[key]} />
                         </span>
                     </div>
                 ))

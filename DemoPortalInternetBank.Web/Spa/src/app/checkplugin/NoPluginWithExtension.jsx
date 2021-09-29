@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { getPluginDirectAppLink, getExtensionDownloadLink } from './pluginDownloadLinks';
 
@@ -8,8 +9,12 @@ const ExtensionCheck = ({ children }) => (
         <div className="requirement__row w-100 d-flex flex-row">
             <span className="requirement__number">2</span>
             <div className="requirement__description d-flex flex-column justify-content-start align-items-start">
-                <span className="description__title">Расширение для браузера</span>
-                <span className="description__name">Адаптер Рутокен Плагин</span>
+                <span className="description__title">
+                    <FormattedMessage id="plugin.no-extension-title" />
+                </span>
+                <span className="description__name">
+                    <FormattedMessage id="plugin.no-extension-header" />
+                </span>
             </div>
         </div>
 
@@ -26,8 +31,12 @@ const PluginCheck = ({ children }) => (
         <div className="requirement__row w-100 d-flex flex-row">
             <span className="requirement__number">1</span>
             <div className="requirement__description d-flex flex-column justify-content-start align-items-start">
-                <span className="description__title">Программа</span>
-                <span className="description__name">Рутокен Плагин</span>
+                <span className="description__title">
+                    <FormattedMessage id="plugin.no-plugin-title" />
+                </span>
+                <span className="description__name">
+                    <FormattedMessage id="plugin.no-plugin-description" />
+                </span>
             </div>
         </div>
 
@@ -46,18 +55,26 @@ const getPluginChilds = (os) => {
     if (os === 'Linux') {
         return (
             <span className="description__info">
-                Загрузите&nbsp;
-                <a className="link" href={pluginLink}>установочный файл</a>
-                &nbsp;на компьютер и откройте его. Установите программу
+                <FormattedMessage id="plugin.no-plugin-linux-desc-1" />
+                &nbsp;
+                <a className="link" href={pluginLink}>
+                    <FormattedMessage id="plugin.no-plugin-linux-desc-2" />
+                </a>
+                &nbsp;
+                <FormattedMessage id="plugin.no-plugin-linux-desc-3" />
             </span>
         );
     }
 
     return (
         <span className="description__info">
-            <a className="link" href={pluginLink}>Установочный файл программы</a>
-                &nbsp;уже загружается. Его значок отобразится в загрузках браузера.
-                &nbsp;Щелкните по значку файла и установите программу
+            <a className="link" href={pluginLink}>
+                <FormattedMessage id="plugin.no-plugin-install-desc-1" />
+            </a>
+            &nbsp;
+            <FormattedMessage id="plugin.no-plugin-install-desc-2" />
+            &nbsp;
+            <FormattedMessage id="plugin.no-plugin-install-desc-3" />
         </span>
     );
 };
@@ -68,11 +85,15 @@ const getExtensionChilds = (browserName) => {
             <div className="requirement__description d-flex flex-column justify-content-start align-items-start">
                 <span className="description__info">
                     <span className="d-block mb-1">
-                        <span className="link">Уставите расширение &quot;Адаптер Рутокен Плагин&quot;</span>
-                        .&nbsp; В открывшемся окне нажмите
-                        &quot;+ Добавить в Firefox&quot;.
+                        <span className="link">
+                            <FormattedMessage id="plugin.no-extension-firefox-1" />
+                        </span>
+                        .&nbsp;
+                        <FormattedMessage id="plugin.no-extension-firefox-2" />
                     </span>
-                    <span>Обновите страницу. Если вы снова увидите этот экран — перезапустите браузер</span>
+                    <span>
+                        <FormattedMessage id="plugin.no-plugin-update-page" />
+                    </span>
                 </span>
             </div>
         );
@@ -83,13 +104,17 @@ const getExtensionChilds = (browserName) => {
             <div className="requirement__description d-flex flex-column justify-content-start align-items-start">
                 <span className="description__info">
                     <span className="d-block mb-1">
-                        Включите&nbsp;
-                        <span className="link">расширение</span>
-                        ,&nbsp;для этого в меню браузера выберите пункт
-                        &quot;Добавлено новое расширение (Адаптер Рутокен Плагин)&quot;.
-                        В открывшемся окне нажмите &quot;Включить расширение&quot;.
+                        <FormattedMessage id="plugin.no-extension-chrome-1" />
+                        &nbsp;
+                        <span className="link">
+                            <FormattedMessage id="plugin.no-extension-chrome-2" />
+                        </span>
+                        ,&nbsp;
+                        <FormattedMessage id="plugin.no-extension-chrome-3" />
                     </span>
-                    <span>Обновите страницу. Если вы снова увидите этот экран — перезапустите браузер</span>
+                    <span>
+                        <FormattedMessage id="plugin.no-plugin-update-page" />
+                    </span>
                 </span>
             </div>
         );
@@ -98,10 +123,15 @@ const getExtensionChilds = (browserName) => {
     return (
         <div className="requirement__description d-flex flex-column justify-content-start align-items-start">
             <span className="description__info">
-                <span className="d-block mb-1">Перезапустите браузер.</span>
+                <span className="d-block mb-1">
+                    <FormattedMessage id="plugin.no-extension-default-1" />
+                </span>
                 <span>
-                    <span className="link">Установите расширение</span>
-                        &nbsp;и убедитесь, что оно активно
+                    <span className="link">
+                        <FormattedMessage id="plugin.no-extension-default-2" />
+                    </span>
+                    &nbsp;
+                    <FormattedMessage id="plugin.no-extension-default-3" />
                 </span>
             </span>
         </div>

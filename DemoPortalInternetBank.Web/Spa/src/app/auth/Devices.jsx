@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import changeActiveDeviceAction from '../actions/changeCurrentDeviceActions';
 
 import Certificates from './index';
@@ -40,7 +41,9 @@ class Devices extends React.Component {
         return (
             <div className="main">
                 <div className="main_title">
-                    <p>Вход в Демобанк по сертификату</p>
+                    <p>
+                        <FormattedMessage id="auth.devices-header" />
+                    </p>
                 </div>
                 <div className="main_device">
                     <ul className="device_container">
@@ -60,7 +63,7 @@ class Devices extends React.Component {
                                     </div>
                                     <div className="device_name">
                                         <span>
-                                            {DEVICES[deviceId].description}
+                                            <FormattedMessage id={DEVICES[deviceId].type} />
                                         </span>
                                     </div>
                                 </li>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import { loadPlugin as loadPluginAction } from './actions/loadPluginActions';
 import { setLoginState as setLoginStateAction } from './actions/userInfoActions';
@@ -59,7 +60,9 @@ class MainView extends React.Component {
             return (
                 <div className="plugin_loader">
                     <div className="main_title">
-                        <p>Загружаем плагин...</p>
+                        <p>
+                            <FormattedMessage id="main.plugin-load" />
+                        </p>
                     </div>
                     <div className="loading">
                         <div className="loader" />

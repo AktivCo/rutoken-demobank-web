@@ -1,11 +1,12 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const IncorrectLoad = () => (
     <div className="main">
         <div className="main__wrapper main__settings d-flex flex-column justify-content-start align-items-start p-2">
             <div className="aboutservice w-100 d-flex flex-column justify-content-center align-items-center">
                 <span className="aboutservice__title mb-1">
-                    Аппаратная ошибка
+                    <FormattedMessage id="plugin.incorrect-load-title" />
                 </span>
             </div>
             <div className="requirement inactive w-100 d-flex flex-column justify-content-start align-items-start mb-2">
@@ -13,7 +14,7 @@ const IncorrectLoad = () => (
                     <div className="requirement__row w-100 d-flex flex-row">
                         <div className="requirement__description d-flex flex-column justify-content-start align-items-start">
                             <span className="description__name">
-                                Попробуйте переподключить устройство
+                                <FormattedMessage id="plugin.incorrect-load-reconnect" />
                             </span>
                         </div>
                     </div>

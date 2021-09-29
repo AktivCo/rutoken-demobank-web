@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import withLoader from './withLoader';
 import { sign as signAction } from '../actions/sign';
@@ -68,7 +69,9 @@ class PaymentList extends React.Component {
                 .push(
                     <span key="multisign--trigger">
                         <Range onChange={this.onSelectionModeChange} />
-                        <span className="personal__multisign--trigger">Подписание нескольких платежных поручений</span>
+                        <span className="personal__multisign--trigger">
+                            <FormattedMessage id="personal.multisign" />
+                        </span>
                     </span>,
                 );
 

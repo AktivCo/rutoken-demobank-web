@@ -52,3 +52,18 @@ html {
     font-size: 14px;
 }
 
+.asdasd {
+    position: absolute;
+    font-size: 20px;
+    left: 50%;
+    cursor: pointer;
+
+    span {
+        padding: 0 10px;
+    }
+
+    .selected {
+        border: blue 2px solid;
+    }
+}
+
