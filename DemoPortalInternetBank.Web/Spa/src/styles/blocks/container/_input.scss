@@ -55,3 +55,87 @@ button {
     }
 }
 
+.dropdown {
+    padding-left: calc(154px + 2rem);
+
+    .dropdown-header {
+        margin-bottom: 1rem;
+        margin-top: 0.25rem;
+        font-weight: 500;
+        font-size: $font-size--small;
+        color: $gray-light;
+        background: $white;
+
+        .dropdown-icon {
+            width: 24px;
+            height: 24px;
+
+            &.dropdown-icon--up {
+                background: $expand-less;
+            }
+
+            &.dropdown-icon--down {
+                background: $expand-more;
+            }
+        }
+
+        .language-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 0.5rem;
+            background: $language;
+        }
+
+        &:hover {
+            cursor: pointer;
+            color: $gray;
+
+            .dropdown-icon {
+                &.dropdown-icon--up {
+                    background: $expand-less--hover;
+                }
+
+                &.dropdown-icon--down {
+                    background: $expand-more--hover;
+                }
+            }
+
+            .language-icon {
+                background: $language--hover;
+            }
+        }
+    }
+
+    .dropdown-options {
+        padding: 0;
+        margin: 0;
+        background: $white;
+        border: 1px solid #e5e5e5;
+        box-sizing: border-box;
+        color: $gray-light;
+        font-size: $font-size--small;
+        font-weight: 500;
+        z-index: 9999;
+        border-radius: 8px;
+        box-shadow: 0px 10px 20px 0px $gray-lighten;
+
+        .options-wrapper {
+            padding-left: 1rem;
+            padding-right: 1rem;
+
+            &:first-child {
+                margin-top: 1rem;
+            }
+
+            .option {
+                list-style: none;
+                margin-bottom: 1rem;
+
+                &:hover {
+                    cursor: pointer;
+                    color: $gray;
+                }
+            }
+        }
+    }
+}

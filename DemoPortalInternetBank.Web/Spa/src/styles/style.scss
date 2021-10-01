@@ -14,6 +14,7 @@
 
 
 @import "blocks/container/_container.scss";
+@import "blocks/container/_footer.scss";
 @import "blocks/container/certificatecard.scss";
 
 @import "blocks/container/header/_header.scss";
@@ -51,19 +52,3 @@ html {
     font-family: 'Segoe UI';
     font-size: 14px;
 }
-
-.asdasd {
-    position: absolute;
-    font-size: 20px;
-    left: 50%;
-    cursor: pointer;
-
-    span {
-        padding: 0 10px;
-    }
-
-    .selected {
-        border: blue 2px solid;
-    }
-}
-

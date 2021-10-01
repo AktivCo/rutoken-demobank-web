@@ -1,4 +1,6 @@
-header {   
+header {
+    z-index: 9999;
+
     .header {
         background-image: $background-image-line;
         background-repeat: repeat-x;
@@ -6,9 +8,10 @@ header {
         height: 90px;
         flex-grow: 0;
     }
-    
+
     .header__img {
         padding-left: 2rem;
+        z-index: 9999;
 
         .img__logo {
             background: $logo-image no-repeat center center;
@@ -17,7 +20,7 @@ header {
             position: absolute;
         }
     }
-    
+
     .header__menu {
         padding-right: 2rem;
         color: $gray-light;
@@ -54,9 +57,9 @@ header {
                     color: $key-container-dark;
                     border-bottom: 2px solid $key-container-dark;
                     text-decoration: none;
-                }               
+                }
             }
-        }        
+        }
     }
 
     .header__userinfo {
@@ -65,7 +68,6 @@ header {
         margin-bottom: 10px;
         margin-right: 20px;
         padding: 10px 20px;
-
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -81,4 +83,3 @@ header {
         }
     }
 }
-        
