@@ -13,8 +13,9 @@ import saveAction from '../actions/fileActions';
 import PersonalSuccessSignModal from './PersonalSuccessSignModal';
 import Button from '../controls/Button';
 
+const getImageClass = (locale) => `personal-signature ${locale}`;
 
-const PersonalBlockModal = ({ modalState, sign, save }) => (
+const PersonalBlockModal = ({ SELECTED_LANGUAGE, modalState, sign, save }) => (
     <div className="personal-payment-info">
         <h2>
             №&nbsp;
@@ -55,7 +56,7 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
         </div>
 
         {
-            modalState.cms && <div className="personal-signature" />
+            modalState.cms && <div className={getImageClass(SELECTED_LANGUAGE)} />
         }
 
         <div className="personal-payment-info--field mt-2">
@@ -138,6 +139,8 @@ const PersonalBlockModal = ({ modalState, sign, save }) => (
     </div>
 );
 
+const mapStateToProps = (state) => ({ SELECTED_LANGUAGE: state.SELECTED_LANGUAGE });
+
 const mapActionsToProps = (dispatch) =>
     ({
         sign: (payment) => dispatch(signAction(payment)),
@@ -145,9 +148,10 @@ const mapActionsToProps = (dispatch) =>
     });
 
 PersonalBlockModal.propTypes = {
+    SELECTED_LANGUAGE: PropTypes.string.isRequired,
     modalState: PropTypes.shape().isRequired,
     sign: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
 };
 
-export default withOperation('sign', connect(null, mapActionsToProps)(PersonalBlockModal), PersonalSuccessSignModal);
+export default withOperation('sign', connect(mapStateToProps, mapActionsToProps)(PersonalBlockModal), PersonalSuccessSignModal);

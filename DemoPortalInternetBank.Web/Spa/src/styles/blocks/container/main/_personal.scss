@@ -235,9 +235,16 @@
 }
 
 .personal-signature {
-    background: $signature no-repeat center center;
     width: 240px;
     height: 100px;
+
+    &.ru {
+        background: $signature-ru no-repeat center center;
+    }
+
+    &.en {
+        background: $signature-en no-repeat center center;
+    }
 }
 
 .personal__multisign--trigger {

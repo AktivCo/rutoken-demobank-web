@@ -15,6 +15,7 @@ import PersonalSuccessSignModal from './PersonalSuccessSignModal';
 import Input from '../controls/Input';
 import Button from '../controls/Button';
 
+const getImageClass = (locale) => `personal-signature ${locale}`;
 
 class PersonalBlockModal extends React.Component {
     state = { pin: null }
@@ -25,7 +26,7 @@ class PersonalBlockModal extends React.Component {
 
     render() {
         const { pin } = this.state;
-        const { modalState, sign, save, intl } = this.props;
+        const { modalState, sign, save, intl, SELECTED_LANGUAGE } = this.props;
 
         const placeholder = intl.formatMessage({ id: 'personal.enter-pin-placeholder' });
 
@@ -70,7 +71,7 @@ class PersonalBlockModal extends React.Component {
                 </div>
 
                 {
-                    modalState.cms && <div className="personal-signature" />
+                    modalState.cms && <div className={getImageClass(SELECTED_LANGUAGE)} />
                 }
 
                 <div className="personal-payment-info--field mt-2">
@@ -160,6 +161,8 @@ class PersonalBlockModal extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => ({ SELECTED_LANGUAGE: state.SELECTED_LANGUAGE });
+
 const mapActionsToProps = (dispatch) =>
     ({
         sign: (pin, payment) => dispatch(signAction(pin, payment)),
@@ -167,10 +170,11 @@ const mapActionsToProps = (dispatch) =>
     });
 
 PersonalBlockModal.propTypes = {
+    SELECTED_LANGUAGE: PropTypes.string.isRequired,
     modalState: PropTypes.shape().isRequired,
     sign: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
     intl: PropTypes.shape().isRequired,
 };
 
-export default withOperation('sign', connect(null, mapActionsToProps)(injectIntl(PersonalBlockModal)), PersonalSuccessSignModal);
+export default withOperation('sign', connect(mapStateToProps, mapActionsToProps)(injectIntl(PersonalBlockModal)), PersonalSuccessSignModal);

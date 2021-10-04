@@ -31,11 +31,13 @@ const Header = ({ LOGIN_STATE, SELECTED_LANGUAGE, setLanguageState, logout }) =>
         setLanguageState(selectedItem.locale);
     };
 
+    const getRutokenImageClass = (language) => `img__logo ${language.locale}`;
+
     return (
         <header>
             <div className="header d-flex flex-row justify-content-between">
                 <div className="header__img">
-                    <a to="/devices"><span className="img__logo" /></a>
+                    <a to="/devices"><span className={getRutokenImageClass(selectedLanguage)} /></a>
                     <Dropdown
                         options={options}
                         selectedOption={selectedLanguage}

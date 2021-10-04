@@ -1,7 +1,8 @@
 $font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 
 $background-image-line:url('./images/bgr_body.png');
-$logo-image:url('./images/logo.png');
+$logo-image--ru:url('./images/logo-ru.png');
+$logo-image--en:url('./images/logo-en.png');
 $ecp-image--active:url('./images/usb_current.png');
 $ecpsc-image--active: url('./images/smartcard_current.png');
 $pinpad-image--active: url('./images/pinpad_current.png');
@@ -51,5 +52,6 @@ $expand-less--hover: url('./images/expand_less_24px_hover.png');
 
 $link-outgoing:url('./images/link-outgoing.svg');
 $link-sent:url('./images/link-sent.svg');
-$signature:url('./images/signature.svg');
+$signature-ru:eurl('./images/signature-ru.svg');
+$signature-en:eurl('./images/signature-en.svg');
 $icon-done:url('./images/icon-done.svg');

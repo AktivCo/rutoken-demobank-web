@@ -1,6 +1,4 @@
 header {
-    z-index: 9999;
-
     .header {
         background-image: $background-image-line;
         background-repeat: repeat-x;
@@ -14,10 +12,17 @@ header {
         z-index: 9999;
 
         .img__logo {
-            background: $logo-image no-repeat center center;
             width: 11rem;
             height: 4rem;
             position: absolute;
+
+            &.ru {
+                background: $logo-image--ru no-repeat center center;
+            }
+            
+            &.en {
+                background: $logo-image--en no-repeat center center;
+            }
         }
     }
 
