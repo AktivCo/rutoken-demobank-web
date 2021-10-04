@@ -56,4 +56,15 @@ namespace DemoPortalInternetBank.Domain.Services
         {
         }
     }
+
+    public interface ITranslationRepository : IRepository<Translation>
+    {
+    }
+
+    public class TranslationRepository : Repository<Translation>, ITranslationRepository
+    {
+        public TranslationRepository(EfDbContext context) : base(context)
+        {
+        }
+    }
 }

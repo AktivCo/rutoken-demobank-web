@@ -134,6 +134,7 @@ const base = {
         PIN_LOCKED: 'User\'s PIN has been blocked after being entered incorrectly several times in a row. Please contact technical support.',
         LOGIN_ERROR: '{description}. {pinRetriesLeft} {pinRetriesLeft, plural, one {attempt} other {attempts}} left.',
     },
+    translation: { 'handle.translation-object': '{en}' },
 };
 
 const result = {};

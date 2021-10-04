@@ -57,7 +57,7 @@ class PersonalBlockMultipleConfirmModal extends React.Component {
                                     &nbsp;
                                     <FormattedMessage id="payment.date-from" />
                                     &nbsp;
-                                    {payment.account.respondent.name}
+                                    <FormattedMessage id="handle.translation-object" values={payment.account.respondent.translation} />
                                 </div>
                             ))
                         }

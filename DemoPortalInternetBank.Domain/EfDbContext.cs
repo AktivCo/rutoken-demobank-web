@@ -17,6 +17,7 @@ namespace DemoPortalInternetBank.Domain
         public DbSet<Bank> Banks { get; set; }
         public DbSet<Respondent> Respondents { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Translation> Translations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -44,7 +44,7 @@ class PersonalBlockModal extends React.Component {
                     &nbsp;
                     <FormattedMessage id="payment.date-from" />
                     &nbsp;
-                    {modalState.account.respondent.name}
+                    <FormattedMessage id="handle.translation-object" values={modalState.account.respondent.translation} />
                 </div>
 
                 <div className="personal-payment-info--field mt-3">
@@ -80,7 +80,9 @@ class PersonalBlockModal extends React.Component {
                     </div>
                 </div>
 
-                <h3>{modalState.account.bank.name}</h3>
+                <h3>
+                    <FormattedMessage id="handle.translation-object" values={modalState.account.bank.translation} />
+                </h3>
 
                 <div className="personal-payment-info--field mt-1">
                     <div className="personal-payment-info--label">
@@ -106,7 +108,9 @@ class PersonalBlockModal extends React.Component {
                     </div>
                 </div>
 
-                <h3>{modalState.account.respondent.name}</h3>
+                <h3>
+                    <FormattedMessage id="handle.translation-object" values={modalState.account.respondent.translation} />
+                </h3>
 
                 <div className="personal-payment-info--field mt-1">
                     <div className="personal-payment-info--label">

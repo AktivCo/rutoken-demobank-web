@@ -25,25 +25,25 @@ namespace DemoPortalInternetBank.Domain
             {
                 new Bank
                 {
-                    Name = "ПАО «Сбербанк России»",
+                    Translation = new Translation { Ru="ПАО «Сбербанк России»", En="Sberbank of Russia" },
                     CheckingAccount = "30101810400000000225",
                     BIK = "044525225"
                 },
                 new Bank
                 {
-                    Name = "ПАО «Банк ВТБ»",
+                    Translation = new Translation { Ru="ПАО «Банк ВТБ»", En="VTB Bank" },
                     CheckingAccount = "30232810481100000009",
                     BIK = "044525745"
                 },
                 new Bank
                 {
-                    Name = "Акционерное общество «Тинькофф Банк»",
+                    Translation = new Translation { Ru="Акционерное общество «Тинькофф Банк»", En="Tinkoff" },
                     CheckingAccount = "30232810100000000004",
                     BIK = "044525974"
                 },
                 new Bank
                 {
-                    Name = "ПАО Банк «ФК Открытие»",
+                    Translation = new Translation { Ru="ПАО Банк «ФК Открытие»", En="Otkritie Bank" },
                     CheckingAccount = "30101810300000000985",
                     BIK = "044525985"
                 }
@@ -53,53 +53,53 @@ namespace DemoPortalInternetBank.Domain
             {
                 new Respondent
                 {
-                    Name = "ОАО «Нефтегаз»",
+                    Translation = new Translation { Ru="ОАО «Нефтегаз»", En="Neftegaz" },
                     Inn = "7710026924",
                     Kpp = "771001024",
                     Protected = true
                 },
                 new Respondent
                 {
-                    Name = "Торгово-промышленная палата Российской Федерации",
+                    Translation = new Translation { Ru="Торгово-промышленная палата Российской Федерации", En="Chamber of Commerce and Industry of the Russian Federation" },
                     Inn = "7710026920",
                     Kpp = "771001001"
                 },
                 new Respondent
                 {
-                    Name = "ООО «НПП Буринтех»",
+                    Translation = new Translation { Ru="ООО «НПП Буринтех»", En="Burinteh" },
                     Inn = "0272010012",
                     Kpp = "027701001",
                     Protected = true
                 },
                 new Respondent
                 {
-                    Name = "ПАО «МегаФон»",
+                    Translation = new Translation { Ru="ПАО «МегаФон»", En="Megafon" },
                     Inn = "7812014560",
                     Kpp = "997750001",
                 },
                 new Respondent
                 {
-                    Name = "ООО «Иванов Алекс»",
+                    Translation = new Translation { Ru="ООО «Иванов Алекс»", En="Ivanov Alex" },
                     Inn = "7812014564",
                     Kpp = "997750001",
                     Protected = true
                 },
                 new Respondent
                 {
-                    Name = "ООО «Глория групп»",
+                    Translation = new Translation { Ru="ООО «Глория групп»", En="Gloria group" },
                     Inn = "5024173097",
                     Kpp = "502401001",
                 },
                 new Respondent
                 {
-                    Name = "ОАО «Газпром»",
+                    Translation = new Translation { Ru="ОАО «Газпром»", En="Gazprom" },
                     Inn = "7812314564",
                     Kpp = "997725001",
                     Protected = true
                 },
                 new Respondent
                 {
-                    Name = "ООО «Фурлан»",
+                    Translation = new Translation { Ru="ООО «Фурлан»", En="Furlan" },
                     Inn = "5024152097",
                     Kpp = "502451001",
                 },

@@ -36,7 +36,7 @@ const PersonalBlock = ({ element, isSelected, onSelect }) => (
             &nbsp;
             <FormattedMessage id="payment.date-from" />
             &nbsp;
-            {element.account.respondent.name}
+            <FormattedMessage id="handle.translation-object" values={element.account.respondent.translation} />
         </p>
 
         <span className="light">
@@ -49,7 +49,9 @@ const PersonalBlock = ({ element, isSelected, onSelect }) => (
         <span className="light">
             <FormattedMessage id="payment.recipient" />
         </span>
-        <span>{element.account.respondent.name}</span>
+        <span>
+            <FormattedMessage id="handle.translation-object" values={element.account.respondent.translation} />
+        </span>
 
         <span className="light">
             <FormattedMessage id="payment.date-from-upper" />

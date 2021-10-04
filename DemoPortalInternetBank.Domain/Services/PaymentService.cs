@@ -88,6 +88,8 @@ namespace DemoPortalInternetBank.Domain.Services
 
         public List<Payment> GetPayments(int userId, bool isPayment = false)
         {
+            _paymentDataService.Translations.GetAll().ToList();
+
             var payments =
                 _paymentDataService.Payments.GetAll()
                     .Where(p => p.UserId == userId && (!isPayment ? p.CMS == null : p.CMS != null))

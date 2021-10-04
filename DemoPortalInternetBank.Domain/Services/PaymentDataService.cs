@@ -7,6 +7,7 @@ namespace DemoPortalInternetBank.Domain.Services
         IPaymentRepository Payments { get; }
         IRespondentRepository Respondents { get; }
         IUserRepository Users { get; }
+        ITranslationRepository Translations { get; }
     }
 
     public class PaymentDataService : IPaymentDataService
@@ -16,6 +17,7 @@ namespace DemoPortalInternetBank.Domain.Services
         private IBankRepository _bank;
         private IRespondentRepository _respondent;
         private IUserRepository _user;
+        private ITranslationRepository _translation;
         private readonly EfDbContext _context;
 
         public PaymentDataService(EfDbContext context)
@@ -37,5 +39,8 @@ namespace DemoPortalInternetBank.Domain.Services
 
         public IUserRepository Users =>
             _user ?? (_user = new UserRepository(_context));
+
+        public ITranslationRepository Translations =>
+            _translation ?? (_translation = new TranslationRepository(_context));
     }
 }

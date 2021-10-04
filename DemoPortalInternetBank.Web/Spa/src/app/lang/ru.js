@@ -134,6 +134,7 @@ const base = {
         PIN_LOCKED: 'PIN-код Пользователя был заблокирован после неправильного ввода нескольких раз подряд. Обратитесь в службу технической поддержки.',
         LOGIN_ERROR: '{description}. Осталось {pinRetriesLeft} {pinRetriesLeft, plural, one {попытка} few {попытки} other {попыток}}.',
     },
+    translation: { 'handle.translation-object': '{ru}' },
 };
 
 const result = {};

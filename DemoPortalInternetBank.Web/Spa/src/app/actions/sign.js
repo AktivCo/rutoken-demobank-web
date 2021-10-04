@@ -13,11 +13,11 @@ const constructPinPadData = (payment) =>
     `<!PINPADFILE UTF8><N>Платежное поручение<V>${payment.id}
     <N>Сумма<V>${payment.amount}
     <N>Дата<V>${formatDate(payment.paymentDate)}
-    <N>Получатель<V>${payment.account.respondent.name}
+    <N>Получатель<V>${payment.account.respondent.translation.ru}
     <N>Инн<V>${payment.account.respondent.inn}
     <N>КПП<V>${payment.account.respondent.kpp}
     <N>Назначение платежа<V>Оплата счета
-    <N>Банк получателя<V>${payment.account.bank.name}
+    <N>Банк получателя<V>${payment.account.bank.translation.ru}
     <N>БИК<V>${payment.account.bank.bik}
     <N>Номер счета получателя<V>${payment.account.accountNumber}
     <N>Плательщик<V>ООО "Демобанк"
