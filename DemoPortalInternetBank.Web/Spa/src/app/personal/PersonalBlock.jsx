@@ -43,7 +43,7 @@ const PersonalBlock = ({ element, isSelected, onSelect }) => (
             <FormattedMessage id="payment.summ" />
         </span>
         <span>
-            {formatMoney(element.amount)}
+            <FormattedMessage id="amount" values={{ amount: formatMoney(element.amount) }} />
         </span>
 
         <span className="light">

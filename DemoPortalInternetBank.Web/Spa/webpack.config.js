@@ -65,23 +65,23 @@ module.exports = {
     plugins: [
         new StyleLintPlugin(),
     ],
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                uglifyOptions: {
-                    warnings: false,
-                    parse: {},
-                    compress: {},
-                    mangle: true, // Note `mangle.properties` is `false` by default.
-                    output: null,
-                    toplevel: false,
-                    nameCache: null,
-                    ie8: true,
-                    keep_fnames: false,
-                },
-            }),
-        ],
-    },
+    // optimization: {
+    //     minimizer: [
+    //         new UglifyJsPlugin({
+    //             uglifyOptions: {
+    //                 warnings: false,
+    //                 parse: {},
+    //                 compress: {},
+    //                 mangle: true, // Note `mangle.properties` is `false` by default.
+    //                 output: null,
+    //                 toplevel: false,
+    //                 nameCache: null,
+    //                 ie8: true,
+    //                 keep_fnames: false,
+    //             },
+    //         }),
+    //     ],
+    // },
     resolve: {
         extensions: ['*', '.js', '.jsx'],
     },

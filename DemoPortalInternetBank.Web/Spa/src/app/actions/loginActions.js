@@ -7,7 +7,7 @@ import { operationStart, operationFinished, operationError } from './operations'
 
 const defaultPin = '12345678';
 
-const handleIncorrectPin = (deviceId, err) => (dispatch) => {
+const handleIncorrectPin = (deviceId, err, errorCode) => (dispatch) => {
     let sequense = Promise.resolve();
 
     sequense = sequense.then(() => Plugin.getDeviceInfo(deviceId, Plugin.TOKEN_INFO_PINS_INFO));
@@ -18,7 +18,7 @@ const handleIncorrectPin = (deviceId, err) => (dispatch) => {
             pinRetriesLeft: retries.retriesLeft,
         };
 
-        const error = { ...err, internalCodeError: 'LOGIN_ERROR', values };
+        const error = { ...err, internalCodeError: errorCode, values };
         dispatch(operationError('login', error));
 
         throw error;
@@ -27,14 +27,14 @@ const handleIncorrectPin = (deviceId, err) => (dispatch) => {
     return sequense;
 };
 
-const logoutAndLogin = (deviceId, password) => (dispatch) => {
+const logoutAndLogin = (deviceId, password) => (dispatch, getState) => {
     let sequense = Promise.resolve();
 
     sequense = sequense.then(() => Plugin.logout(deviceId));
 
     sequense = sequense.then(() => Plugin.removePin(deviceId));
     /* eslint-disable-next-line no-use-before-define */
-    sequense = sequense.then(() => login(deviceId, password)(dispatch));
+    sequense = sequense.then(() => login(deviceId, password)(dispatch, getState));
 
     return sequense;
 };
@@ -44,7 +44,8 @@ const logoutAndLogin = (deviceId, password) => (dispatch) => {
  * @param {number} deviceId - Id подключенного устройства.
  * @param {string} pin - PIN-код подключенного устройства.
  */
-const login = (deviceId, pin) => (dispatch) => {
+const login = (deviceId, pin) => (dispatch, getState) => {
+    const { LOGIN_STATE } = getState();
     dispatch(operationStart('login'));
 
     let sequense = Promise.resolve();
@@ -60,11 +61,14 @@ const login = (deviceId, pin) => (dispatch) => {
 
     sequense = sequense.catch((err) => {
         if (err instanceof PluginError && err.code === Plugin.errorCodes.ALREADY_LOGGED_IN) {
-            return logoutAndLogin(deviceId, pin)(dispatch);
+            return logoutAndLogin(deviceId, pin)(dispatch, getState);
         }
 
         if (err instanceof PluginError && err.code === Plugin.errorCodes.PIN_INCORRECT) {
-            return handleIncorrectPin(deviceId, err)(dispatch);
+            if (LOGIN_STATE) {
+                return handleIncorrectPin(deviceId, err, 'LOGIN_ERROR_WITH_LOGOUT_WARNING')(dispatch);
+            }
+            return handleIncorrectPin(deviceId, err, 'LOGIN_ERROR')(dispatch);
         }
 
         dispatch(operationError('login', err));

@@ -1,6 +1,6 @@
 const formatMoney = (num) => {
     if (Number.isNaN(num)) {
-        return '';
+        return '0';
     }
 
     const rank = 10;
@@ -26,7 +26,7 @@ const formatMoney = (num) => {
         resultStr = `-${resultStr}`;
     }
 
-    return `${resultStr} ₽`;
+    return `${resultStr}`;
 };
 
 const formatDate = (stringDate) => {

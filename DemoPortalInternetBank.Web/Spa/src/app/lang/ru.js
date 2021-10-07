@@ -99,8 +99,8 @@ const base = {
         'personal.select-payments': 'Выберите платежные поручения',
         'personal.selected-payments-plural': 'Выбрaно {count} {count, plural,  one {поручение} few {поручения} other {поручений}}',
         'personal.sign-btn': 'Подписать',
-        'personal.signed-single': 'Подписана и отправлена на обработку в банк платежка на сумму {amount}',
-        'personal.signed-multiple': 'Подписаны и отправлены на обработку в банк {count} {count, plural, few {платежки} other {платежeк}} на сумму {amount}',
+        'personal.signed-single': 'Подписана и отправлена на обработку в банк платежка на сумму {amount} ₽',
+        'personal.signed-multiple': 'Подписаны и отправлены на обработку в банк {count} {count, plural, few {платежки} other {платежeк}} на сумму {amount} ₽',
         'personal.done': 'Готово',
         'personal.to-sent': 'к отправленным',
     },
@@ -133,7 +133,9 @@ const base = {
         SIGN_IN_ERROR: 'Не удалось войти в систему',
         PIN_LOCKED: 'PIN-код Пользователя был заблокирован после неправильного ввода нескольких раз подряд. Обратитесь в службу технической поддержки.',
         LOGIN_ERROR: '{description}. Осталось {pinRetriesLeft} {pinRetriesLeft, plural, one {попытка} few {попытки} other {попыток}}.',
+        LOGIN_ERROR_WITH_LOGOUT_WARNING: '{description}. В целях безопасности мы совершили выход из профиля. Закрытие данного окна приведет к возвращению на страницу логина. Осталось {pinRetriesLeft} {pinRetriesLeft, plural, one {попытка} few {попытки} other {попыток}}.',
     },
+    amount: { amount: '{amount} ₽' },
     translation: { 'handle.translation-object': '{ru}' },
 };
 

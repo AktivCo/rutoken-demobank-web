@@ -25,9 +25,7 @@ const PersonalBlockMultipleModal = ({ modalState, generateMultipleSignature }) =
                     <FormattedMessage id="personal.amount-preposition" />
                 </div>
                 <div className="personal-payment-info--value">
-                    {
-                        amount
-                    }
+                    <FormattedMessage id="amount" values={{ amount }} />
                 </div>
             </div>
 

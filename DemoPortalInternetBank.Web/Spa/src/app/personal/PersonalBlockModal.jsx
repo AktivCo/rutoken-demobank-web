@@ -37,7 +37,7 @@ const PersonalBlockModal = ({ SELECTED_LANGUAGE, modalState, sign, save }) => (
                 <FormattedMessage id="payment.summ" />
             </div>
             <div className="personal-payment-info--value">
-                {formatMoney(modalState.amount)}
+                <FormattedMessage id="amount" values={{ amount: formatMoney(modalState.amount) }} />
             </div>
         </div>
 
@@ -124,7 +124,7 @@ const PersonalBlockModal = ({ SELECTED_LANGUAGE, modalState, sign, save }) => (
                         <small>
                             <FormattedMessage id="personal.payment-with-summ" />
                             &nbsp;
-                            {formatMoney(modalState.amount)}
+                            <FormattedMessage id="amount" values={{ amount: formatMoney(modalState.amount) }} />
                         </small>
                     </Button>
                 </div>

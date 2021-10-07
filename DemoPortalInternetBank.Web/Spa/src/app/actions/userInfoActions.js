@@ -15,12 +15,13 @@ const checkLoginState = () => (dispatch) => {
     return sequense;
 };
 
-const logout = () => () => {
+const logout = () => (dispatch) => {
     let sequense = Promise.resolve();
 
     sequense = sequense.then(() => axios.get('/api/user/logout'));
 
     sequense = sequense.then(() => {
+        dispatch({ type: 'SET_LOGIN_STATE', payload: false });
         window.location.reload();
     });
 

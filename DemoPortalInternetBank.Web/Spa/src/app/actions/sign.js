@@ -114,7 +114,7 @@ const generateSignatureWithConfirm = (pin, payment) => (dispatch, getState) => {
 
     let sequense = Promise.resolve();
 
-    sequense = sequense.then(() => login(getState().CURRENT_DEVICE_ID, pin)(dispatch));
+    sequense = sequense.then(() => login(getState().CURRENT_DEVICE_ID, pin)(dispatch, getState));
 
     sequense = sequense.then(() => makeSingleSignature(payment)(dispatch, getState));
 
@@ -155,7 +155,7 @@ const generateMultipleSignatureWithConfirm = (pin, payments) => (dispatch, getSt
 
     let sequense = Promise.resolve();
 
-    sequense = sequense.then(() => login(getState().CURRENT_DEVICE_ID, pin)(dispatch));
+    sequense = sequense.then(() => login(getState().CURRENT_DEVICE_ID, pin)(dispatch, getState));
 
     sequense = sequense.then(() => makeMultipleSignature(payments)(dispatch, getState));
 
@@ -172,7 +172,7 @@ const generateMultipleSignatureWithConfirm = (pin, payments) => (dispatch, getSt
 };
 
 
-const sign = (paymentData, sequenceModals) => (dispatch) => {
+const sign = (paymentData, sequenceModals, onErrorCloseAction) => (dispatch) => {
     let sequense = Promise.resolve();
 
     const { PaymentModal, PaymentModalConfirm, PaymentMultipleModal, PaymentMultipleModalConfirm } = sequenceModals;
@@ -185,11 +185,15 @@ const sign = (paymentData, sequenceModals) => (dispatch) => {
 
     let modal = PaymentModal;
 
+    let errorCloseAction = null;
+
     if (isProtected && isMultiple) {
         modal = PaymentMultipleModalConfirm;
+        errorCloseAction = onErrorCloseAction;
     } else {
         if (isProtected) {
             modal = PaymentModalConfirm;
+            errorCloseAction = onErrorCloseAction;
         }
         if (isMultiple) {
             modal = PaymentMultipleModal;
@@ -202,7 +206,7 @@ const sign = (paymentData, sequenceModals) => (dispatch) => {
 
     sequense = sequense.then(() => {
         const promise = new Promise((resolve) => {
-            dispatch(showModal(modal, modalData, { size: 'lg' }, resolve));
+            dispatch(showModal(modal, modalData, { size: 'lg' }, resolve, errorCloseAction));
         });
 
         return promise;

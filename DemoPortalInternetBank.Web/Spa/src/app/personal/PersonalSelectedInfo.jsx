@@ -25,7 +25,7 @@ const PersonalSelectedInfo = ({ payments, onMultipleSign, intl }) => {
                     {getSelectedPaymentsInfo(intl, payments.length)}
                 </p>
                 <span>
-                    {paymentSumStr}
+                    <FormattedMessage id="amount" values={{ amount: paymentSumStr }} />
                 </span>
             </div>
             <div>

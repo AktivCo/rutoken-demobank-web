@@ -78,7 +78,7 @@ const Header = ({ LOGIN_STATE, SELECTED_LANGUAGE, setLanguageState, logout }) =>
                             </p>
                         </div>
                         <div className="header__userinfo--balance">
-                            {formatMoney(LOGIN_STATE.balance)}
+                            <FormattedMessage id="amount" values={{ amount: formatMoney(LOGIN_STATE.balance) }} />
                         </div>
                     </div>
                 )

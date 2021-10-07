@@ -6,6 +6,11 @@ import PropTypes from 'prop-types';
 class Dropdown extends React.Component {
     constructor(props) {
         super(props);
+
+        this.wrapperRef = React.createRef();
+        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+
         this.state = {
             options: props.options,
             isOpen: false,
@@ -15,14 +20,13 @@ class Dropdown extends React.Component {
         };
     }
 
-    renderDropdownIconBeforeSelectedItemClass = (iconClass) =>
-        `${iconClass.toString()}`
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
 
-    renderDropdownArrowIconClass = (isOpen) => cn({
-        'dropdown-icon--up': isOpen,
-        'dropdown-icon--down': !isOpen,
-        'dropdown-icon': true,
-    });
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
 
     setIsOpen = () => {
         const { isOpen } = this.state;
@@ -30,14 +34,30 @@ class Dropdown extends React.Component {
         this.setState({ isOpen: !isOpen });
     }
 
-    setSelectedOption = (option: number) => {
+    setSelectedOption = (option) => {
         this.setState({ selectedOption: option });
+    }
+
+    setWrapperRef(node) {
+        this.wrapperRef = node;
     }
 
     toggling = () => {
         const { setIsOpen } = this;
 
         setIsOpen();
+    }
+
+    handleClickOutside = (event) => {
+        const { isOpen } = this.state;
+        const { toggling } = this;
+
+        if (this.wrapperRef
+            && this.wrapperRef.current
+            && !this.wrapperRef.current.contains(event.target)
+            && isOpen) {
+            toggling();
+        }
     }
 
     handleClick = (value) => () => {
@@ -48,6 +68,15 @@ class Dropdown extends React.Component {
         setIsOpen();
         onOptionClicked(value);
     };
+
+    renderDropdownIconBeforeSelectedItemClass = (iconClass) =>
+        `${iconClass.toString()}`
+
+    renderDropdownArrowIconClass = (isOpen) => cn({
+        'dropdown-icon--up': isOpen,
+        'dropdown-icon--down': !isOpen,
+        'dropdown-icon': true,
+    });
 
     render() {
         const { isOpen, selectedOption, options, showIcon, iconClass } = this.state;
@@ -70,7 +99,7 @@ class Dropdown extends React.Component {
                     <div className={renderDropdownArrowIconClass(isOpen)} />
                 </div>
                 {isOpen && (
-                    <div className="dropdown-options">
+                    <div className="dropdown-options" ref={this.wrapperRef}>
                         <div className="options-wrapper">
                             {options.map((option) => (
                                 <div

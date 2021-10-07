@@ -52,7 +52,7 @@ class PersonalBlockModal extends React.Component {
                         <FormattedMessage id="payment.summ" />
                     </div>
                     <div className="personal-payment-info--value">
-                        {formatMoney(modalState.amount)}
+                        <FormattedMessage id="amount" values={{ amount: formatMoney(modalState.amount) }} />
                     </div>
                 </div>
 
@@ -145,7 +145,7 @@ class PersonalBlockModal extends React.Component {
                                 <small>
                                     <FormattedMessage id="personal.payment-with-summ" />
                                     &nbsp;
-                                    {formatMoney(modalState.amount)}
+                                    <FormattedMessage id="amount" values={{ amount: formatMoney(modalState.amount) }} />
                                 </small>
                             </Button>
                         </div>
