@@ -22,7 +22,7 @@ const getExtensionDownloadLink = (browserName) => {
     case 'Opera':
         return 'https://addons.opera.com/ru/extensions/details/adapter-rutoken-plagin/';
     case 'Microsoft Edge':
-        return 'https://www.microsoft.com/en-us/p/adapter-rutoken-plugin/9p4kb5pz2vvx';
+        return 'https://microsoftedge.microsoft.com/addons/detail/rutoken-plugin-for-edge/bbkhpnmiijkcilgdnlaojbkokdhiijfc?hl=ru';
     default:
         return 'http://www.rutoken.ru/support/download/rutoken-plugin/';
     }
