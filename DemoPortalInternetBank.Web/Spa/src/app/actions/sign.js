@@ -26,6 +26,21 @@ const constructPinPadData = (payment) =>
     <N>Номер счета плательщика<V>0000005034613644136
     `;
 
+const setTokenPinIncorrect = () => {
+    let sequense = Promise.resolve();
+
+    sequense = sequense.then(() => axios.get('/api/user/pin/incorrect'));
+
+    return sequense;
+};
+
+const setTokenPinCorrect = () => {
+    let sequense = Promise.resolve();
+
+    sequense = sequense.then(() => axios.get('/api/user/pin/correct'));
+
+    return sequense;
+};
 
 /**
  * Метод формирования и подписи платежного поручения с использованием API Рутокен Плагина.
@@ -116,6 +131,8 @@ const generateSignatureWithConfirm = (pin, payment) => (dispatch, getState) => {
 
     sequense = sequense.then(() => login(getState().CURRENT_DEVICE_ID, pin)(dispatch, getState));
 
+    sequense = sequense.then(() => setTokenPinCorrect());
+
     sequense = sequense.then(() => makeSingleSignature(payment)(dispatch, getState));
 
     sequense = sequense.then(() => {
@@ -125,6 +142,9 @@ const generateSignatureWithConfirm = (pin, payment) => (dispatch, getState) => {
 
     sequense = sequense.catch((err) => {
         dispatch(operationError('sign', err));
+        if (err.code === Plugin.errorCodes.PIN_INCORRECT) {
+            return setTokenPinIncorrect();
+        }
     });
 
     return sequense;
@@ -157,7 +177,10 @@ const generateMultipleSignatureWithConfirm = (pin, payments) => (dispatch, getSt
 
     sequense = sequense.then(() => login(getState().CURRENT_DEVICE_ID, pin)(dispatch, getState));
 
+    sequense = sequense.then(() => setTokenPinCorrect());
+
     sequense = sequense.then(() => makeMultipleSignature(payments)(dispatch, getState));
+
 
     sequense = sequense.then(() => {
         dispatch({ type: 'DELETE_OBJECTS_LIST' });
@@ -166,13 +189,16 @@ const generateMultipleSignatureWithConfirm = (pin, payments) => (dispatch, getSt
 
     sequense = sequense.catch((err) => {
         dispatch(operationError('sign', err));
+        if (err.code === Plugin.errorCodes.PIN_INCORRECT) {
+            return setTokenPinIncorrect();
+        }
     });
 
     return sequense;
 };
 
 
-const sign = (paymentData, sequenceModals, onErrorCloseAction) => (dispatch) => {
+const sign = (paymentData, sequenceModals) => (dispatch) => {
     let sequense = Promise.resolve();
 
     const { PaymentModal, PaymentModalConfirm, PaymentMultipleModal, PaymentMultipleModalConfirm } = sequenceModals;
@@ -185,15 +211,11 @@ const sign = (paymentData, sequenceModals, onErrorCloseAction) => (dispatch) => 
 
     let modal = PaymentModal;
 
-    let errorCloseAction = null;
-
     if (isProtected && isMultiple) {
         modal = PaymentMultipleModalConfirm;
-        errorCloseAction = onErrorCloseAction;
     } else {
         if (isProtected) {
             modal = PaymentModalConfirm;
-            errorCloseAction = onErrorCloseAction;
         }
         if (isMultiple) {
             modal = PaymentMultipleModal;
@@ -204,9 +226,13 @@ const sign = (paymentData, sequenceModals, onErrorCloseAction) => (dispatch) => 
         [modalData] = paymentData;
     }
 
+    const reject = function () {
+        checkLoginState()(dispatch);
+    };
+
     sequense = sequense.then(() => {
         const promise = new Promise((resolve) => {
-            dispatch(showModal(modal, modalData, { size: 'lg' }, resolve, errorCloseAction));
+            dispatch(showModal(modal, modalData, { size: 'lg' }, resolve, reject));
         });
 
         return promise;

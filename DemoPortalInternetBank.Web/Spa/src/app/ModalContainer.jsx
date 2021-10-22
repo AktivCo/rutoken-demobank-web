@@ -10,7 +10,7 @@ const getContentClassName = (size) => cn({
     'modal-lg': size === 'lg',
 });
 
-const ModalContainer = ({ SHOW_MODAL, closeModal, isLogined, internalError }) => {
+const ModalContainer = ({ SHOW_MODAL, closeModal }) => {
     if (!SHOW_MODAL || !SHOW_MODAL.modalType) return null;
 
     const WrappedModelComponent = SHOW_MODAL.modalType;
@@ -33,7 +33,7 @@ const ModalContainer = ({ SHOW_MODAL, closeModal, isLogined, internalError }) =>
                         tabIndex={0}
                         onClick={() => {
                             closeModal();
-                            if (SHOW_MODAL.onErrorCloseAction && isLogined && internalError && internalError.internalCodeError === 'LOGIN_ERROR_WITH_LOGOUT_WARNING') {
+                            if (SHOW_MODAL.onErrorCloseAction) {
                                 SHOW_MODAL.onErrorCloseAction();
                             }
                         }}
@@ -46,7 +46,7 @@ const ModalContainer = ({ SHOW_MODAL, closeModal, isLogined, internalError }) =>
                     modalState={SHOW_MODAL.modalState}
                     closeModal={() => {
                         closeModal();
-                        if (SHOW_MODAL.onErrorCloseAction && isLogined && internalError && internalError.internalCodeError === 'LOGIN_ERROR_WITH_LOGOUT_WARNING') {
+                        if (SHOW_MODAL.onErrorCloseAction) {
                             SHOW_MODAL.onErrorCloseAction();
                         }
                     }}
@@ -56,11 +56,7 @@ const ModalContainer = ({ SHOW_MODAL, closeModal, isLogined, internalError }) =>
     );
 };
 
-const mapState = (state) => ({
-    SHOW_MODAL: state.SHOW_MODAL,
-    isLogined: state.LOGIN_STATE,
-    internalError: state.OPERATION_HANDLE && state.OPERATION_HANDLE.error,
-});
+const mapState = (state) => ({ SHOW_MODAL: state.SHOW_MODAL });
 
 const mapActionsToProps = (dispatch) => (
     { closeModal: () => dispatch(hideModal()) }
@@ -68,15 +64,9 @@ const mapActionsToProps = (dispatch) => (
 
 ModalContainer.propTypes = {
     SHOW_MODAL: PropTypes.shape(),
-    isLogined: PropTypes.oneOfType([PropTypes.bool, PropTypes.shape()]),
     closeModal: PropTypes.func.isRequired,
-    internalError: PropTypes.shape(),
 };
 
-ModalContainer.defaultProps = {
-    SHOW_MODAL: null,
-    isLogined: null,
-    internalError: null,
-};
+ModalContainer.defaultProps = { SHOW_MODAL: null };
 
 export default connect(mapState, mapActionsToProps)(ModalContainer);

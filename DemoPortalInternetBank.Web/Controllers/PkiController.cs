@@ -69,7 +69,9 @@ namespace DemoPortalInternetBank.Web.Controllers
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
+            
+            HttpContext.Session.Remove("PIN_INCORRECT");
+            
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
 

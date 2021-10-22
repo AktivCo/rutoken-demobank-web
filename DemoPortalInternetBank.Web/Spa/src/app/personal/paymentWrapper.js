@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 
 import withLoader from './withLoader';
 import { sign as signAction } from '../actions/sign';
-import { logout as logoutAction } from '../actions/userInfoActions';
 import OBJECT_TYPES from '../personalViewStates';
 import getObjectsListAction from '../actions/getObjectsList';
 
@@ -130,7 +129,7 @@ const mapActionsToProps = (dispatch) =>
             PaymentModalConfirm: PersonalBlockConfirmModal,
             PaymentMultipleModal: PersonalBlockMultipleModal,
             PaymentMultipleModalConfirm: PersonalBlockMultipleConfirmModal,
-        }, () => dispatch(logoutAction()))),
+        })),
     });
 
 const mapBeforeLoadActions = (objectType) => (dispatch) => (

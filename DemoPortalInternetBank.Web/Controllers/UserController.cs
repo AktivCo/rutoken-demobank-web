@@ -27,12 +27,38 @@ namespace DemoPortalInternetBank.Web.Controllers
             _pkiManager = pkiManager;
         }
 
+        [Route("pin/incorrect")]
+        [HttpGet]
+        public IActionResult PinInCorrect()
+        {
+            var token = new byte[0];
+            HttpContext.Session.Set("PIN_INCORRECT", token);
+
+            return Ok();
+        }
+
+        [Route("pin/correct")]
+        [HttpGet]
+        public IActionResult PinCorrect()
+        {
+            HttpContext.Session.Remove("PIN_INCORRECT");
+            return Ok();
+        }
+
+
         [Route("info")]
         [HttpGet]
         // GET
         public IActionResult Index()
         {
             const int USER_AVAILABLE_PAYMENTS_SUM = 1000000;
+            
+            var result = new byte[0];
+            
+            if (HttpContext.Session.TryGetValue("PIN_INCORRECT", out result))
+            {
+                return Unauthorized();
+            }
 
             var user = new UserModel();
 
