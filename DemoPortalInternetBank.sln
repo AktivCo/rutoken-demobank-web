@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoPortalInternetBank.Doma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoPortalInternetBank.Migrator", "DemoPortalInternetBank.Migrator\DemoPortalInternetBank.Migrator.csproj", "{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoPortalInternetBank.ConsoleApp", "DemoPortalInternetBank.ConsoleApp\DemoPortalInternetBank.ConsoleApp.csproj", "{C50CE2A8-9DE1-488A-B7D6-9E5C7444E9A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E0E2CED-88BA-4A5C-A843-1EC9DAD48FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50CE2A8-9DE1-488A-B7D6-9E5C7444E9A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50CE2A8-9DE1-488A-B7D6-9E5C7444E9A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50CE2A8-9DE1-488A-B7D6-9E5C7444E9A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50CE2A8-9DE1-488A-B7D6-9E5C7444E9A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

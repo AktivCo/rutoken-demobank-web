@@ -91,7 +91,7 @@ namespace DemoPortalInternetBank.Pki
 
             var certGen = new X509V3CertificateGenerator();
 
-            var dn = "ST=Moscow,L=Moscow,O=ZAO Aktiv-Soft,OU=Rutoken,CN=Rutoken TEST CA " + GetAlgoName();
+            var dn = "ST=Moscow,L=Moscow,O=AO Aktiv-Soft,OU=Rutoken,CN=Rutoken TEST CA " + GetAlgoName();
 
             var dnName = new X509Name(dn);
 
@@ -101,6 +101,15 @@ namespace DemoPortalInternetBank.Pki
             certGen.SetNotAfter(expiryDate);
             certGen.SetSubjectDN(dnName);
             certGen.SetPublicKey(keyPair.Public);
+            
+            certGen.AddExtension(X509Extensions.AuthorityKeyIdentifier, false,
+                new AuthorityKeyIdentifierStructure(keyPair.Public));
+            
+            certGen.AddExtension(X509Extensions.SubjectKeyIdentifier, false,
+                new SubjectKeyIdentifierStructure(keyPair.Public));
+            
+            certGen.AddExtension(X509Extensions.BasicConstraints, true, 
+                new BasicConstraints(true));
 
             var certificate = GenerateCertificate(keyPair.Private, certGen);
 
