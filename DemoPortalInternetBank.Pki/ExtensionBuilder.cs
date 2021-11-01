@@ -54,6 +54,17 @@ namespace DemoPortalInternetBank.Pki
                 authorityInformationAccess
             );
         }
+        
+        protected void ApplyAuthorityKeyIdentifierExt(
+            X509V3CertificateGenerator certGen, 
+            Pkcs10CertificationRequest request,
+            X509Certificate caCert)
+        {
+            certGen.AddExtension(X509Extensions.AuthorityKeyIdentifier, false,
+                new AuthorityKeyIdentifierStructure(caCert));
+            certGen.AddExtension(X509Extensions.SubjectKeyIdentifier, false,
+                new SubjectKeyIdentifierStructure(request.GetPublicKey()));
+        }
     }
 
     public class DefaultExtensionBuilder : ExtensionBuilder
@@ -127,7 +138,10 @@ namespace DemoPortalInternetBank.Pki
             }
 
             ApplyCrlExtension(certGen, _crlLink);
+            
             ApplyAuthorityInfoAccess(certGen, _rootCertLink);
+            
+            ApplyAuthorityKeyIdentifierExt(certGen, request, caCert);
         }
     }
 
@@ -137,10 +151,7 @@ namespace DemoPortalInternetBank.Pki
         {
             const string demoBankCertExtension = "1.1.1.1.1.1.2";
             
-            certGen.AddExtension(X509Extensions.AuthorityKeyIdentifier, false,
-                new AuthorityKeyIdentifierStructure(caCert));
-            certGen.AddExtension(X509Extensions.SubjectKeyIdentifier, false,
-                new SubjectKeyIdentifierStructure(request.GetPublicKey()));
+            ApplyAuthorityKeyIdentifierExt(certGen, request, caCert);
 
             certGen.AddExtension(
                 X509Extensions.ExtendedKeyUsage,
