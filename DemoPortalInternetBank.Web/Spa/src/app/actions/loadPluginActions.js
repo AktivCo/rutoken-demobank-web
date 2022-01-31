@@ -73,7 +73,7 @@ const loadPlugin = () => (dispatch, getState) => {
     return sequense;
 };
 
-const checkConnectedDevices = () => (dispatch) => {
+const checkConnectedDevices = () => (dispatch, getState) => {
     let sequense = Promise.resolve();
 
     sequense = sequense.then(() => Plugin.enumerateDevices());
@@ -82,14 +82,13 @@ const checkConnectedDevices = () => (dispatch) => {
         if (devices.length === 0) {
             const pr = new Promise((resolve) => {
                 setTimeout(() => {
-                    resolve(checkConnectedDevices()(dispatch));
+                    resolve(checkConnectedDevices()(dispatch, getState));
                 }, 1000);
             });
 
             return pr;
         }
-
-        return loadPlugin()(dispatch);
+        return loadPlugin()(dispatch, getState);
     });
 
     return sequense;
