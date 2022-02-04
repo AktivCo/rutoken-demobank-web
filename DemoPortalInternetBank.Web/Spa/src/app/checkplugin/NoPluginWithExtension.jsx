@@ -173,7 +173,7 @@ const NoPluginWithExtension = ({ browserName, os }) => {
             </div>,
             <a
                 key="extension-wrapper"
-                className="requirement inactive w-100 d-flex flex-column justify-content-start align-items-start mb-2"
+                className="requirement w-100 d-flex flex-column justify-content-start align-items-start mb-2"
                 onClick={(e) => handleLoadExtension(e, ext)}
                 href={ext}
             >
