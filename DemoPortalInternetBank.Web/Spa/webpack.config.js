@@ -1,6 +1,5 @@
 const path = require('path');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     mode: 'development',
