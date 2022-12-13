@@ -57,7 +57,7 @@ namespace DemoPortalInternetBank.Pki
             return pair;
         }
 
-        protected override string GetAlgoName()
+        public override string GetAlgoName()
         {
             return "GOST";
         }

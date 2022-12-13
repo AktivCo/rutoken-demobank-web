@@ -71,9 +71,8 @@ eICvLrmN/N6mSWIvJ/8mmBKuqBvVr9yrQ9/9H9qY7bs=
             var encoded = result.GetEncoded();
             
             
-            File.WriteAllBytes($"{result.SigAlgName}.crl", encoded);
+            File.WriteAllBytes($"{pkiService.GetAlgoName()}.crl", encoded);
             
-
             var pem = GetPem(result.GetEncoded(), "X509 CRL");
             
             Console.WriteLine(pem);

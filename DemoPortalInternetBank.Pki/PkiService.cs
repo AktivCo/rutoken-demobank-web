@@ -166,7 +166,7 @@ namespace DemoPortalInternetBank.Pki
             var crlGen = new X509V2CrlGenerator();
             crlGen.SetIssuerDN(caCert.IssuerDN);
             crlGen.SetThisUpdate(DateTime.Now);
-            crlGen.SetNextUpdate(DateTime.Now.AddYears(1));
+            crlGen.SetNextUpdate(DateTime.Now.AddYears(5));
 
             crlGen.AddCrlEntry(BigInteger.One, DateTime.Now, CrlReason.PrivilegeWithdrawn);
 
@@ -200,6 +200,6 @@ namespace DemoPortalInternetBank.Pki
             X509V2CrlGenerator certGen);
 
         protected abstract AsymmetricCipherKeyPair GenerateKeyPair();
-        protected abstract string GetAlgoName();
+        public abstract string GetAlgoName();
     }
 }
