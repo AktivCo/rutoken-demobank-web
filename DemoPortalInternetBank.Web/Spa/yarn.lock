@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@aktivco-it/rutoken-plugin-bootstrap@^1.9.2":
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/@aktivco-it/rutoken-plugin-bootstrap/-/rutoken-plugin-bootstrap-1.9.2.tgz#8ef75e515e3b03ccc796dd0e7e8c5887624bfc6f"
-  integrity sha512-oMYybWVdCGIkoqMiuJ+yScq6+Yx4niKvbUzETxB9KpDymoFsg3gIBw4Gy5Batv/YO2Divt/OsSz40paGSZof2Q==
+"@aktivco-it/rutoken-plugin-bootstrap@^1.9.5":
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/@aktivco-it/rutoken-plugin-bootstrap/-/rutoken-plugin-bootstrap-1.9.5.tgz#e391f8091ba51e465505c132f51dddcdb3d908a3"
+  integrity sha512-8bDKUc7vW/hIbnotPEeK/U+W3jBjY44CeW8B0cYCiWCAjW0WUoJVb8nq++BhbVu6QtaH47iwjGlvWPN+MAeDdA==
   dependencies:
     "@aktivco/rutoken-plugin" "^1.0.9"
     bowser "^2.7.0"
