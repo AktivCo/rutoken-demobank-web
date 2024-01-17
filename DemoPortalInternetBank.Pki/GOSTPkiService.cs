@@ -1,3 +1,4 @@
+using DemoPortalInternetBank.Pki.GostTC26;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.CryptoPro;
 using Org.BouncyCastle.Asn1.Rosstandart;
@@ -30,6 +31,13 @@ namespace DemoPortalInternetBank.Pki
 
         protected override X509Certificate GenerateCertificate(AsymmetricKeyParameter privateKey,
             X509V3CertificateGenerator certGen)
+        {
+            var signer = new GostSignerFactory(privateKey);
+            return certGen.Generate(signer);
+        }
+
+        protected override X509Certificate GenerateCertificate(AsymmetricKeyParameter privateKey,
+            X509V3CertificateGeneratorCustom certGen)
         {
             var signer = new GostSignerFactory(privateKey);
             return certGen.Generate(signer);

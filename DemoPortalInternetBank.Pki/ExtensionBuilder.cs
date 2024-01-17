@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
+using DemoPortalInternetBank.Pki.GostTC26;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.X509;
+using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.X509;
 using Org.BouncyCastle.X509.Extension;
@@ -11,12 +13,13 @@ namespace DemoPortalInternetBank.Pki
     public abstract class ExtensionBuilder
     {
         public abstract void Build(
-            X509V3CertificateGenerator certGen,
+            X509V3CertificateGeneratorCustom certGen,
             Pkcs10CertificationRequest request,
-            X509Certificate caCert);
+            X509Certificate caCert,
+            AsymmetricKeyParameter publicKey);
 
         protected void ApplyCrlExtension(
-            X509V3CertificateGenerator certGen,
+            X509V3CertificateGeneratorCustom certGen,
             string crlLink
         )
         {
@@ -37,7 +40,7 @@ namespace DemoPortalInternetBank.Pki
         }
 
         protected void ApplyAuthorityInfoAccess(
-            X509V3CertificateGenerator certGen,
+            X509V3CertificateGeneratorCustom certGen,
             string rootCertLink
         )
         {
@@ -56,23 +59,24 @@ namespace DemoPortalInternetBank.Pki
         }
         
         protected void ApplyAuthorityKeyIdentifierExt(
-            X509V3CertificateGenerator certGen, 
-            Pkcs10CertificationRequest request,
+            X509V3CertificateGeneratorCustom certGen,
+            AsymmetricKeyParameter publicKey,
             X509Certificate caCert)
         {
             certGen.AddExtension(X509Extensions.AuthorityKeyIdentifier, false,
                 new AuthorityKeyIdentifierStructure(caCert));
             certGen.AddExtension(X509Extensions.SubjectKeyIdentifier, false,
-                new SubjectKeyIdentifierStructure(request.GetPublicKey()));
+                new SubjectKeyIdentifierStructureCustom(publicKey));
         }
     }
 
     public class DefaultExtensionBuilder : ExtensionBuilder
     {
         public override void Build(
-            X509V3CertificateGenerator certGen,
+            X509V3CertificateGeneratorCustom certGen,
             Pkcs10CertificationRequest request,
-            X509Certificate caCert)
+            X509Certificate caCert,
+            AsymmetricKeyParameter publicKey)
         {
         }
     }
@@ -90,9 +94,10 @@ namespace DemoPortalInternetBank.Pki
         }
 
         public override void Build(
-            X509V3CertificateGenerator certGen,
+            X509V3CertificateGeneratorCustom certGen,
             Pkcs10CertificationRequest request,
-            X509Certificate caCert)
+            X509Certificate caCert,
+            AsymmetricKeyParameter publicKey)
         {
             var requestInfo = request.GetCertificationRequestInfo();
 
@@ -141,17 +146,21 @@ namespace DemoPortalInternetBank.Pki
             
             ApplyAuthorityInfoAccess(certGen, _rootCertLink);
             
-            ApplyAuthorityKeyIdentifierExt(certGen, request, caCert);
+            ApplyAuthorityKeyIdentifierExt(certGen, publicKey, caCert);
         }
     }
 
     public class DemoBankExtensionBuilder : ExtensionBuilder
     {
-        public override void Build(X509V3CertificateGenerator certGen, Pkcs10CertificationRequest request, X509Certificate caCert)
+        public override void Build(
+            X509V3CertificateGeneratorCustom certGen,
+            Pkcs10CertificationRequest request,
+            X509Certificate caCert,
+            AsymmetricKeyParameter publicKey)
         {
             const string demoBankCertExtension = "1.1.1.1.1.1.2";
             
-            ApplyAuthorityKeyIdentifierExt(certGen, request, caCert);
+            ApplyAuthorityKeyIdentifierExt(certGen, publicKey, caCert);
 
             certGen.AddExtension(
                 X509Extensions.ExtendedKeyUsage,
@@ -176,9 +185,10 @@ namespace DemoPortalInternetBank.Pki
         }
 
         public override void Build(
-            X509V3CertificateGenerator certGen,
+            X509V3CertificateGeneratorCustom certGen,
             Pkcs10CertificationRequest request,
-            X509Certificate caCert)
+            X509Certificate caCert,
+            AsymmetricKeyParameter publicKey)
         {
             certGen.AddExtension(
                 X509Extensions.AuthorityKeyIdentifier,
@@ -189,7 +199,7 @@ namespace DemoPortalInternetBank.Pki
             certGen.AddExtension(
                 X509Extensions.SubjectKeyIdentifier,
                 false,
-                new SubjectKeyIdentifierStructure(request.GetPublicKey())
+                new SubjectKeyIdentifierStructure(publicKey)
             );
 
             certGen.AddExtension(

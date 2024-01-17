@@ -1,6 +1,9 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using DemoPortalInternetBank.Pki.GostTC26;
+using Org.BouncyCastle.Asn1;
+using Org.BouncyCastle.Asn1.Rosstandart;
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Cms;
 using Org.BouncyCastle.Crypto;
@@ -134,13 +137,34 @@ namespace DemoPortalInternetBank.Pki
                 new SecureRandom()
             );
 
-            var certGen = new X509V3CertificateGenerator();
+            var certGen = new X509V3CertificateGeneratorCustom();
 
             certGen.SetSerialNumber(serialNumber);
             certGen.SetIssuerDN(caCert.SubjectDN);
             certGen.SetNotBefore(startDate);
             certGen.SetNotAfter(expiryDate);
-            certGen.SetPublicKey(request.GetPublicKey());
+
+            var keyInfo = request.GetCertificationRequestInfo().SubjectPublicKeyInfo;
+            var paramSet = (DerObjectIdentifier)Asn1Sequence.GetInstance(keyInfo.AlgorithmID.Parameters)[0];
+
+            AlgorithmIdentifier algorithmID = keyInfo.AlgorithmID;
+            DerObjectIdentifier algorithm = algorithmID.Algorithm;
+
+            AsymmetricKeyParameter publicKey;
+            if (algorithm.Equals(RosstandartObjectIdentifiers.id_tc26_gost_3410_12_256) ||
+                algorithm.Equals(RosstandartObjectIdentifiers.id_tc26_gost_3410_12_512))
+            {
+                bool isDigestNull;
+                (publicKey, isDigestNull) = PublicKeyFactoryCustom.CreateKey(keyInfo, paramSet);
+                certGen.SetPublicKeyCustom(publicKey, isDigestNull);
+            }
+            else
+            {
+                publicKey = request.GetPublicKey();
+                certGen.SetPublicKey(publicKey);
+            }
+
+
 
             if (!string.IsNullOrEmpty(customDN))
             {
@@ -151,7 +175,7 @@ namespace DemoPortalInternetBank.Pki
                 certGen.SetSubjectDN(request.GetCertificationRequestInfo().Subject);
             }
 
-            extensionBuilder.Build(certGen, request, caCert);
+            extensionBuilder.Build(certGen, request, caCert, publicKey);
 
             var x509Certificate = GenerateCertificate(caKey, certGen);
 
@@ -193,6 +217,11 @@ namespace DemoPortalInternetBank.Pki
         protected abstract X509Certificate GenerateCertificate(
             AsymmetricKeyParameter privateKey,
             X509V3CertificateGenerator certGen
+        );
+
+        protected abstract X509Certificate GenerateCertificate(
+            AsymmetricKeyParameter privateKey,
+            X509V3CertificateGeneratorCustom certGen
         );
 
         protected abstract X509Crl GenerateCrl(
