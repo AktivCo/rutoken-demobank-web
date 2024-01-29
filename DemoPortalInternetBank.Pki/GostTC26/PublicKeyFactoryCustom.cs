@@ -20,7 +20,8 @@ namespace DemoPortalInternetBank.Pki.GostTC26
 
             bool isDigestNull = false;
 
-            if (algorithm.Equals(RosstandartObjectIdentifiers.id_tc26_gost_3410_12_256))
+            if (algorithm.Equals(RosstandartObjectIdentifiers.id_tc26_gost_3410_12_256) ||
+                algorithm.Equals(RosstandartObjectIdentifiers.id_tc26_gost_3410_12_512))
             {
                 byte[] str = ((DerOctetString)Asn1Object.FromByteArray(keyInfo.PublicKeyData.GetOctets())).GetOctets();
                 int num = 32;
@@ -42,7 +43,9 @@ namespace DemoPortalInternetBank.Pki.GostTC26
                 if (Asn1Sequence.GetInstance(keyInfo.AlgorithmID.Parameters).Count < 2)
                 {
                     isDigestNull = true;
-                    var digest = RosstandartObjectIdentifiers.id_tc26_gost_3411_12_256;
+                    var digest = algorithm.Equals(RosstandartObjectIdentifiers.id_tc26_gost_3411_12_256) ? 
+                        RosstandartObjectIdentifiers.id_tc26_gost_3411_12_256 :
+                        RosstandartObjectIdentifiers.id_tc26_gost_3411_12_512; 
                     instance6 = new Gost3410PublicKeyAlgParametersCustom(paramSet, digest);
                 }
                 else
