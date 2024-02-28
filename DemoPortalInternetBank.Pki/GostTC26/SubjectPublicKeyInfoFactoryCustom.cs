@@ -11,7 +11,6 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Math.EC;
-using Org.BouncyCastle.Utilities;
 
 namespace DemoPortalInternetBank.Pki.GostTC26
 {
@@ -27,6 +26,34 @@ namespace DemoPortalInternetBank.Pki.GostTC26
             if (publicKey.IsPrivate)
             {
                 throw new ArgumentException("Private key passed - public key expected.", "publicKey");
+            }
+
+            if (publicKey is ElGamalPublicKeyParameters)
+            {
+                ElGamalPublicKeyParameters elGamalPublicKeyParameters = (ElGamalPublicKeyParameters)publicKey;
+                ElGamalParameters parameters = elGamalPublicKeyParameters.Parameters;
+                return new SubjectPublicKeyInfo(new AlgorithmIdentifier(OiwObjectIdentifiers.ElGamalAlgorithm, new ElGamalParameter(parameters.P, parameters.G).ToAsn1Object()), new DerInteger(elGamalPublicKeyParameters.Y));
+            }
+
+            if (publicKey is DsaPublicKeyParameters)
+            {
+                DsaPublicKeyParameters dsaPublicKeyParameters = (DsaPublicKeyParameters)publicKey;
+                DsaParameters parameters2 = dsaPublicKeyParameters.Parameters;
+                Asn1Encodable parameters3 = ((parameters2 == null) ? null : new DsaParameter(parameters2.P, parameters2.Q, parameters2.G).ToAsn1Object());
+                return new SubjectPublicKeyInfo(new AlgorithmIdentifier(X9ObjectIdentifiers.IdDsa, parameters3), new DerInteger(dsaPublicKeyParameters.Y));
+            }
+
+            if (publicKey is DHPublicKeyParameters)
+            {
+                DHPublicKeyParameters dHPublicKeyParameters = (DHPublicKeyParameters)publicKey;
+                DHParameters parameters4 = dHPublicKeyParameters.Parameters;
+                return new SubjectPublicKeyInfo(new AlgorithmIdentifier(dHPublicKeyParameters.AlgorithmOid, new DHParameter(parameters4.P, parameters4.G, parameters4.L).ToAsn1Object()), new DerInteger(dHPublicKeyParameters.Y));
+            }
+
+            if (publicKey is RsaKeyParameters)
+            {
+                RsaKeyParameters rsaKeyParameters = (RsaKeyParameters)publicKey;
+                return new SubjectPublicKeyInfo(new AlgorithmIdentifier(PkcsObjectIdentifiers.RsaEncryption, DerNull.Instance), new RsaPublicKeyStructure(rsaKeyParameters.Modulus, rsaKeyParameters.Exponent).ToAsn1Object());
             }
 
             if (publicKey is ECPublicKeyParameters)
@@ -112,6 +139,30 @@ namespace DemoPortalInternetBank.Pki.GostTC26
 
                 Gost3410PublicKeyAlgParameters gost3410PublicKeyAlgParameters2 = new Gost3410PublicKeyAlgParameters(gost3410PublicKeyParameters.PublicKeyParamSet, CryptoProObjectIdentifiers.GostR3411x94CryptoProParamSet);
                 return new SubjectPublicKeyInfo(new AlgorithmIdentifier(CryptoProObjectIdentifiers.GostR3410x94, gost3410PublicKeyAlgParameters2.ToAsn1Object()), new DerOctetString(array4));
+            }
+
+            if (publicKey is X448PublicKeyParameters)
+            {
+                X448PublicKeyParameters x448PublicKeyParameters = (X448PublicKeyParameters)publicKey;
+                return new SubjectPublicKeyInfo(new AlgorithmIdentifier(EdECObjectIdentifiers.id_X448), x448PublicKeyParameters.GetEncoded());
+            }
+
+            if (publicKey is X25519PublicKeyParameters)
+            {
+                X25519PublicKeyParameters x25519PublicKeyParameters = (X25519PublicKeyParameters)publicKey;
+                return new SubjectPublicKeyInfo(new AlgorithmIdentifier(EdECObjectIdentifiers.id_X25519), x25519PublicKeyParameters.GetEncoded());
+            }
+
+            if (publicKey is Ed448PublicKeyParameters)
+            {
+                Ed448PublicKeyParameters ed448PublicKeyParameters = (Ed448PublicKeyParameters)publicKey;
+                return new SubjectPublicKeyInfo(new AlgorithmIdentifier(EdECObjectIdentifiers.id_Ed448), ed448PublicKeyParameters.GetEncoded());
+            }
+
+            if (publicKey is Ed25519PublicKeyParameters)
+            {
+                Ed25519PublicKeyParameters ed25519PublicKeyParameters = (Ed25519PublicKeyParameters)publicKey;
+                return new SubjectPublicKeyInfo(new AlgorithmIdentifier(EdECObjectIdentifiers.id_Ed25519), ed25519PublicKeyParameters.GetEncoded());
             }
 
             throw new ArgumentException("Class provided no convertible: " + publicKey.GetType().FullName);

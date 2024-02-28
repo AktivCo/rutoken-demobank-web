@@ -2,6 +2,7 @@ using System;
 using DemoPortalInternetBank.Pki.GostTC26;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.Crypto.Operators;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
 
@@ -36,8 +37,8 @@ namespace DemoPortalInternetBank.Pki
         protected override X509Certificate GenerateCertificate(AsymmetricKeyParameter privateKey,
             X509V3CertificateGeneratorCustom certGen)
         {
-            certGen.SetSignatureAlgorithm("SHA1withRSA");
-            return certGen.Generate(privateKey);
+            var signature = new Asn1SignatureFactory("SHA1withRSA", privateKey);
+            return certGen.Generate(signature);
         }
 
         protected override X509Crl GenerateCrl(AsymmetricKeyParameter privateKey, X509V2CrlGenerator crlGen)

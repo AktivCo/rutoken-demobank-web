@@ -145,7 +145,6 @@ namespace DemoPortalInternetBank.Pki
             certGen.SetNotAfter(expiryDate);
 
             var keyInfo = request.GetCertificationRequestInfo().SubjectPublicKeyInfo;
-            var paramSet = (DerObjectIdentifier)Asn1Sequence.GetInstance(keyInfo.AlgorithmID.Parameters)[0];
 
             AlgorithmIdentifier algorithmID = keyInfo.AlgorithmID;
             DerObjectIdentifier algorithm = algorithmID.Algorithm;
@@ -155,6 +154,7 @@ namespace DemoPortalInternetBank.Pki
                 algorithm.Equals(RosstandartObjectIdentifiers.id_tc26_gost_3410_12_512))
             {
                 bool isDigestNull;
+                var paramSet = (DerObjectIdentifier)Asn1Sequence.GetInstance(keyInfo.AlgorithmID.Parameters)[0];
                 (publicKey, isDigestNull) = PublicKeyFactoryCustom.CreateKey(keyInfo, paramSet);
                 certGen.SetPublicKeyCustom(publicKey, isDigestNull);
             }
@@ -212,6 +212,7 @@ namespace DemoPortalInternetBank.Pki
         }
 
         protected abstract AsymmetricKeyParameter GetRootKey();
+
         protected abstract X509Certificate GetRootCert();
 
         protected abstract X509Certificate GenerateCertificate(
@@ -229,6 +230,7 @@ namespace DemoPortalInternetBank.Pki
             X509V2CrlGenerator certGen);
 
         protected abstract AsymmetricCipherKeyPair GenerateKeyPair();
+
         public abstract string GetAlgoName();
     }
 }
