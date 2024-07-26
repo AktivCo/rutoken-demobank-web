@@ -39,7 +39,7 @@
         "webpack-cli": "^3.3.10"
     },
     "dependencies": {
-        "@aktivco-it/rutoken-plugin-bootstrap": "^1.9.5",
+        "@aktivco-it/rutoken-plugin-bootstrap": "^1.9.7",
         "axios": "0.26.0",
         "babel-polyfill": "6.26.0",
         "classnames": "2.2.5",
