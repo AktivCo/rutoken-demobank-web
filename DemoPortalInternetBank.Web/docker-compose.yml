@@ -1,0 +1,26 @@
+version: '2'
+services:
+  demobank.aktivco.ru-dotnet:
+    container_name:  ${APP_CONTAINER_NAME}
+    image: mcr.microsoft.com/dotnet/core/aspnet:2.2
+    restart: always
+    volumes:
+      - ${APP_FOLDER}/var/app:/app
+      - ${APP_FOLDER}/var/migrator:/migrator
+    links:
+      - demobank.aktivco.ru-psql:demobank.aktivco.ru-psql
+    ports:
+      - ${APP_OUT_PORT}:80
+    tty: true
+  demobank.aktivco.ru-psql:
+    container_name: ${DB_CONTAINER_NAME}
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${DB_PSWD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    restart: always
+    volumes:
+      - ${DB_FOLDER}:/var/lib/postgresql/data
+    ports:
+      - ${DB_OUT_PORT}:${DB_PORT}

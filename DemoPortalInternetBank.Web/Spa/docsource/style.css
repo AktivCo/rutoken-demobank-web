@@ -1,0 +1,80 @@
+body {
+    margin: 0 !important;
+}
+
+
+a, a:visited, a:active {
+    color: #117788 !important;
+}
+
+.mainpage {
+    margin-left: 24px;
+}
+
+nav
+{
+    float: none !important;
+    border-left: none !important;
+    padding-left: 30px !important;
+    width: 328px;
+}
+
+.header {
+    background-image: url('./bgr_body.png');
+    background-repeat: repeat-x;
+    background-size: 100% 35%;
+    height: 90px;
+    flex-grow: 0;
+}
+    
+.header__img {
+    padding-left: 28px;
+    width: 300px;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.flex-row {
+    flex-direction: row !important;
+}
+
+
+.img__logo {
+    background: url('./logo.png') no-repeat center center;
+    width: 11rem;
+    height: 4rem;
+    position: absolute;
+}
+
+.header__menu {
+    margin-left: 12px;
+    color: #888888;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2px; 
+}
+
+.header__menu ul {
+    padding: 0;
+    list-style-type: none;
+    font-size: 0;
+    height: 32px;
+}        
+
+.header__menu ul li {
+    font-size: 12px;
+    color: #2b4240;
+}
+
+.header__menu ul li a {
+    display: inline-block;
+    padding-top: 0.5rem;
+    padding-bottom: 0.6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
