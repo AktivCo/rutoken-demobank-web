@@ -1,0 +1,35 @@
+$gray:#444444;
+$gray-light:#888888;
+$gray-lighten:#f5f5f5;
+$gray-brightest:#dfdfdf;
+$white: #ffffff;
+$black: #000000;
+$update-background:rgba(68, 68, 68, 0.05);
+
+$surfie-green-dark:#2b4240;
+$surfie-green:#117788;
+$surfie-green-light:#5ea48a;
+
+$red:#dd2233;
+$red-light:#f07d64;
+$red-lighten:#fbe8ea;
+
+$yellow: #ffd966;
+
+$main-first-background-color: $white;
+$main-second-background-color: $gray-lighten;
+
+$selected-device-background-color:$gray-lighten;
+$device-font-color:$gray;
+$form-warning-color:$gray-light;
+
+$selected-device-info-background-color:$surfie-green;
+$selected-device-divider-color:rgba(255, 255, 255, 0.1);
+
+$error-color: $red;
+$error-background-color: $red-lighten;
+$border-color: $gray-brightest;
+
+$key-container-red:$red-light;
+$key-container-green:$surfie-green-light;
+$key-container-dark:$surfie-green-dark;

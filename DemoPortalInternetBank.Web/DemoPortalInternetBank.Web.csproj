@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <AssemblyName>DemoPortalInternetBank.Web</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DemoPortalInternetBank.Domain\DemoPortalInternetBank.Domain.csproj" />
+      <ProjectReference Include="..\DemoPortalInternetBank.Pki\DemoPortalInternetBank.Pki.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ResolveComReferenceCache Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.csproj.ResolveComReference.cache" />
+      <_ResolveComReferenceCache Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.csproj.ResolveComReference.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <IntermediateAssembly Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll" />
+      <IntermediateAssembly Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DebugSymbolsIntermediatePath Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.pdb" />
+      <_DebugSymbolsIntermediatePath Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DeploymentManifestEntryPoint Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll" />
+      <_DeploymentManifestEntryPoint Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ApplicationManifest Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll.manifest" />
+      <ApplicationManifest Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.dll.manifest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DeployManifest Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.application" />
+      <DeployManifest Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.application" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <RazorIntermediateAssembly Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Views.dll" />
+      <RazorIntermediateAssembly Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Razor.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_RazorDebugSymbolsIntermediatePath Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Views.pdb" />
+      <_RazorDebugSymbolsIntermediatePath Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Razor.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckBuilt Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Views.dll" />
+      <UpToDateCheckBuilt Remove="obj\Debug\netcoreapp2.2\DemoPortalInternetBank.Web.Razor.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+*.user
+.idea/
+bin/
+obj/
+node_modules/
+wwwroot/
+.vs/
+DemoPortalInternetBank.Web/Spa/out

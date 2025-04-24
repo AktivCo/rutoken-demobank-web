@@ -1,0 +1,13 @@
+.container {
+    width: 1020px;    
+    border-left: $border;
+    border-right: $border;
+    background-color: $main-first-background-color;
+    min-height: 100vh;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .container {
+        min-width: 1020px;
+    }
+}

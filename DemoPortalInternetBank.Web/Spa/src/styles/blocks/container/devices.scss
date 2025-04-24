@@ -1,0 +1,116 @@
+
+.main_device {
+    margin-top: 10px;    
+    width: 100%;
+    display: flex;
+}
+
+.device_container {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+
+.main_device_arrow {
+    border: solid #117788;
+    border-width: 0 4px 4px 0;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 20px;
+    height: 0;
+    cursor: pointer;
+
+    &.arrow_right {
+        transform: rotate(-45deg);
+    }
+
+    &.arrow_left {
+        transform: rotate(135deg);
+    }
+}
+
+.device_wrapper {
+    cursor: pointer;
+    flex-grow: 1;    
+    width: 165px;
+    display: flex;
+    flex-direction: column;
+
+    &::after  {
+        content: '';
+        width: 0;
+        margin: 0 auto;
+        height: 30px;
+        border-bottom: solid 15px transparent;
+        border-left: solid 15px transparent;
+        border-right: solid 15px transparent;    
+    }
+    
+    &.active::after  {
+        border-bottom: solid 15px #117788;        
+    }    
+}
+
+.device_logo {
+    margin-top: -10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    height: 48px;
+    width: 48px;
+    display: block;
+
+    &.bluetooth {
+        background: url("./images/bluetooth_current.png");
+    }
+    
+    &.smartcard {
+        background: url("./images/smartcard_current.png");
+    }
+
+    &.usb {
+        background: url("./images/usb_current.png");
+    }
+
+    &.pinpad {
+        background: url("./images/pinpad_current.png");
+    }
+
+    &.microsd {
+        background: url("./images/microsd_current.png");
+    }
+}
+
+.device_name {    
+    flex-grow: 1;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.2px;
+    color: #444444;
+    
+}
+
+
+.device_logo_container {
+    &:focus {
+        outline: none;
+    }
+}
+
+.device_logo_container,
+.device_name {
+    border-left: 1px solid #dfdfdf;
+}
+
+.device_wrapper:first-child div.device_name,
+.device_wrapper:first-child div.device_logo_container {
+    border-left: none;
+}

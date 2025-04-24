@@ -1,0 +1,14 @@
+{
+    "templates": {
+        "default": {
+            "layoutFile": "docsource/jsdoc.tmpl",
+            "staticFiles": {
+                "include": [
+                    "docsource/style.css",
+                    "docsource/bgr_body.png",
+                    "docsource/logo.png"
+                ]
+            }
+        }
+    }
+}
