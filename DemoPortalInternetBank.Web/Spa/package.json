@@ -40,7 +40,7 @@
     },
     "dependencies": {
         "@aktivco-it/rutoken-plugin-bootstrap": "^1.9.7",
-        "axios": "0.26.0",
+        "axios": "0.30.2",
         "babel-polyfill": "6.26.0",
         "classnames": "2.2.5",
         "history": "4.7.2",
