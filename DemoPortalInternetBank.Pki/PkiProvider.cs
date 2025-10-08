@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using Org.BouncyCastle.Asn1.X9;
 using Org.BouncyCastle.Cms;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
@@ -93,12 +94,17 @@ namespace DemoPortalInternetBank.Pki
             }
 
             var isGost = request.SignatureAlgorithm.Algorithm.Id.Contains("1.2.643");
+            var isECDsa = request.SignatureAlgorithm.Algorithm.Id.StartsWith("1.2.840.10045");
 
             PkiService service;
 
             if (isGost)
             {
                 service = new GOSTPkiService();
+            }
+            else if (isECDsa)
+            {
+                service = new ECDsaPkiService();
             }
             else
             {

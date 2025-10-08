@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.ConstrainedExecution;
 using DemoPortalInternetBank.Pki;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Utilities.IO.Pem;
@@ -37,9 +39,15 @@ eICvLrmN/N6mSWIvJ/8mmBKuqBvVr9yrQ9/9H9qY7bs=
 
             GetSelSigned(gostPkiService);
 
+            var ecdsaPkiService = new ECDsaPkiService();
+
+            GetSelSigned(ecdsaPkiService);
+
             GetCrl(rsaPkiService);
 
             GetCrl(gostPkiService);
+
+            GetCrl(ecdsaPkiService);
 
         }
 
@@ -52,7 +60,7 @@ eICvLrmN/N6mSWIvJ/8mmBKuqBvVr9yrQ9/9H9qY7bs=
 
             var infoPrivate = PrivateKeyInfoFactory.CreatePrivateKeyInfo(keyPair.Private);
 
-            var serializedPrivateKey = infoPrivate.GetDerEncoded();
+            var serializedPrivateKey = infoPrivate.ToAsn1Object().GetDerEncoded();
 
             var priv = GetPem(serializedPrivateKey, "PRIVATE KEY");
 
@@ -79,15 +87,16 @@ eICvLrmN/N6mSWIvJ/8mmBKuqBvVr9yrQ9/9H9qY7bs=
         }
 
 
-        private static string GetPem(byte[] encoded, String type)
+        private static string GetPem(byte[] encoded, string type)
         {
-            var stringWriter = new StringWriter();
-            var pemWriter = new PemWriter(stringWriter);
-            var pemObject = new PemObject(type, encoded);
+            string res = string.Empty;
 
-            pemWriter.WriteObject(pemObject);
-
-            var res = stringWriter.ToString();
+            using (var sw = new StringWriter())
+            {
+                var pem = new PemWriter(sw);
+                pem.WriteObject(new PemObject(type, encoded));
+                res = sw.ToString();
+            }
 
             return res;
         }
