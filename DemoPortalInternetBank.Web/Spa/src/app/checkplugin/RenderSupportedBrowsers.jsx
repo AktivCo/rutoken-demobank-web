@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import SupportedBrowserLink from './SupportedBrowserLink';
 import { getSupportedBrowserHref } from './pluginDownloadLinks';
 
-
 const RenderSupportedBrowsers = (suppBrowsers) => (
     <span className="description__name">
         <FormattedMessage id="plugin.but-we-support-1" defaultMessage=" " />

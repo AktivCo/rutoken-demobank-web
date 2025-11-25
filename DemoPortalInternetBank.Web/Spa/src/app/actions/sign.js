@@ -64,7 +64,7 @@ const makeSignature = (payment, state) => {
     });
 
     sequense = sequense.then((cms) => {
-        const pay = { ...payment, cms: cms };
+        const pay = { ...payment, cms };
         return pay;
     });
 
@@ -103,7 +103,6 @@ const makeMultipleSignature = (payments) => (dispatch, getState) => {
 
     return sequense;
 };
-
 
 const generateSignature = (payment) => (dispatch, getState) => {
     dispatch(operationStart('sign'));
@@ -150,7 +149,6 @@ const generateSignatureWithConfirm = (pin, payment) => (dispatch, getState) => {
     return sequense;
 };
 
-
 const generateMultipleSignature = (payments) => (dispatch, getState) => {
     dispatch(operationStart('sign'));
 
@@ -181,7 +179,6 @@ const generateMultipleSignatureWithConfirm = (pin, payments) => (dispatch, getSt
 
     sequense = sequense.then(() => makeMultipleSignature(payments)(dispatch, getState));
 
-
     sequense = sequense.then(() => {
         dispatch({ type: 'DELETE_OBJECTS_LIST' });
         dispatch(operationSuccess('sign', payments));
@@ -196,7 +193,6 @@ const generateMultipleSignatureWithConfirm = (pin, payments) => (dispatch, getSt
 
     return sequense;
 };
-
 
 const sign = (paymentData, sequenceModals) => (dispatch) => {
     let sequense = Promise.resolve();
@@ -225,7 +221,7 @@ const sign = (paymentData, sequenceModals) => (dispatch) => {
     if (!isMultiple) {
         [modalData] = paymentData;
     }
-
+    // eslint-disable-next-line func-names
     const reject = function () {
         checkLoginState()(dispatch);
     };

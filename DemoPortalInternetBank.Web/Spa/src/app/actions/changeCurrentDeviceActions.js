@@ -37,7 +37,7 @@ const changeCurrentDevIdAndGetCertificates = (deviceId) => (dispatch, getState) 
     });
 
     sequense = sequense.then((certs) => {
-        const certificates = [].concat([], ...certs).map((certId) => ({ certId: certId }));
+        const certificates = [].concat([], ...certs).map((certId) => ({ certId }));
         return certificates;
     });
 
@@ -60,7 +60,9 @@ const changeCurrentDevIdAndGetCertificates = (deviceId) => (dispatch, getState) 
     });
 
     sequense = sequense.then((certificates) => {
-        const crts = certificates.filter((fl) => fl.extensions && fl.extensions.extKeyUsage && fl.extensions.extKeyUsage.includes('1.1.1.1.1.1.2'));
+        const crts = certificates.filter(
+            (fl) => fl.extensions && fl.extensions.extKeyUsage && fl.extensions.extKeyUsage.includes('1.1.1.1.1.1.2'),
+        );
         dispatch(pluginSetCertificates(deviceId, crts));
     });
 

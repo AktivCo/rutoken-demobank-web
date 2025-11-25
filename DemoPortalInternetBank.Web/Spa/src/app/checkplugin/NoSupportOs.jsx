@@ -19,7 +19,7 @@ const NoSupportOs = (os) => (
                                     os.map((o, index) => {
                                         if (os.length - 1 === index) {
                                             return (
-                                                <span>
+                                                <span key={o}>
                                                     &nbsp;
                                                     <FormattedMessage id="plugin.and-preposition" />
                                                     &nbsp;

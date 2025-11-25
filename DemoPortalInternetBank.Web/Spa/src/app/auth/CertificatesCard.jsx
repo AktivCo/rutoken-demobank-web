@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import CertificateInfo from './CertificatesInfo';
 
-
 import { signin as signinAction } from '../actions/signinActions';
 import PinModal from './PinModal';
 import ChangePinModal from './ChangePinModal';
@@ -53,13 +52,12 @@ const mapStateToProps = (state) => (
     { CURRENT_DEVICE_ID: state.CURRENT_DEVICE_ID }
 );
 
-
 const mapActionsToProps = (dispatch) =>
     (
         {
             signin: (deviceId, certificate) => dispatch(signinAction(deviceId, certificate, {
-                PinModal: PinModal,
-                ChangePinModal: ChangePinModal,
+                PinModal,
+                ChangePinModal,
             })),
         }
     );

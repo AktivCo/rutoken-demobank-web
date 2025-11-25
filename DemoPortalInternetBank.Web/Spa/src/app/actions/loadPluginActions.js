@@ -54,7 +54,6 @@ const loadPlugin = () => (dispatch, getState) => {
         return Promise.all(deviceNumbers.map((dev) => getDeviceInfo(dev)));
     });
 
-
     sequense = sequense.then((fetchedDevices) => {
         const devices = fetchedDevices.reduce((acc, current, index) => ({ ...acc, [index]: current }), {});
 

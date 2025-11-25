@@ -21,7 +21,6 @@ const operationError = (title, error) => ({
 
 const operationFinished = () => ({ type: 'OPERATION_FINISH' });
 
-
 export {
     operationStart,
     operationSuccess,

@@ -44,7 +44,10 @@ class PersonalBlockModal extends React.Component {
                     &nbsp;
                     <FormattedMessage id="payment.date-from" />
                     &nbsp;
-                    <FormattedMessage id="handle.translation-object" values={modalState.account.respondent.translation} />
+                    <FormattedMessage
+                        id="handle.translation-object"
+                        values={modalState.account.respondent.translation}
+                    />
                 </div>
 
                 <div className="personal-payment-info--field mt-3">
@@ -109,7 +112,10 @@ class PersonalBlockModal extends React.Component {
                 </div>
 
                 <h3>
-                    <FormattedMessage id="handle.translation-object" values={modalState.account.respondent.translation} />
+                    <FormattedMessage
+                        id="handle.translation-object"
+                        values={modalState.account.respondent.translation}
+                    />
                 </h3>
 
                 <div className="personal-payment-info--field mt-1">
@@ -181,4 +187,8 @@ PersonalBlockModal.propTypes = {
     intl: PropTypes.shape().isRequired,
 };
 
-export default withOperation('sign', connect(mapStateToProps, mapActionsToProps)(injectIntl(PersonalBlockModal)), PersonalSuccessSignModal);
+export default withOperation(
+    'sign',
+    connect(mapStateToProps, mapActionsToProps)(injectIntl(PersonalBlockModal)),
+    PersonalSuccessSignModal,
+);

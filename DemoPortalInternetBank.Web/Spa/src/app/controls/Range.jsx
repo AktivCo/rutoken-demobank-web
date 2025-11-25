@@ -7,7 +7,6 @@ const getClassName = (isActive) => cn({
     active: isActive,
 });
 
-
 class Range extends React.Component {
     state = { value: 1 }
 

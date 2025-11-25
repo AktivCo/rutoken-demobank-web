@@ -45,5 +45,4 @@ const formatDate = (stringDate) => {
     return `${dd}.${mm}.${yyyy}`;
 };
 
-
 export { formatMoney, formatDate };

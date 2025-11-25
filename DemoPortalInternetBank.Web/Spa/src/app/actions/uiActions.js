@@ -1,11 +1,11 @@
 const showModal = (modalType, modalState, modalOptions, onSuccessAction, onErrorCloseAction) => ({
     type: 'SHOW_MODAL',
     payload: {
-        modalType: modalType,
-        modalState: modalState,
-        modalOptions: modalOptions,
-        onSuccessAction: onSuccessAction,
-        onErrorCloseAction: onErrorCloseAction,
+        modalType,
+        modalState,
+        modalOptions,
+        onSuccessAction,
+        onErrorCloseAction,
     },
 });
 

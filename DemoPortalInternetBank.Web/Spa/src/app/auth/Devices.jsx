@@ -7,12 +7,10 @@ import changeActiveDeviceAction from '../actions/changeCurrentDeviceActions';
 
 import Certificates from './index';
 
-
 const getActiveClass = (deviceId, activeDeviceId) => cn({
     device_wrapper: true,
     active: deviceId === activeDeviceId,
 });
-
 
 const classes = {
     TOKEN_TYPE_PINPAD_2: 'pinpad',
@@ -22,7 +20,6 @@ const classes = {
 };
 
 const getDeviceClass = (type) => `device_logo ${classes[type]}`;
-
 
 class Devices extends React.Component {
     componentDidMount() {
@@ -77,7 +74,6 @@ class Devices extends React.Component {
     }
 }
 
-
 const mapStateToProps = (state) => ({
     DEVICES: state.DEVICES,
     CURRENT_DEVICE_ID: state.CURRENT_DEVICE_ID,
@@ -92,6 +88,5 @@ Devices.propTypes = {
     DEVICES: PropTypes.shape().isRequired,
     changeActiveDevice: PropTypes.func.isRequired,
 };
-
 
 export default connect(mapStateToProps, mapActionsToProps)(Devices);

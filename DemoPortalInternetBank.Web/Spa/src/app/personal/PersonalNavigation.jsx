@@ -53,12 +53,10 @@ const PersonalNavigation = ({ PERSONAL_VIEW_STATE, setPersonalViewState }) => (
     </div>
 );
 
-
 const mapStateToProps = (state) => ({ PERSONAL_VIEW_STATE: state.PERSONAL_VIEW_STATE });
 
 const mapActionsToProps = (dispatch) =>
     ({ setPersonalViewState: (viewState) => dispatch(setPersonalViewStateAction(viewState)) });
-
 
 PersonalNavigation.propTypes = {
     PERSONAL_VIEW_STATE: PropTypes.number.isRequired,

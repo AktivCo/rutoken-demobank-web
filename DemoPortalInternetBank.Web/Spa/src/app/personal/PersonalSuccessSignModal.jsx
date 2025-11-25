@@ -7,7 +7,7 @@ import {
     setPersonalViewState as setPersonalViewStateAction,
     hideModal as hideModalAction,
 }
-from '../actions/uiActions';
+    from '../actions/uiActions';
 
 import { formatMoney } from '../utils';
 import PERSONAL_VIEW_STATES from '../personalViewStates';
@@ -50,11 +50,9 @@ const mapActionsToProps = (dispatch) =>
         },
     });
 
-
 PersonalSuccessSignModal.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     navigate: PropTypes.func.isRequired,
 };
-
 
 export default connect(null, mapActionsToProps)(PersonalSuccessSignModal);

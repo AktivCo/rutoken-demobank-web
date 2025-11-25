@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-
 const withLoader = (mapState, mapActions) => (WrappedComponent) => {
     const Component = class extends React.Component {
         static propTypes = {
@@ -42,6 +41,5 @@ const withLoader = (mapState, mapActions) => (WrappedComponent) => {
 
     return connect(mapState, mapActions)(Component);
 };
-
 
 export default withLoader;

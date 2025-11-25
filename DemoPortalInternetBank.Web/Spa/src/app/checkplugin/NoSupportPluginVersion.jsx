@@ -14,7 +14,10 @@ const NoSupportPluginVersion = (os) => (
                     <FormattedMessage id="plugin.update-required-desc" />
                 </span>
             </div>
-            <a className="requirement w-100 d-flex flex-column justify-content-start align-items-start mb-2" href={getPluginDownloadLink(os)}>
+            <a
+                className="requirement w-100 d-flex flex-column justify-content-start align-items-start mb-2"
+                href={getPluginDownloadLink(os)}
+            >
                 <div className="requirement w-100 d-flex flex-column justify-content-start align-items-start mb-2">
                     <div className="requirement__wrapper w-100 d-flex flex-column justify-content-start align-items-start p-2">
                         <div className="requirement__row w-100 d-flex flex-row">
@@ -53,6 +56,5 @@ const NoSupportPluginVersion = (os) => (
         </div>
     </div>
 );
-
 
 export default NoSupportPluginVersion;

@@ -27,7 +27,6 @@ const pluginResetCertificates = (deviceId) => ({
     payload: { [deviceId]: null },
 });
 
-
 export {
     pluginLoadError,
     pluginLoadFinished,

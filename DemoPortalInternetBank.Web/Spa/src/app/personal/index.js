@@ -7,7 +7,6 @@ import { setUserCertificate as setUserCertificateActions } from '../actions/user
 import PersonalNavigation from './PersonalNavigation';
 import PersonalBlocksContainer from './PersonalBlocksContainer';
 
-
 class Personal extends React.Component {
     componentDidMount() {
         const { setUserCertificate } = this.props;
@@ -24,7 +23,6 @@ class Personal extends React.Component {
         );
     }
 }
-
 
 const mapActionsToProps = (dispatch) =>
     ({ setUserCertificate: () => dispatch(setUserCertificateActions()) });

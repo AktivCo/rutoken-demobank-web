@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const base = {
     devices: {
         TOKEN_TYPE_PINPAD_2: 'PINPad Rutoken',
@@ -144,6 +145,5 @@ const result = {};
 Object.keys(base).forEach((key) => {
     Object.assign(result, base[key]);
 });
-
 
 export default result;

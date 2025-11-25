@@ -12,7 +12,6 @@ import RegisterError from './RegisterError';
 import Loading from './LoadingCertificates';
 import PinModal from './PinModal';
 
-
 class Register extends React.Component {
     state = { commonName: null }
 
@@ -61,14 +60,13 @@ class Register extends React.Component {
     }
 }
 
-
 const mapStateToProps = (state) => ({ CURRENT_DEVICE_ID: state.CURRENT_DEVICE_ID });
 
 const mapActionsToProps = (dispatch) =>
     ({
         register: (deviceId, commonName, org) => dispatch(registerAction(deviceId, commonName, org, {
-            PinModal: PinModal,
-            ChangePinModal: ChangePinModal,
+            PinModal,
+            ChangePinModal,
         })),
     });
 
@@ -78,6 +76,10 @@ Register.propTypes = {
     intl: PropTypes.shape().isRequired,
 };
 
-
-export default withOperation('register',
-    connect(mapStateToProps, mapActionsToProps)(injectIntl(Register)), null, RegisterError, Loading);
+export default withOperation(
+    'register',
+    connect(mapStateToProps, mapActionsToProps)(injectIntl(Register)),
+    null,
+    RegisterError,
+    Loading,
+);

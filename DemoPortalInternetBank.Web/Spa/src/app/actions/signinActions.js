@@ -11,7 +11,6 @@ import { checkLoginState } from './userInfoActions';
 
 import { saveCurrentCert } from '../certificatesStorage';
 
-
 /**
  * Метод аутентификации пользователя в системе Демобанк.
  * Получение случайного числа, подпись случайного числа, отправка полученной подписи на BackEnd.
@@ -64,7 +63,6 @@ const signinAction = (deviceId, certificate) => (dispatch) => {
 
     return sequense;
 };
-
 
 /**
  * Метод начала аутентификации пользователя в системе Демобанк.

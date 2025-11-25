@@ -23,7 +23,7 @@ class MainView extends React.Component {
                     Pragma: 'no-cache',
                     'Cache-Control': 'no-cache, no-store',
                 };
-                return { ...config, headers: headers };
+                return { ...config, headers };
             },
             (error) => Promise.reject(error),
         );
@@ -78,7 +78,6 @@ class MainView extends React.Component {
         return <CheckLogin />;
     }
 }
-
 
 const mapStateToProps = (state) => ({
     PLUGIN_LOAD_ERROR: state.PLUGIN_LOAD_ERROR,

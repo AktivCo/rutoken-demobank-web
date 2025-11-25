@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import { setLoginState as setLoginStateAction } from './uiActions';
 
-
 const checkLoginState = () => (dispatch) => {
     let sequense = Promise.resolve();
 
@@ -35,7 +34,6 @@ const setUserCertificate = () => (dispatch, getState) => {
 
     return sequense;
 };
-
 
 const setLoginState = (isSignedIn) => (dispatch, getState) => {
     if (!isSignedIn) {

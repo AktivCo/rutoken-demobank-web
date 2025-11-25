@@ -112,7 +112,6 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
     return injectIntl(Component);
 };
 
-
 const mapStateToProps = (state) => ({
     OPERATION_HANDLE: state.OPERATION_HANDLE,
     SELECTED_LANGUAGE: state.SELECTED_LANGUAGE,
@@ -122,7 +121,12 @@ const mapActionsToProps = (dispatch) =>
     ({ setPreviousOperationFinished: () => dispatch(setPreviousOperationFinishedAction()) });
 
 const wrapper = (operationTitle, wrapComponent, successComponent, errorComponent, processComponent) =>
-    connect(mapStateToProps, mapActionsToProps)(withOperation(operationTitle,
-        wrapComponent, successComponent, errorComponent, processComponent));
+    connect(mapStateToProps, mapActionsToProps)(withOperation(
+        operationTitle,
+        wrapComponent,
+        successComponent,
+        errorComponent,
+        processComponent,
+    ));
 
 export default wrapper;

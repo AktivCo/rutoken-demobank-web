@@ -43,7 +43,10 @@ const PersonalBlockMultipleModal = ({ modalState, generateMultipleSignature }) =
                                 &nbsp;
                                 <FormattedMessage id="payment.date-from" />
                                 &nbsp;
-                                <FormattedMessage id="handle.translation-object" values={payment.account.respondent.translation} />
+                                <FormattedMessage
+                                    id="handle.translation-object"
+                                    values={payment.account.respondent.translation}
+                                />
                             </div>
                         ))
                     }
@@ -71,7 +74,6 @@ const mapActionsToProps = (dispatch) =>
     (
         { generateMultipleSignature: (payments) => dispatch(generateMultipleSignatureAction(payments)) }
     );
-
 
 PersonalBlockMultipleModal.propTypes = {
     modalState: PropTypes.arrayOf(PropTypes.shape()).isRequired,

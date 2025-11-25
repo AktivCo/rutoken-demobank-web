@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { checkConnectedDevices as checkConnectedDevicesAction } from './actions/loadPluginActions';
 
-
 class NoDevices extends React.Component {
     componentDidMount() {
         const { checkConnectedDevices } = this.props;
@@ -15,7 +14,9 @@ class NoDevices extends React.Component {
     render() {
         return (
             <div className="main d-flex flex-row">
-                <div className="main__wrapper main__settings d-flex flex-column justify-content-start align-items-center p-2">
+                <div className="main__wrapper main__settings d-flex flex-column
+                    justify-content-start align-items-center p-2"
+                >
                     <div className="aboutservice">
                         <span className="aboutservice__title">
                             <FormattedMessage id="main.no-devices-title" />
@@ -42,7 +43,6 @@ class NoDevices extends React.Component {
         );
     }
 }
-
 
 const mapActionsToProps = (dispatch) =>
     ({ checkConnectedDevices: () => dispatch(checkConnectedDevicesAction()) });

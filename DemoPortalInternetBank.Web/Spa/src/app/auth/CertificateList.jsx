@@ -20,7 +20,6 @@ class CertificateList extends React.Component {
         const mf = <p key="last-cert"><FormattedMessage id="auth.last-signin-as" /></p>;
         const mp = (certs) => certs.map((cert) => <CertificateCard key={cert.certId} certificate={cert} />);
 
-
         if (certificates.length === 1) {
             result.push(mt);
             result.push(mp(certificates));
@@ -68,12 +67,10 @@ class CertificateList extends React.Component {
     }
 }
 
-
 const mapActionsToProps = (dispatch) =>
     (
         { showViewRegister: () => dispatch(showViewRegisterAction()) }
     );
-
 
 CertificateList.propTypes = {
     certificates: PropTypes.arrayOf(PropTypes.shape()),
@@ -81,6 +78,5 @@ CertificateList.propTypes = {
 };
 
 CertificateList.defaultProps = { certificates: [] };
-
 
 export default withOperation('signin', connect(null, mapActionsToProps)(CertificateList), null, RegisterError, Loading);

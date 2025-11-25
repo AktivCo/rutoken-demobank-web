@@ -119,7 +119,6 @@ const createPkcs10AndCompleteRegister = (deviceId, commonName, organization) => 
         return signinAction(deviceId, certificate)(dispatch);
     });
 
-
     sequense = sequense.catch((err) => {
         let error;
         if (err instanceof PluginError) {
@@ -133,7 +132,6 @@ const createPkcs10AndCompleteRegister = (deviceId, commonName, organization) => 
 
     return sequense;
 };
-
 
 /**
  * Метод начала регистрации нового пользователя в системе Демобанк.

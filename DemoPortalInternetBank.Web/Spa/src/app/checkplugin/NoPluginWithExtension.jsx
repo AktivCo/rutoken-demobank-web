@@ -158,7 +158,6 @@ const handleLoadExtension = (e, link) => {
     }, 300);
 };
 
-
 const NoPluginWithExtension = ({ browserName, os }) => {
     const ext = getExtensionDownloadLink(browserName);
     const pluginChilds = getPluginChilds(os);
@@ -166,7 +165,10 @@ const NoPluginWithExtension = ({ browserName, os }) => {
 
     return (
         [
-            <div key="plugin-wrapper" className="requirement w-100 d-flex flex-column justify-content-start align-items-start mb-2">
+            <div
+                key="plugin-wrapper"
+                className="requirement w-100 d-flex flex-column justify-content-start align-items-start mb-2"
+            >
                 <PluginCheck>
                     {pluginChilds}
                 </PluginCheck>

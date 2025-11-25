@@ -5,7 +5,6 @@ import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import { formatMoney } from '../utils';
 
-
 const setSelectedClass = (isSelected) => cn({
     'personal-block': true,
     'personal-block-selected': isSelected,

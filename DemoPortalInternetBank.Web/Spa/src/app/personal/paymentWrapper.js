@@ -77,7 +77,6 @@ class PaymentList extends React.Component {
 
             const selectedPayments = OBJECTS_LIST.filter((el, index) => selectedItems.includes(index));
 
-
             if (multipleSelection) {
                 renderList
                     .push(

@@ -39,7 +39,6 @@ const CertificateInfo = ({ subject }) => {
     );
 };
 
-
 CertificateInfo.propTypes = { subject: PropTypes.shape() };
 
 CertificateInfo.defaultProps = { subject: null };

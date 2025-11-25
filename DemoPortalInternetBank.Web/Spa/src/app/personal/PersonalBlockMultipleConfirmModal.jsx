@@ -55,7 +55,10 @@ class PersonalBlockMultipleConfirmModal extends React.Component {
                                     &nbsp;
                                     <FormattedMessage id="payment.date-from" />
                                     &nbsp;
-                                    <FormattedMessage id="handle.translation-object" values={payment.account.respondent.translation} />
+                                    <FormattedMessage
+                                        id="handle.translation-object"
+                                        values={payment.account.respondent.translation}
+                                    />
                                 </div>
                             ))
                         }
@@ -89,11 +92,14 @@ const mapActionsToProps = (dispatch) =>
         { generateMultipleSignature: (pin, payments) => dispatch(generateMultipleSignatureAction(pin, payments)) }
     );
 
-
 PersonalBlockMultipleConfirmModal.propTypes = {
     modalState: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     generateMultipleSignature: PropTypes.func.isRequired,
     intl: PropTypes.shape().isRequired,
 };
 
-export default withOperation('sign', connect(null, mapActionsToProps)(injectIntl(PersonalBlockMultipleConfirmModal)), PersonalSuccessSignModal);
+export default withOperation(
+    'sign',
+    connect(null, mapActionsToProps)(injectIntl(PersonalBlockMultipleConfirmModal)),
+    PersonalSuccessSignModal,
+);

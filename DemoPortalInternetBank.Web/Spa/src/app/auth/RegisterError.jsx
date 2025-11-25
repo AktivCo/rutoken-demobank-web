@@ -28,7 +28,6 @@ const RegisterError = ({ error, restartOperation }) => (
     </div>
 );
 
-
 const mapStateToProps = (state) =>
     ({ error: state.OPERATION_HANDLE.error });
 

@@ -7,7 +7,6 @@ import Input from '../controls/Input';
 import { login as loginAction } from '../actions/loginActions';
 import withOperation from '../withOperation';
 
-
 class PinModal extends React.Component {
     state = { password: null }
 
@@ -32,7 +31,6 @@ class PinModal extends React.Component {
     render() {
         const { intl } = this.props;
         const placeholder = intl.formatMessage({ id: 'auth.pin-modal-placeholder' });
-
 
         return (
             <div>

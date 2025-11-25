@@ -21,7 +21,6 @@ import NoSupportCurrentBrowserVersion from './NoSupportCurrentBrowserVersion';
 import NoSupportPluginVersion from './NoSupportPluginVersion';
 import { getPluginDirectAppLink } from './pluginDownloadLinks';
 
-
 const DownloadPlugin = (name) => {
     const lastLoadedTime = new Date(localStorage.getItem('lastPluginLoaded'));
     const dateDiffMinutes = !lastLoadedTime ? 0 : Math.floor((new Date() - lastLoadedTime) / (1000 * 60));

@@ -7,7 +7,6 @@ import Input from '../controls/Input';
 import { changePinByPin as changePinByPinAction } from '../actions/loginActions';
 import withOperation from '../withOperation';
 
-
 class ChangePinModal extends React.Component {
     state = { newpin: null, newpinconfirm: null }
 
