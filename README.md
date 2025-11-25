@@ -7,7 +7,7 @@
 
 - Dotnet SDK(версия 2.2.8)
 - ASP.NET Core (версия 2.2.8)(не всегда ставится с Dotnet SDK, можно проверить через команду `dotnet --info`)
-- Node js (версия v11.5.0 или новее)
+- Node js (версия v20.19.5)
 - Yarn (версия v1.12.0 или новее)
 - PostgreSQL (на сервере нужна PostgreSQL версии не ниже 11, учетная запись должна быть наделена правами создания БД. 
     connectionString - в файле DemoPortalInternetBank.Web/appsettings.json)

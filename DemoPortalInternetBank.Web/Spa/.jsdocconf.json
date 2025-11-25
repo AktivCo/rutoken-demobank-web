@@ -1,4 +1,12 @@
 {
+    "source": {
+        "include": ["src/app"],
+        "exclude": ["node_modules", "docs"]
+    },
+    "opts": {
+        "destination": "./out/",
+        "recurse": true
+    },
     "templates": {
         "default": {
             "layoutFile": "docsource/jsdoc.tmpl",

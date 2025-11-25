@@ -1,6 +1,6 @@
 {
     "rules": {
-        "block-no-empty": null,
+        "block-no-empty": true,
         "color-no-invalid-hex": true,
         "comment-empty-line-before": [
             "always",
@@ -11,8 +11,6 @@
                 ]
             }
         ],
-        "declaration-colon-space-after": "always",
-        "max-empty-lines": 2,
         "rule-empty-line-before": [
             "always",
             {
@@ -23,17 +21,6 @@
                     "after-comment"
                 ]
             }
-        ],
-        "unit-whitelist": [
-            "em",
-            "rem",
-            "%",
-            "s",
-            "px",
-            "vh",
-            "vw",
-            "deg",
-            "ms"
         ]
     }
 }

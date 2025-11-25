@@ -1,93 +1,68 @@
 const path = require('path');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
     entry: [
         './src/app/index.js',
         './src/styles/style.scss',
     ],
-
     output: {
         path: path.resolve(__dirname, '../wwwroot'),
         filename: 'app.bundle.js',
     },
+    resolve: {
+		extensions: ['.js', '.jsx'],
+	},
     module: {
         rules: [
+           {
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env', '@babel/preset-react'],
+					},
+				},
+			},
+         	{
+				test: /\.(jpg|gif|png|svg)$/,
+				type: 'asset/resource'
+			},
             {
-                test: /\.(js|jsx)$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: [
-                        [
-                            'es2015', {
-                                "loose": true,
-                            },
-                        ],
-                        "stage-0",
-                        "react"
-                    ],
-                    plugins: [
-
-                        "add-module-exports",
-                        "transform-object-rest-spread"
-                    ]
-                }
-            },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                use: {
-                    loader: 'url-loader', options: { limit: 20000 }
-                }
-            },
-            {
-                test: /.(ttf|otf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]',
-                        mimetype: 'application/font-woff',
-                        outputPath: 'fonts/',
-                    }
-                }]
-            },
-            {
-                test: /\.(js|jsx)$/,
-                loader: "eslint-loader"
-            },
-            {
-                test: /\.scss$/,
-                loaders: ["style-loader", "css-loader", "sass-loader"]
-            },
+				test: /\.css$/,
+				use: [
+					'style-loader',
+					'css-loader',
+				]
+			},
+			{
+				test: /\.scss$/,
+				use: [
+					'style-loader',
+					'css-loader',
+					{
+						loader: 'sass-loader',
+						options: {
+							sassOptions: {
+								silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import'],
+							}
+						}
+					}
+				]
+			}
         ],
     },
     plugins: [
-        new StyleLintPlugin(),
+		new StyleLintPlugin({
+			configFile: '.stylelintrc.json',
+			files: '**/*.scss',
+			fix: false,
+		}),
+        new ESLintPlugin({
+            extensions: ['js', 'jsx'],
+            fix: true,
+        })
     ],
-    // optimization: {
-    //     minimizer: [
-    //         new UglifyJsPlugin({
-    //             uglifyOptions: {
-    //                 warnings: false,
-    //                 parse: {},
-    //                 compress: {},
-    //                 mangle: true, // Note `mangle.properties` is `false` by default.
-    //                 output: null,
-    //                 toplevel: false,
-    //                 nameCache: null,
-    //                 ie8: true,
-    //                 keep_fnames: false,
-    //             },
-    //         }),
-    //     ],
-    // },
-    resolve: {
-        extensions: ['*', '.js', '.jsx'],
-    },
-    devtool: 'source-map',
-
-    watchOptions: {
-        poll: true
-    }
-
 };
