@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace DemoPortalInternetBank.Web
 {
@@ -31,7 +32,7 @@ namespace DemoPortalInternetBank.Web
 
             services.AddSession(options =>
             {
-                options.CookieName = ".DemoBank.Session";
+                options.Cookie.Name = ".DemoBank.Session";
                 options.IdleTimeout = TimeSpan.FromSeconds(600);
             });
 
@@ -46,19 +47,22 @@ namespace DemoPortalInternetBank.Web
                 {
                     options.ExpireTimeSpan = TimeSpan.FromSeconds(600);
                 });
-            
+
             services.AddScoped<IDbTransactionService, DbTransactionService>();
             services.AddScoped<IPaymentDataService, PaymentDataService>();
-            
+
             services.AddScoped<PkiManager>();
             services.AddScoped<PaymentService>();
 
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.EnableEndpointRouting = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

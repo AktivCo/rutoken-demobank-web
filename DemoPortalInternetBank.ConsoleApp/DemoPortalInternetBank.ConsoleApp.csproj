@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
-    </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\DemoPortalInternetBank.Pki\DemoPortalInternetBank.Pki.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DemoPortalInternetBank.Pki\DemoPortalInternetBank.Pki.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@ version: '2'
 services:
   demobank.rutoken.ru-dotnet:
     container_name:  ${APP_CONTAINER_NAME}
-    image: mcr.microsoft.com/dotnet/core/aspnet:2.2
+    image: mcr.microsoft.com/dotnet/aspnet:10.0
     restart: always
     command: bash -c "cd /app && dotnet DemoPortalInternetBank.Web.dll"
     volumes:
@@ -11,7 +11,7 @@ services:
     links:
       - demobank.rutoken.ru-psql:demobank.rutoken.ru-psql
     ports:
-      - ${APP_OUT_PORT}:80
+      - ${APP_OUT_PORT}:8080
     depends_on:
       - demobank.rutoken.ru-psql
   demobank.rutoken.ru-psql:
