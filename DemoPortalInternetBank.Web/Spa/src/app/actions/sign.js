@@ -221,7 +221,7 @@ const sign = (paymentData, sequenceModals) => (dispatch) => {
     if (!isMultiple) {
         [modalData] = paymentData;
     }
-    // eslint-disable-next-line func-names
+     
     const reject = function () {
         checkLoginState()(dispatch);
     };

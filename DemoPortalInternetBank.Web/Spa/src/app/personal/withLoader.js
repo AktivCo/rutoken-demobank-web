@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const withLoader = (mapState, mapActions) => (WrappedComponent) => {
-    const Component = class extends React.Component {
+    const LoaderComponent = class extends React.Component {
         static propTypes = {
             action: PropTypes.func,
             data: PropTypes.shape(),
@@ -39,7 +39,9 @@ const withLoader = (mapState, mapActions) => (WrappedComponent) => {
         }
     };
 
-    return connect(mapState, mapActions)(Component);
+    LoaderComponent.displayName = 'LoaderComponent';
+
+    return connect(mapState, mapActions)(LoaderComponent);
 };
 
 export default withLoader;

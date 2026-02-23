@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import OPERATION_STATUS from '../operationStatus';
 
 const Button = ({ type, className, children, loading, onClick }) => (
-    /* eslint-disable react/button-has-type */
+     
     <button type={type} className={className} onClick={onClick} disabled={loading}>
         {children}
     </button>

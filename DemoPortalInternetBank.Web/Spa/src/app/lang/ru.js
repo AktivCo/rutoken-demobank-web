@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+ 
 const base = {
     devices: {
         TOKEN_TYPE_PINPAD_2: 'Рутокен PINPad',

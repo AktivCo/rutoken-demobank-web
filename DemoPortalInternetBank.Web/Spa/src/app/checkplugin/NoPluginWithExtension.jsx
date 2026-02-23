@@ -2,8 +2,9 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { getPluginDirectAppLink, getExtensionDownloadLink } from './pluginDownloadLinks';
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
+ 
 const ExtensionCheck = ({ children }) => (
     <div className="requirement__wrapper w-100 d-flex flex-column justify-content-start align-items-start p-2">
         <div className="requirement__row w-100 d-flex flex-row">
@@ -25,7 +26,10 @@ const ExtensionCheck = ({ children }) => (
     </div>
 );
 
-// eslint-disable-next-line react/prop-types
+ExtensionCheck.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+ 
 const PluginCheck = ({ children }) => (
     <div className="requirement__wrapper w-100 d-flex flex-column justify-content-start align-items-start p-2">
         <div className="requirement__row w-100 d-flex flex-row">
@@ -48,6 +52,10 @@ const PluginCheck = ({ children }) => (
         </div>
     </div>
 );
+
+PluginCheck.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 const getPluginChilds = (os) => {
     const pluginLink = getPluginDirectAppLink(os);

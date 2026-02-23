@@ -14,7 +14,6 @@ class Input extends React.Component {
 
     render() {
         const { type } = this.state;
-        /* eslint-disable jsx-a11y/interactive-supports-focus */
         return (
             <div style={{ position: 'relative' }}>
                 <input {...this.props} type={type} autoComplete="new-password" />

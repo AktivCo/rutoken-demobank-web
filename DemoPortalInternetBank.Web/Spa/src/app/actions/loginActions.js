@@ -33,7 +33,7 @@ const logoutAndLogin = (deviceId, password) => (dispatch, getState) => {
     sequense = sequense.then(() => Plugin.logout(deviceId));
 
     sequense = sequense.then(() => Plugin.removePin(deviceId));
-    /* eslint-disable-next-line no-use-before-define */
+     
     sequense = sequense.then(() => login(deviceId, password)(dispatch, getState));
 
     return sequense;

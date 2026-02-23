@@ -9,7 +9,7 @@ import OPERATION_STATUS from './operationStatus';
 import { operationFinished as setPreviousOperationFinishedAction } from './actions/operations';
 
 const withOperation = (operationTitle, WrappedComponent, SuccessComponent, ErrorComponent, ProcessComponent) => {
-    const Component = class extends React.Component {
+    const WithOperationComponent = class extends React.Component {
         static propTypes = {
             OPERATION_HANDLE: PropTypes.shape(),
             SELECTED_LANGUAGE: PropTypes.string.isRequired,
@@ -109,7 +109,8 @@ const withOperation = (operationTitle, WrappedComponent, SuccessComponent, Error
         }
     };
 
-    return injectIntl(Component);
+    WithOperationComponent.displayName = 'WithOperationComponent';
+    return injectIntl(WithOperationComponent);
 };
 
 const mapStateToProps = (state) => ({
