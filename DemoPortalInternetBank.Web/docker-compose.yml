@@ -1,10 +1,23 @@
-version: '2'
 services:
   demobank.rutoken.ru-dotnet:
     container_name:  ${APP_CONTAINER_NAME}
-    image: mcr.microsoft.com/dotnet/aspnet:10.0
+    build: .
     restart: always
-    command: bash -c "cd /app && dotnet DemoPortalInternetBank.Web.dll"
+    environment:
+    - ASPNETCORE_URLS=http://0.0.0.0:8080
+    command: >
+      bash -c "
+        echo 'Run migrations...' &&
+        dotnet /migrator/DemoPortalInternetBank.Migrator.dll \"Host=demobank.rutoken.ru-psql;Port=5432;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PSWD}\" &&
+        if [ \$? -eq 0 ]; then
+          echo 'Migrations applied successfully, start app...' &&
+          cd /app &&
+          dotnet DemoPortalInternetBank.Web.dll
+        else
+          echo 'Migrations failed! Exiting...'
+          exit 1
+        fi
+      "
     volumes:
       - ${APP_FOLDER}/var/app:/app
       - ${APP_FOLDER}/var/migrator:/migrator
@@ -13,7 +26,8 @@ services:
     ports:
       - ${APP_OUT_PORT}:8080
     depends_on:
-      - demobank.rutoken.ru-psql
+      demobank.rutoken.ru-psql:
+        condition: service_healthy
   demobank.rutoken.ru-psql:
     container_name: ${DB_CONTAINER_NAME}
     image: postgres
@@ -26,3 +40,9 @@ services:
       - ${DB_FOLDER}:/var/lib/postgresql/data
     ports:
       - ${DB_OUT_PORT}:${DB_PORT}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
