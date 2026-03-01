@@ -50,7 +50,7 @@ namespace DemoPortalInternetBank.Web.Controllers
             {
                 randomArrayFromCms = _pkiManager.VerifySignature(cms);
             }
-            catch (Exception err)
+            catch
             {
                 return BadRequest();
             }
@@ -101,7 +101,7 @@ namespace DemoPortalInternetBank.Web.Controllers
             {
                 signedResult = _pkiManager.VerifySignature(res);
             }
-            catch (Exception err)
+            catch
             {
                 return BadRequest();
             }

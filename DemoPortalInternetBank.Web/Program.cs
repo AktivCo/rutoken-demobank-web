@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace DemoPortalInternetBank.Web
 {
@@ -8,14 +7,14 @@ namespace DemoPortalInternetBank.Web
     {
         public static void Main(string[] args)
         {
-            // Preserve pre-upgrade behavior for timestamp handling (allow Local DateTime for timestamptz)
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-
-            CreateWebHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+           Host.CreateDefaultBuilder(args)
+               .ConfigureWebHostDefaults(webBuilder =>
+               {
+                   webBuilder.UseStartup<Startup>();
+               });
     }
 }

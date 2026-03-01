@@ -106,7 +106,7 @@ namespace DemoPortalInternetBank.Web.Controllers
             {
                 _pkiManager.VerifySignature(res);
             }
-            catch (Exception err)
+            catch
             {
                 return BadRequest();
             }
@@ -130,11 +130,12 @@ namespace DemoPortalInternetBank.Web.Controllers
                 {
                     new PkiManager().VerifySignature(res);
                 }
-                catch (Exception err)
+                catch
                 {
                     return BadRequest();
                 }
 
+                payment.Account = null;
                 _paymentService.SavePayment(userId, payment);
             }
 

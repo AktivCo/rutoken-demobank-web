@@ -6,7 +6,7 @@ namespace DemoPortalInternetBank.Domain.Entities
     {
         public int Id { get; set; }
         public int Amount { set; get; }
-        public DateTime PaymentDate { get; set; }
+        public DateTimeOffset PaymentDate { get; set; }
         public int AccountId { get; set; }
         public Account Account { get; set; }
 

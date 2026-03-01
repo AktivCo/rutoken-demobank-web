@@ -72,7 +72,7 @@ namespace DemoPortalInternetBank.Domain.Services
                 {
                     UserId = userId,
                     AccountId = account.Id,
-                    PaymentDate = DateTime.Now,
+                    PaymentDate = DateTimeOffset.UtcNow,
                     Amount = amount,
                 };
 

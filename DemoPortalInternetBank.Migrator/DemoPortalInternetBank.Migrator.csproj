@@ -11,4 +11,11 @@
     <ProjectReference Include="..\DemoPortalInternetBank.Domain\DemoPortalInternetBank.Domain.csproj" />
   </ItemGroup>
 
+<ItemGroup>
+	<Content Include="..\DemoPortalInternetBank.Domain\Migrations\**\*.cs">
+		<Link>Migrations\%(RecursiveDir)%(FileName)%(Extension)</Link>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
+</ItemGroup>
+
 </Project>
