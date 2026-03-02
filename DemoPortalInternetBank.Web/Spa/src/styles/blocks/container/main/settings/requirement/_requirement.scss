@@ -1,0 +1,87 @@
+.requirement {
+    object-fit: contain;
+    overflow: hidden;
+    border-radius: $border-radius;
+    background-color: #e7f1f3;
+    text-decoration: none;
+
+    &.inactive {
+        background-color: rgba(68, 68, 68, 0.05);
+    }
+
+    .requirement__wrapper {
+        .requirement__row {
+            .requirement__number {
+                font-size: 60px;
+                @include font-bold();
+                line-height: 1;
+                letter-spacing: 1.1px;
+                text-align: left;
+                color: #bcdbe1;
+                width: 15%;
+            }
+
+            .requirement__description {
+                width: 85%;
+                
+                .description__title,
+                .description__name {
+                    font-size: $font-size--large;
+                    @include font-normal();
+                    line-height: 1.25;
+                    letter-spacing: 0.5px;
+                    text-align: center;
+                    color: $device-font-color;
+                    
+                    a, .link {
+                        color: $surfie-green;
+                        text-decoration: underline;
+
+                        &:hover,
+                        &:active {
+                            color: $surfie-green;
+                        }
+                    }
+                }
+
+                .description__title {
+                    font-weight: bold;
+                }
+
+                .description__info {
+                    font-size: $font-size--small;
+                    @include font-normal();
+                    line-height: 1.43;
+                    letter-spacing: normal;
+                    text-align: left;
+                    color: $device-font-color;
+                    margin-top: 2rem;
+
+                    a, .link {
+                        color: $surfie-green;
+                        text-decoration: underline;
+                        
+                        &:hover,
+                        &:active {
+                            color: $surfie-green;
+                        }
+                    }
+
+                    ol {
+                        padding: 0;
+                        margin: 0;
+                    }
+                }
+            }
+
+            .supportedbrowsers {
+                font-size: $font-size--large;
+                @include font-normal();
+                line-height: 1.25;
+                letter-spacing: 0.4px;
+                text-align: center;
+                color: $selected-device-info-background-color;
+            }
+        }
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "name": "demo-portal-internet-bank-front",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "",
+    "license": "MIT",
+    "scripts": {
+        "build:dev": "webpack --mode development -w",
+        "build:prod": "webpack --mode production",
+        "build:doc": "node docsource/index.js && npx jsdoc -c ./.jsdocconf.json"
+    },
+    "devDependencies": {
+        "@babel/core": "7.26.0",
+        "@babel/preset-env": "7.26.0",
+        "@babel/preset-react": "7.26.3",
+        "@babel/eslint-parser": "7.26.5",
+        "babel-loader": "8.3.0",
+        "css-loader": "7.1.2",
+        "eslint": "7.32.0",
+        "eslint-config-airbnb": "19.0.4",
+        "eslint-plugin-import": "2.29.1",
+        "eslint-plugin-jsx-a11y": "6.10.2",
+        "eslint-plugin-react": "7.37.4",
+        "eslint-plugin-react-hooks": "4.6.0",
+        "eslint-webpack-plugin": "3.2.0",
+        "sass-loader": "16.0.4",
+        "style-loader": "4.0.0",
+        "jsdoc": "4.0.1",
+        "sass": "1.83.4",
+        "html-webpack-plugin": "5.6.3",
+        "stylelint": "16.25.0",
+        "stylelint-webpack-plugin": "5.0.1",
+        "webpack": "5.97.1",
+        "webpack-cli": "6.0.1"
+    },
+    "dependencies": {
+        "@aktivco-it/rutoken-plugin-bootstrap": "1.9.11",
+        "axios": "1.13.2",
+        "classnames": "2.2.5",
+        "history": "4.7.2",
+        "prop-types": "15.7.2",
+        "react": "16.12.0",
+        "react-dom": "16.12.0",
+        "react-intl": "5.25.1",
+        "react-redux": "5.0.7",
+        "react-router": "4.2.0",
+        "react-router-dom": "4.2.2",
+        "redux": "4.0.0",
+        "redux-thunk": "2.2.0",
+        "core-js": "3.35.1"
+    }
+}

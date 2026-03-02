@@ -1,0 +1,22 @@
+{
+    "source": {
+        "include": ["src/app"],
+        "exclude": ["node_modules", "docs"]
+    },
+    "opts": {
+        "destination": "./out/",
+        "recurse": true
+    },
+    "templates": {
+        "default": {
+            "layoutFile": "docsource/jsdoc.tmpl",
+            "staticFiles": {
+                "include": [
+                    "docsource/style.css",
+                    "docsource/bgr_body.png",
+                    "docsource/logo.png"
+                ]
+            }
+        }
+    }
+}
